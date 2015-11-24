@@ -22,7 +22,7 @@
     //$routeProvider.when('/addMemo', {
     //    templateUrl: '/memos/addMemo.html',
     //    controller: 'MemoController'
-    });
+    //});
     $routeProvider.otherwise({ redirectTo: '/index' });
 }])
 
