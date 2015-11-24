@@ -1,4 +1,4 @@
-﻿angular.module('name of app', [
+﻿angular.module('AirBermudes', [
     'ngRoute', //module
 ])
 .config(['$routeProvider', function ($routeProvider) {
