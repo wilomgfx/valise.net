@@ -1,6 +1,0 @@
-namespace voyagesAPI.Areas.HelpPage.ModelDescriptions
-{
-    public class DictionaryModelDescription : KeyValuePairModelDescription
-    {
-    }
-}
