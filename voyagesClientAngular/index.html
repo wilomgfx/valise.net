@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>AirBermudes</title>
+</head>
+<body ng-app="">
+    <div>
+        <nav class="navbar navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/">AirBermudes!</a>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#/login">Sign in</a></li>
+                        <li><a href="#/signup">Sign up</a></li>
+                        <li> <a style="color:white"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container theme-showcase" role="main">
+            <div class="row">
+                <div class="col-md-12">
+                    <!--ng-include id="user" src="'url'" /-->
+                    <ng-view></ng-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
