@@ -19,4 +19,13 @@ function ClientController($scope, $rootScope, AuthService, MsgFlashService, $tim
     //MsgFlashService.setErrorMessage("an error occured, please try again");
     //MsgFlashService.hideMessages();
 
+
+    $scope.login() = function () {
+
+    }
+
+    $scope.login() = function () {
+
+    } 
+
 };
