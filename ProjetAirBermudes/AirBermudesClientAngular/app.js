@@ -1,16 +1,17 @@
-﻿angular.module('AppBermudes', [
-    'ngRoute'
+﻿angular.module('AppAirBermudes', [
+    'ngRoute',
+    'AppAirBermudes.users'
 ])
 .config(['$routeProvider', function ($routeProvider) {
 
-    //$routeProvider.when('/login', {
-    //    templateUrl: '/users/login.html',
-    //    controller: 'ClientController'
-    //});
-    //$routeProvider.when('/signup', {
-    //    templateUrl: '/users/signup.html',
-    //    controller: 'ClientController'
-    //});
+    $routeProvider.when('/login', {
+        templateUrl: '/users/login.html',
+        controller: 'ClientController'
+    });
+    $routeProvider.when('/signup', {
+        templateUrl: '/users/signup.html',
+        controller: 'ClientController'
+    });
     //$routeProvider.when('/', {
     //    templateUrl: '/users/user.html',
     //    controller: 'ClientController'

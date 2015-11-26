@@ -1,0 +1,6 @@
+E:\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.dll.config
+E:\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.dll
+E:\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.pdb
+E:\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.csprojResolveAssemblyReference.cache
+E:\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.dll
+E:\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.pdb
