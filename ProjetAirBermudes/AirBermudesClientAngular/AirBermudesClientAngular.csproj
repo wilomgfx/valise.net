@@ -60,9 +60,9 @@
   <ItemGroup>
     <Content Include="app.js" />
     <Content Include="index.html" />
-    <Content Include="user\login.html" />
-    <Content Include="user\signUp.html" />
-    <Content Include="user\user.js" />
+    <Content Include="users\login.html" />
+    <Content Include="users\signUp.html" />
+    <Content Include="users\users.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
