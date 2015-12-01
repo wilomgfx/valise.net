@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using System.Data.Entity;
+using AirBermudesAPI.Models;
 
 namespace ProjetAirBermudes.Models
 {
@@ -29,5 +31,9 @@ namespace ProjetAirBermudes.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Day> Days { get; set; }
+
+        public DbSet<Destination> Destinations { get; set; }
     }
 }
