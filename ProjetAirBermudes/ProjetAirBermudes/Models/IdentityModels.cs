@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using System.Data.Entity;
+using AirBermudesAPI.Models;
+using System.Collections.Generic;
 
 namespace ProjetAirBermudes.Models
 {
@@ -16,6 +19,8 @@ namespace ProjetAirBermudes.Models
             // Ajouter des revendications d’utilisateur personnalisées ici
             return userIdentity;
         }
+
+        public List<Travel> Travels { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -24,10 +29,14 @@ namespace ProjetAirBermudes.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        DbSet<Travel> Travels { get; set; }
         
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<AirBermudesAPI.Models.Travel> Travels { get; set; }
     }
 }

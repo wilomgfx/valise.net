@@ -1,6 +1,7 @@
 ﻿angular.module('AppAirBermudes', [
     'ngRoute',
     'AppAirBermudes.users',
+    'AppAirBermudes.travels',
     'MessageFlashingService',
     'AuthentificationService'
 ])
