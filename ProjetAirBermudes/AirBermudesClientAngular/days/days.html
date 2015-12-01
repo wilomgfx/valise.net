@@ -1,0 +1,38 @@
+<div class="container theme-showcase" role="main">
+    <div class="row">
+        <div ng-show="showAlertSucess" class="alert alert-success" role="alert"><p>{{flashMessage}}</p></div>
+        <div ng-show="showAlertError" class="alert alert-danger" role="alert"><p>{{flashErrors}}</p></div>
+        
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Days</h2>
+                </div>
+                <div class="panel-body">
+                    <p>This will go in a modal dialog... later</p>
+                    <form>
+                        <div class="form-group">
+                            <label class="label label-primary" for="email">Date</label>
+                            <input type="date" class="form-control" id="date" ng-model="currentDay.DayDate">
+                        </div>
+                        <div class="form-group">
+                            <label class="label label-primary" for="budget">Budget</label>
+                            <input type="number" class="form-control" id="budget" ng-model="currentDay.Budget">
+                        </div>
+                        <button type="button" class="button button-default" ng-click="newDay()">New day</button>
+                    </form>
+                    
+                    <div id="list-memo" class="list-group">
+                        <button type="button" class="btn list-group-item" ng-repeat="day in dayList" ng-click="onClickDay(day)">
+                            {{day.DayDate}} Budget: {{day.Budget}}
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+        </div>
+
+    </div>
+</div>

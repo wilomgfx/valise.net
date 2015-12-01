@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="days\days.html" />
+    <Content Include="days\days.js" />
     <Content Include="index.html" />
     <Content Include="users\login.html" />
     <Content Include="users\signUp.html" />

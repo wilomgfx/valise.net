@@ -167,6 +167,5 @@ C:\Users\1297063\Desktop\GitHub\valise.net\ProjetAirBermudes\ProjetAirBermudes\b
 C:\Users\1297063\Desktop\GitHub\valise.net\ProjetAirBermudes\ProjetAirBermudes\bin\fr\Microsoft.Owin.Security.Twitter.resources.dll
 C:\Users\1297063\Desktop\GitHub\valise.net\ProjetAirBermudes\ProjetAirBermudes\bin\fr\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
 C:\Users\1297063\Desktop\GitHub\valise.net\ProjetAirBermudes\ProjetAirBermudes\bin\fr\System.Web.Http.Owin.resources.dll
-C:\Users\1297063\Desktop\GitHub\valise.net\ProjetAirBermudes\ProjetAirBermudes\obj\Debug\AirBermudesAPI.csprojResolveAssemblyReference.cache
 C:\Users\1297063\Desktop\GitHub\valise.net\ProjetAirBermudes\ProjetAirBermudes\obj\Debug\AirBermudesAPI.dll
 C:\Users\1297063\Desktop\GitHub\valise.net\ProjetAirBermudes\ProjetAirBermudes\obj\Debug\AirBermudesAPI.pdb

@@ -1,9 +1,10 @@
-﻿angular.module('AppAirBermudes', [
+angular.module('AppAirBermudes', [
     'ngRoute',
     'AppAirBermudes.users',
+    'AppAirBermudes.days',
     'MessageFlashingService',
-    'AuthentificationService',
-    'RouteAutorization'
+    'AuthentificationService'//,
+    //'RouteAutorization'
 ])
 .config(['$routeProvider', function ($routeProvider) {
 
@@ -15,6 +16,11 @@
         templateUrl: '/users/signup.html',
         controller: 'ClientController'
     });
+    $routeProvider.when('/days', {
+        templateUrl: '/days/days.html',
+        controller: 'DaysController'
+    });
+    
     //$routeProvider.when('/', {
     //    templateUrl: '/users/user.html',
     //    controller: 'ClientController'
