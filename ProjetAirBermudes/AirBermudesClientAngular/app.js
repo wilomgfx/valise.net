@@ -1,9 +1,9 @@
 ﻿angular.module('AppAirBermudes', [
     'ngRoute',
     'AppAirBermudes.users',
-    'MessageFlashingService',
-    'AuthentificationService',
-    'RouteAutorization'
+    'AppAirBermudes.MessageFlashingService',
+    'AppAirBermudes.AuthentificationService',
+    'AppAirBermudes.RouteAutorization'
 ])
 .config(['$routeProvider', function ($routeProvider) {
 
@@ -42,7 +42,7 @@
 }])
 
 //service for authentification, find out the current logged in user and if the user is logged in
-angular.module('AuthentificationService', [])
+angular.module('AppAirBermudes.AuthentificationService', [])
 .service('AuthService', function () {
 
     this.loggedInUser = "";
@@ -61,7 +61,7 @@ angular.module('AuthentificationService', [])
 
 // Route change listener to validate if the user is authenticated and can acces the next route.
 /*
-angular.module('RouteAutorization', [])
+angular.module('AppAirBermudes.RouteAutorization', [])
 .run(['$rootScope', '$location', 'AuthService', function ($rootScope, $location, AuthService) {
 
     var authS = AuthService;
@@ -81,7 +81,7 @@ angular.module('RouteAutorization', [])
 */
 
 //created by William Cantin -Version 1.0
-angular.module('MessageFlashingService', [])
+angular.module('AppAirBermudes.MessageFlashingService', [])
 .service('MsgFlashService', function ($timeout) {
 
     //for this service to show messages include this in your html
