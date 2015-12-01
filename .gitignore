@@ -232,4 +232,3 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 *.cache
-ProjetAirBermudes/AirBermudesClientAngular/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
