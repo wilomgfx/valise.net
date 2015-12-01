@@ -2,7 +2,8 @@
     'ngRoute',
     'AppAirBermudes.users',
     'MessageFlashingService',
-    'AuthentificationService'
+    'AuthentificationService',
+    'RouteAutorization'
 ])
 .config(['$routeProvider', function ($routeProvider) {
 
@@ -26,10 +27,22 @@
     //    templateUrl: '/memos/addMemo.html',
     //    controller: 'MemoController'
     //});
+
+    /*
+        When the login will be implemented, add this attribute to all route with the right value.
+        The RouteAutorization module must be uncommented
+
+        access: {
+            requireAuthentication: true
+        }
+
+    */
+
     $routeProvider.otherwise({ redirectTo: '/index' });
 }])
 
 //service for authentification, find out the current logged in user and if the user is logged in
+/*
 angular.module('AuthentificationService', [])
 .service('AuthService', function () {
 
@@ -45,6 +58,26 @@ angular.module('AuthentificationService', [])
     }
 
 })
+*/
+
+// Route change listener to validate if the user is authenticated and can acces the next route.
+angular.module('RouteAutorization', [])
+.run(['$rootScope', '$location', 'AuthService', function ($rootScope, $location, AuthService) {
+
+    var authS = AuthService;
+
+    $rootScope.$on('$routeChangeStart', function (event, next) {
+
+        if (next.access) {
+
+            if (next.access.requireAuthentication && !authS.isLoggedIn) {
+
+                $location.path("/login");
+            }
+        }
+    });
+
+}])
 
 //created by William Cantin -Version 1.0
 angular.module('MessageFlashingService', [])
