@@ -42,7 +42,6 @@
 }])
 
 //service for authentification, find out the current logged in user and if the user is logged in
-/*
 angular.module('AuthentificationService', [])
 .service('AuthService', function () {
 
@@ -58,9 +57,10 @@ angular.module('AuthentificationService', [])
     }
 
 })
-*/
+
 
 // Route change listener to validate if the user is authenticated and can acces the next route.
+/*
 angular.module('RouteAutorization', [])
 .run(['$rootScope', '$location', 'AuthService', function ($rootScope, $location, AuthService) {
 
@@ -78,6 +78,7 @@ angular.module('RouteAutorization', [])
     });
 
 }])
+*/
 
 //created by William Cantin -Version 1.0
 angular.module('MessageFlashingService', [])
