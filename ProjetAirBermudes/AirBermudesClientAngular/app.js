@@ -1,19 +1,28 @@
 ﻿angular.module('AppAirBermudes', [
     'ngRoute',
-    'AppAirBermudes.users',
+    'AppAirBermudes.Users',
     'AppAirBermudes.travels',
     'MessageFlashingService',
-    'AuthentificationService'
+    'AuthentificationService',
+    'Service'
 ])
 .config(['$routeProvider', function ($routeProvider) {
 
+    $routeProvider.when('/index', {
+        templateUrl: 'usersDEBUG/index.html',
+        controller: 'UsersController'
+    });
     $routeProvider.when('/login', {
-        templateUrl: '/users/login.html',
-        controller: 'ClientController'
+        templateUrl: '/usersDEBUG/index.html',
+        controller: 'UsersController'
     });
     $routeProvider.when('/signup', {
-        templateUrl: '/users/signup.html',
-        controller: 'ClientController'
+        templateUrl: '/usersDEBUG/register.html',
+        controller: 'UsersController'
+    });
+    $routeProvider.when('/travels', {
+        templateUrl: '/travels/home.html',
+        controller: 'TravelsController'
     });
     //$routeProvider.when('/', {
     //    templateUrl: '/users/user.html',
@@ -87,4 +96,30 @@ angular.module('MessageFlashingService', [])
         this.showErrorMessage = false;
     }
 
+})
+
+angular.module('Service', [])
+.service('UserService', function ($rootScope) {
+    this.TOKEN_KEY = "BERMUDESTOKEN";
+    this.USERNAME_KEY = "BERMUDESUSERNAME";
+
+    this.getTokenKey = function () {
+        return this.TOKEN_KEY;
+    };
+
+    this.getUsernameKey = function () {
+        return this.USERNAME_KEY;
+    };
+
+    if (localStorage.getItem(this.TOKEN_KEY)) {
+        $rootScope.connected = true;
+        //$scope.$apply();
+        $rootScope.username = localStorage.getItem(this.USERNAME_KEY);
+    };
+
+    this.logoutUser = function () {
+        localStorage.removeItem(this.TOKEN_KEY);
+        localStorage.removeItem(this.USERNAME_KEY);
+        alert("Vous êtes maintenant déconnecté.");
+    }
 })

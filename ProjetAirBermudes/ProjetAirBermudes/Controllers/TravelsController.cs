@@ -10,6 +10,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AirBermudesAPI.Models;
 using ProjetAirBermudes.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AirBermudesAPI.Controllers
 {
@@ -73,17 +75,39 @@ namespace AirBermudesAPI.Controllers
 
         // POST: api/Travels
         [ResponseType(typeof(Travel))]
-        public IHttpActionResult PostTravel(Travel travel)
+        public IHttpActionResult PostTravel(TravelDTO travelDTO)
         {
+
+            UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //ApplicationUser user = UserManager.FindByEmail(travelDTO.username);
+
+            ApplicationUser user = db.Users.Where(u => u.Email.Equals(travelDTO.username)).Include(u => u.Travels).SingleOrDefault();
+
+            Travel trav = new Travel();
+
+            trav.Budget = travelDTO.Budget;
+            trav.DateBegin = DateTime.Parse(travelDTO.DateBegin);
+            trav.DateEnd = DateTime.Parse(travelDTO.DateEnd);
+            trav.Title = travelDTO.Title;
+
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Travels.Add(travel);
+            db.Travels.Add(trav);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = travel.TravelId }, travel);
+            if(user.Travels == null)
+            {
+                user.Travels = new List<Travel>();
+            }
+
+            user.Travels.Add(trav);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = trav.TravelId }, trav);
         }
 
         // DELETE: api/Travels/5
@@ -115,5 +139,21 @@ namespace AirBermudesAPI.Controllers
         {
             return db.Travels.Count(e => e.TravelId == id) > 0;
         }
+
+        //public List<Travel> GetRealTravelsNoLazyLoading(int userId)
+        //{
+        //    List<Travel> realTravels = db.Travels.Where(t => t.TravelId == user.Cart.CartId).SingleOrDefault();
+
+        //    if (realCart == null)
+        //        return null;
+
+        //    foreach (Product_Qty item in realCart.Content)
+        //    {
+        //        Product_Qty prod = db.Product_Qtys.Include(pqty => pqty.Product).Where(p => p.Product_QtyId == item.Product_QtyId).SingleOrDefault();
+        //        item.Product = prod.Product;
+        //    }
+
+        //    return realCart;
+        //}
     }
 }

@@ -10,3 +10,9 @@ C:\Users\1387434\Desktop\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAn
 C:\Users\1387434\Desktop\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.csprojResolveAssemblyReference.cache
 C:\Users\1387434\Desktop\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.dll
 C:\Users\1387434\Desktop\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.pdb
+D:\Users\Joel\Documents\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.dll.config
+D:\Users\Joel\Documents\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.dll
+D:\Users\Joel\Documents\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.pdb
+D:\Users\Joel\Documents\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.csprojResolveAssemblyReference.cache
+D:\Users\Joel\Documents\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.dll
+D:\Users\Joel\Documents\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.pdb

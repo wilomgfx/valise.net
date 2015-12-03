@@ -2,15 +2,20 @@
     <div class="container theme-showcase" role="main" ng-controller="TravelsController">
         <div class="row">
             <div class="col-md-12">
+                <div ng-show="showAlertSucess" class="alert alert-success" role="alert"><p>{{flashMessage}}</p></div>
+                <div ng-show="showAlertError" class="alert alert-danger" role="alert"><p>{{flashErrors}}</p></div>
                 <h1>Obtenez vos voyages!</h1>
                 <button ng-click="FetchTravels()">Appuyer Ici.</button>
                 <div ng-show="showTravels">
                     <h2>Your travels :</h2>
                     <div ng-repeat="travel in travels">
                         <div class="col-md-4" style="border-color: black; border-style: double;border-width: 2px; background-color: beige;">
-                            <h3 style="text-align: center; font-weight: bold;">{{travel.Titre}} </h3>
-                            <!--<h4 style="text-align: center;">{{travel.Content}} </h4>-->
+                            <h3 style="text-align: center; font-weight: bold;">{{travel.Title}} </h3>
                             <hr style="border-top: 1px solid black;" />
+                            <!--<h4 style="text-align: center;">{{travel.Content}} </h4>-->
+                            <h4 style="text-align: center;">From: {{travel.DateBegin}} </h4>
+                            <h4 style="text-align: center;">To: {{travel.DateEnd}} </h4>
+                            <h4 style="text-align: center;">Budget: {{travel.Budget}} $</h4>
                             <!--<p style="text-align: center">{{memo.Texte}}</p>-->
                         </div>
                     </div>
@@ -33,12 +38,11 @@
                     <br />
                     <br />
                     <button type="button" name="btn_createbydays" ng-click="SetChoiceByDays()" style="width: 100px">Set duration by days...</button>
-                    <div ng-show="showByDays">
-                        <label>Number of days :</label>
-                        <br />
-                        <input type="number" name="nbrofdays" ng-model="nbrofdays" />
-                    </div>
+                    
                     <button type="button" name="btn_createbydays" ng-click="SetChoiceByDates()" style="width: 100px">Set duration from dates...</button>
+                    <br />
+                    <br />
+                    <br />
                     <div ng-show="showByDates">
                         <label>Take off :</label>
                         <br />
@@ -50,11 +54,16 @@
                         <br />
                         <input type="datetime" name="travelend" ng-model="travelend" />                       
                     </div>
+                    <div ng-show="showByDays">
+                        <label>Number of days :</label>
+                        <br />
+                        <input type="number" name="nbrofdays" ng-model="nbrofdays" />
+                    </div>
                     <br />
                     <br />
                     <label>Budget :</label>
                     <br />
-                    <input type="number" name="budget" ng-model="budget" /> <p> $</p>
+                    <input type="number" name="budget" ng-model="budget" /><label>&nbsp;$</label>
                     <br />
                     <br />
                     <button type="submit" style="width: 200px">Create</button>

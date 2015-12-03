@@ -1,0 +1,40 @@
+﻿
+    <div>
+        <div class="container theme-showcase" role="main">
+            <div class="row">
+                <div class="col-md-12" style="height:800px">
+                    <h1>Login :</h1>
+                    <div ng-hide="connected">
+                        <br />
+                        <br />
+                        <p style="color: red;" ng-show="errorShow">{{error}}</p>
+
+                        <form ng-submit="Login()">
+                            <label>Username :</label>
+                            <input type="text" name="Username" ng-model="usernamelocal" />
+                            <br />
+                            <br />
+                            <br />
+                            <label>Password :</label>
+                            <input type="password" name="Password" ng-model="pass" />
+                            <br />
+                            <br />
+                            <button type="submit">Se connecter</button>
+                        </form>
+                        <br />
+                        <br />
+                        <br />
+                        <hr />
+                        <br />
+
+                        <!--<a href="register.html">Nouvel utilisateur?</a>-->
+                        <a href="" ng-click="RedirectToRegister()">Nouvel utilisateur?</a>
+                    </div>
+                    <div ng-show="connected">
+                        <h1>You are already connected.</h1>
+                        <button ng-click="Logout()" style="float: right;margin-top: 10px" ng-show="connected">Sign out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

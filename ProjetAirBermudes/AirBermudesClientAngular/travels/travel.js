@@ -2,7 +2,7 @@
     .module('AppAirBermudes.travels', [])
     .controller('TravelsController', TravelsController);
 
-function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService, MsgFlashService) {
+function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService, MsgFlashService, UserService) {
     $rootScope.travels = [];
     $rootScope.showTravels = false;
     $rootScope.showByDates = false;
@@ -15,6 +15,9 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService,
     //show or not to show the messages
     $scope.showAlertSucess = MsgFlashService.showMessage;
     $scope.showAlertError = MsgFlashService.showErrorMessage;
+
+    $scope.TOKEN_KEY = UserService.getTokenKey();
+    $scope.USERNAME_KEY = UserService.getUsernameKey();
     
     $scope.baseURLTravels = "http://localhost:53762/api/Travels/";
 
@@ -30,7 +33,20 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService,
         $rootScope.showByDays = false;
     }
 
+    if (localStorage.getItem($scope.TOKEN_KEY)) {
+        $rootScope.connected = true;
+        //$scope.$apply();
+        $rootScope.username = localStorage.getItem($scope.USERNAME_KEY);
+        AuthService.setLoggedInUser(localStorage.getItem($scope.USERNAME_KEY));
+    }
+    else {
+        $rootScope.connected = false;
+        //$scope.$apply();
+    }
+
     $scope.FetchTravels = function () {
+        verifyLogIn();
+
         if(AuthService.getLoggedInUser() === "")
         {
             alert("Vous devez d'abord vous connecter.");
@@ -47,6 +63,11 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService,
 
             $rootScope.travels = [];
             for (x in data) {
+                var arrDateBeg = data[x].DateBegin.toString().split("T");
+                var arrDateEnd = data[x].DateEnd.toString().split("T");
+
+                data[x].DateBegin = arrDateBeg[0] + " " + arrDateBeg[1];
+                data[x].DateEnd = arrDateEnd[0] + " " + arrDateEnd[1];
                 $rootScope.travels.push(data[x]);
             }
 
@@ -58,6 +79,8 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService,
     }
 
     $scope.CreateTravel = function () {
+        verifyLogIn();
+
         if (AuthService.getLoggedInUser() === "") {
             alert("Vous devez d'abord vous connecter.");
             return;
@@ -70,7 +93,7 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService,
             var mm = today.getMonth()+1; //January is 0!
             var yyyy = today.getFullYear();
             var hh = today.getHours();
-            var mm = today.getMinutes();
+            var mmm = today.getMinutes();
             var ss = today.getSeconds();
 
             if(dd<10) {
@@ -79,25 +102,57 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService,
 
             if(mm<10) {
                 mm='0'+mm
-            } 
+            }
+
+            if (mmm < 10) {
+                mmm = '0' + mmm
+            }
+
+            if (hh < 10) {
+                hh = '0' + hh
+            }
+
+            if (ss < 10) {
+                ss = '0' + ss
+            }
             // Date format : mm/dd/yyyy hh:mm
-            var formatted = mm+'/'+dd+'/'+yyyy + " " + hh + ":" + mm + ":" + ss;
+            var formatted = mm + '/' + dd + '/' + yyyy + " " + hh + ":" + mmm + ":" + ss;
 
             $scope.datebegin = formatted;
 
-            ​var basedate = new Date();
+            var basedate = new Date();
             var dateahead = basedate + 1000 * 60 * 60 * 24 * $scope.nbrofdays;   // current date's milliseconds - 1,000 ms * 60 s * 60 mins * 24 hrs * (# of days beyond one to go back)
-            dateahead = new Date(yesterday);
+            dateahead = new Date(dateahead);
 
             var dd2 = dateahead.getDate();
             var mm2 = dateahead.getMonth()+1; //January is 0!
             var yyyy2 = dateahead.getFullYear();
             var hh2 = dateahead.getHours();
-            var mm2 = dateahead.getMinutes();
+            var mmm2 = dateahead.getMinutes();
             var ss2 = dateahead.getSeconds();
 
+            if (dd2 < 10) {
+                dd2 = '0' + dd2
+            }
+
+            if (mm < 10) {
+                mm2 = '0' + mm2
+            }
+
+            if (mmm2 < 10) {
+                mmm2 = '0' + mmm2
+            }
+
+            if (hh2 < 10) {
+                hh2 = '0' + hh2
+            }
+
+            if (ss2 < 10) {
+                ss2 = '0' + ss2
+            }
+
             // Date format : mm/dd/yyyy hh:mm
-            var formattedAhead = mm2+'/'+dd2+'/'+yyyy2 + " " + hh2 + ":" + mm2 + ":" + ss2;
+            var formattedAhead = mm2 + '/' + dd2 + '/' + yyyy2 + " " + hh2 + ":" + mmm2 + ":" + ss2;
 
             $scope.dateend = formattedAhead;
         }
@@ -112,10 +167,10 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService,
             url: $scope.baseURLTravels,
             data:
             {
-                title: $scope.traveltitle,
-                datebegin: $scope.datebegin,
-                dateend: $scope.dateend,
-                budget: $scope.budget,
+                Title: $scope.traveltitle,
+                DateBegin: $scope.datebegin,
+                DateEnd: $scope.dateend,
+                Budget: $scope.budget,
                 username: AuthService.getLoggedInUser()
             }
 
@@ -145,5 +200,18 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService,
             contentType: 'application/json',
             data: data ? JSON.stringify(data) : null
         });
+    }
+
+    function verifyLogIn() {
+        if (localStorage.getItem($scope.TOKEN_KEY)) {
+            $rootScope.connected = true;
+            //$scope.$apply();
+            $rootScope.username = localStorage.getItem($scope.USERNAME_KEY);
+            AuthService.setLoggedInUser(localStorage.getItem($scope.USERNAME_KEY));
+        }
+        else {
+            $rootScope.connected = false;
+            //$scope.$apply();
+        }
     }
 }

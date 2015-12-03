@@ -28,9 +28,8 @@ namespace ProjetAirBermudes.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-        }
 
-        DbSet<Travel> Travels { get; set; }
+        }
         
         public static ApplicationDbContext Create()
         {
