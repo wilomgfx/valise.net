@@ -3,7 +3,9 @@
     'AppAirBermudes.users',
     'AppAirBermudes.MessageFlashingService',
     'AppAirBermudes.AuthentificationService',
-    'AppAirBermudes.RouteAutorization'
+    'AppAirBermudes.places'
+
+    /* 'AppAirBermudes.RouteAutorization' */
 ])
 .config(['$routeProvider', function ($routeProvider) {
 
@@ -27,6 +29,13 @@
     //    templateUrl: '/memos/addMemo.html',
     //    controller: 'MemoController'
     //});
+
+    // !!! Test page for places !!!
+    $routeProvider.when('/testplaces', {
+        templateUrl: '/places/testPlaces.html',
+        controller: 'TestPlacesController'
+    });
+
 
     /*
         When the login will be implemented, add this attribute to all route with the right value.

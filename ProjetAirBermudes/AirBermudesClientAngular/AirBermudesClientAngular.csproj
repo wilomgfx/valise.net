@@ -60,6 +60,9 @@
   <ItemGroup>
     <Content Include="app.js" />
     <Content Include="index.html" />
+    <Content Include="places\markerPopup.html" />
+    <Content Include="places\places.js" />
+    <Content Include="places\testPlaces.html" />
     <Content Include="users\login.html" />
     <Content Include="users\signUp.html" />
     <Content Include="users\users.js" />
@@ -76,6 +79,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -4,3 +4,15 @@ E:\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesC
 E:\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.csprojResolveAssemblyReference.cache
 E:\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.dll
 E:\GitHub\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.pdb
+I:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.dll.config
+I:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.dll
+I:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.pdb
+I:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.csprojResolveAssemblyReference.cache
+I:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.dll
+I:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.pdb
+E:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.dll.config
+E:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.dll
+E:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\bin\AirBermudesClientAngular.pdb
+E:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.csprojResolveAssemblyReference.cache
+E:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.dll
+E:\Ecole\Session5\Inter\Tp\Tp3\Project\valise.net\ProjetAirBermudes\AirBermudesClientAngular\obj\Debug\AirBermudesClientAngular.pdb
