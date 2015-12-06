@@ -29,5 +29,7 @@ namespace ProjetAirBermudes.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<AirBermudesAPI.Models.Course> Courses { get; set; }
     }
 }
