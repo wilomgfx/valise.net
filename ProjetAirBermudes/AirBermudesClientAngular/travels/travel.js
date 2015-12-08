@@ -1,5 +1,5 @@
 ﻿angular
-    .module('AppAirBermudes.travels', [])
+    .module('AppAirBermudes.travels', ['ui.bootstrap.datetimepicker'])
     .controller('TravelsController', TravelsController);
 
 function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService, MsgFlashService, UserService) {
@@ -18,6 +18,45 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService,
 
     $scope.TOKEN_KEY = UserService.getTokenKey();
     $scope.USERNAME_KEY = UserService.getUsernameKey();
+
+    $scope.today = calculateToday();
+
+    $scope.datetest = '1990-05-22';
+
+    function calculateToday()
+    {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        var hh = today.getHours();
+        var mmm = today.getMinutes();
+        var ss = today.getSeconds();
+
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        if (mmm < 10) {
+            mmm = '0' + mmm
+        }
+
+        if (hh < 10) {
+            hh = '0' + hh
+        }
+
+        if (ss < 10) {
+            ss = '0' + ss
+        }
+        // Date format : mm/dd/yyyyThh:mm:ss
+        var formatted = mm + '/' + dd + '/' + yyyy + "T" + hh + ":" + mmm + ":" + ss;
+
+        return formatted;
+    }
     
     $scope.baseURLTravels = "http://localhost:53762/api/Travels/";
 
@@ -86,6 +125,8 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, AuthService,
             return;
         }
         
+        $scope.sss = $scope.data.dateDropDownInput;
+
         if($scope.showByDays)
         {
             var today = new Date();

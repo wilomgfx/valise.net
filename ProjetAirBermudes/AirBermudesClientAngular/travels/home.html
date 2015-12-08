@@ -10,7 +10,7 @@
                     <h2>Your travels :</h2>
                     <div ng-repeat="travel in travels">
                         <div class="col-md-4" style="border-color: black; border-style: double;border-width: 2px; background-color: beige;">
-                            <h3 style="text-align: center; font-weight: bold;">{{travel.Title}} </h3>
+                            <h3 style="text-align: center; font-weight: bold;">{{travel.Title}} </h3> <a href="#" ng-click="EditTravel(travel.TravelId)"></a>
                             <hr style="border-top: 1px solid black;" />
                             <!--<h4 style="text-align: center;">{{travel.Content}} </h4>-->
                             <h4 style="text-align: center;">From: {{travel.DateBegin}} </h4>
@@ -44,26 +44,45 @@
                     <br />
                     <br />
                     <div ng-show="showByDates">
-                        <label>Take off :</label>
+                        <!-- <label>Take off :</label>
                         <br />
-                        <input type="datetime" name="travelstart" ng-model="travelstart" />
-                        <!--<input type="text" name="content" ng-model="memocontent" />-->
+                        <input type="datetime-local" name="travelstart" ng-model="travelstart"/>
                         <br />
                         <br />
                         <label>Arrival :</label>
                         <br />
-                        <input type="datetime" name="travelend" ng-model="travelend" />                       
+                        <input type="datetime-local" name="travelend" ng-model="travelend" />       -->    
+                        <label>Take off :</label>
+                        <br />
+                        <!--<datetimepicker data-ng-model="datetest"></datetimepicker>-->
+
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" data-ng-model="data.dateDropDownInput"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="data.dateDropDownInput" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }" />
+                            </ul>
+                        </div>
+                        <input id="traveldatestart" name="travelstart" ng-model="travelstart" />
+                        <br />
+                        <br />
+                        <label>Arrival :</label>
+                        <br />
+                        <input id="traveldateend" name="travelend" ng-model="travelend" />                   
                     </div>
                     <div ng-show="showByDays">
                         <label>Number of days :</label>
                         <br />
-                        <input type="number" name="nbrofdays" ng-model="nbrofdays" />
+                        <input type="number" name="nbrofdays" ng-model="nbrofdays" min="1"/>
                     </div>
                     <br />
                     <br />
                     <label>Budget :</label>
                     <br />
-                    <input type="number" name="budget" ng-model="budget" /><label>&nbsp;$</label>
+                    <input type="number" name="budget" ng-model="budget" min="1" /><label>&nbsp;$</label>
                     <br />
                     <br />
                     <button type="submit" style="width: 200px">Create</button>
