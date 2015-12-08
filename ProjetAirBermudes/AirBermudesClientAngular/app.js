@@ -6,6 +6,7 @@
     'AppAirBermudes.header',
     'AppAirBermudes.courses',
     'AppAirBermudes.travels',
+    'AppAirBermudes.days',
     'AppAirBermudes.RouteAutorization'
 
     //'AppAirBermudes.AuthentificationService',
@@ -36,6 +37,11 @@
         access: {
             requireAuthentication: false
         }
+    });
+
+    $routeProvider.when('/days', {
+        templateUrl: '/days/days.html',
+        controller: 'DaysController'
     });
 
     // !!! Test page for places !!!

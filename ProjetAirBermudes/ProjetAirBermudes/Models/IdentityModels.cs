@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using System.Data.Entity;
+using AirBermudesAPI.Models;
+using System.Collections.Generic;
 
 namespace ProjetAirBermudes.Models
 {
@@ -33,5 +36,11 @@ namespace ProjetAirBermudes.Models
         }
 
         public System.Data.Entity.DbSet<AirBermudesAPI.Models.Course> Courses { get; set; }
+
+        public DbSet<Day> Days { get; set; }
+
+        public DbSet<Destination> Destinations { get; set; }
+
+        public DbSet<Travel> Travels { get; set; }
     }
 }

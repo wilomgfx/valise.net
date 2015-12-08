@@ -62,13 +62,21 @@
     <Content Include="account\login.html" />
     <Content Include="account\signup.html" />
     <Content Include="app.js" />
+    <Content Include="Content\jquery.datetimepicker.css" />
+    <Content Include="courses\courses.html" />
+    <Content Include="courses\courses.js" />
     <Content Include="css\site.css" />
+    <Content Include="days\days.html" />
+    <Content Include="days\days.js" />
     <Content Include="header\header.html" />
     <Content Include="header\header.js" />
     <Content Include="index.html" />
     <Content Include="places\markerPopup.html" />
     <Content Include="places\places.js" />
     <Content Include="places\testPlaces.html" />
+    <Content Include="Scripts\jquery.datetimepicker.js" />
+    <Content Include="travels\home.html" />
+    <Content Include="travels\travel.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
