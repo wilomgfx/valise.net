@@ -54,12 +54,34 @@
                         <input type="datetime-local" name="travelend" ng-model="travelend" />       -->    
                         <label>Take off :</label>
                         <br />
-                        <input id="traveldatestart" name="travelstart" ng-model="travelstart" />
+                        <!--<datetimepicker data-ng-model="datetest"></datetimepicker>-->
+
+                        <div class="dropdown" style="width: 400px">
+                            <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" data-ng-model="data.dateDropDownInput"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="data.dateDropDownInput" data-on-set-time="onTimeSetStart(newDate, oldDate)" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }" />
+                            </ul>
+                        </div>
+                        <!--<input id="traveldatestart" name="travelstart" ng-model="travelstart" />-->
                         <br />
                         <br />
                         <label>Arrival :</label>
                         <br />
-                        <input id="traveldateend" name="travelend" ng-model="travelend" />                   
+                        <div class="dropdown" style="width: 400px">
+                            <a class="dropdown-toggle" id="dropdown3" role="button" data-toggle="dropdown" data-target="#">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" data-ng-model="data.dateDropDownInput2"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="data.dateDropDownInput2" data-on-set-time="onTimeSetEnd(newDate, oldDate)" data-datetimepicker-config="{ dropdownSelector: '#dropdown3' }" />
+                            </ul>
+                        </div>
+                        <!--<input id="traveldateend" name="travelend" ng-model="travelend" />-->                   
                     </div>
                     <div ng-show="showByDays">
                         <label>Number of days :</label>

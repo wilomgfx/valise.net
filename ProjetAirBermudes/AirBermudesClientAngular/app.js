@@ -44,6 +44,14 @@
         controller: 'DaysController'
     });
 
+    $routeProvider.when('/travels', {
+        templateUrl: '/travels/home.html',
+        controller: 'TravelsController',
+        access: {
+            requireAuthentication: true
+        }
+    });
+
     // !!! Test page for places !!!
     $routeProvider.when('/testplaces', {
         templateUrl: '/places/testPlaces.html',
