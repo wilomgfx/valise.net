@@ -1,0 +1,18 @@
+﻿<div class="container theme-showcase" role="main">
+    <div class="row" ng-controller="ClientController">
+        <div ng-show="showAlertSucess" class="alert alert-success" role="alert"><p>{{flashMessage}}</p></div>
+        <div ng-show="showAlertError" class="alert alert-danger" role="alert"><p>{{flashErrors}}</p></div>
+        <form>
+            <div class="form-group">
+                <label class="label label-primary" for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Email" ng-model="formLoginEmail">
+            </div>
+            <div class="form-group">
+                <label class="label label-primary" for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" ng-model="formLoginPassword">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="login()">Login</button>
+        </form>
+    </div>
+</div>
+
