@@ -1,7 +1,7 @@
 ﻿angular.module('AppAirBermudes.courses', ['ngRoute'])
 .controller('CourseController', CourseController);
 
-function CourseController($scope, $rootScope, MsgFlashService, $timeout) {
+function CourseController($scope, $rootScope,IdentityService, MsgFlashService, $timeout) {
 
     //messages from the msgservice
     $scope.flashMessage = MsgFlashService.getMessage();
@@ -11,6 +11,12 @@ function CourseController($scope, $rootScope, MsgFlashService, $timeout) {
     $scope.showAlertSucess = MsgFlashService.showMessage;
     $scope.showAlertError = MsgFlashService.showErrorMessage;
 
+    var headers = {};
+    headers.Authorization = 'Bearer ' + IdentityService.getToken();
+    
+
+    console.log(headers);
+    console.log(IdentityService.getToken());
 
     //examples
     //MsgFlashService.setMessage("Succesfull! Hurray you're now one of us");
@@ -20,40 +26,34 @@ function CourseController($scope, $rootScope, MsgFlashService, $timeout) {
     //MsgFlashService.hideMessages();
 
 
-    $scope.addCourse = function()
+    $scope.addCourse = function (StartDate, DepartureAddress, DestinationAddress, EndDate)
     {
-        $scope.starDate = "";
-        $scope.endDate = "";
-        $scope.destinationAddress = "";
-        $scope.departureAddress = "";
 
+
+        $scope.starDate = StartDate;
+        $scope.endDate = EndDate;
+        $scope.destinationAddress = DestinationAddress;
+        $scope.departureAddress = DepartureAddress;
+
+        console.log(StartDate + " " + EndDate + " " + DestinationAddress + " " + DepartureAddress);
 
         $.ajax({
             method: 'POST',
-            url: "http://localhost:53762/api/Course/",
+            url: "http://localhost:53762/api/Courses/",
+            headers: headers,
             data:
                 {
-                    Startate: starDate,
-                    EndDate: endDate,
-                    DestinationAddress: destinationAddress,
-                    DepartureAddress: departureAddress
+                    Startate: $scope.starDate,
+                    EndDate: $scope.endDate,
+                    DestinationAddress: $scope.destinationAddress,
+                    DepartureAddress: $scope.departureAddress
                 }
             })
             .success(function (data) {
-
-                if (successCallback) {
-
-                    //$('#loading').hide();
-                    successCallback(data);
-                }
+                console.log(data);
             })
             .error(function (error) {
-
-                if (errorCallback) {
-
-                    //$('#loading').hide();
-                    errorCallback(error);
-                }
+                console.log(error);
             });
     }
 
