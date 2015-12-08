@@ -16,6 +16,8 @@ namespace ProjetAirBermudes.Models
             // Ajouter des revendications d’utilisateur personnalisées ici
             return userIdentity;
         }
+		
+		public List<Travel> Travels { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
