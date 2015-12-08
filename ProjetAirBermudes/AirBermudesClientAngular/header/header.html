@@ -1,0 +1,43 @@
+﻿
+<nav class="navbar navbar-inverse" style="background-color: #F2F2F2">
+
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-collapse-section">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="javascript:void(0)">
+            <span class="glyphicon glyphicon-plane"></span> 
+                Air Bermudes
+            </a>
+        </div>
+        <div class="navbar-collapse collapse" id="nav-collapse-section">
+            <ul class="nav navbar-nav">
+                <li><a href="#/testplaces">Test places</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-if="isAuthenticated()"><p class="navbar-text">{{getCurrentUserName()}}</p></li>
+                <li ng-if="!isAuthenticated()"><a href="#/signup">Sign up</a></li>
+                <li ng-if="!isAuthenticated()">
+                    <button type="button"
+                            class="btn btn-default navbar-btn"
+                            ng-click="loginLogout()">
+                        Log in
+                    </button>
+                </li>
+                <li ng-if="isAuthenticated()">
+                    <button type="button"
+                            class="btn btn-default navbar-btn"
+                            ng-click="loginLogout()">
+                        Log out
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</nav>

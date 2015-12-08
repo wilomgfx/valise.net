@@ -1,13 +1,18 @@
 ﻿angular.module('AppAirBermudes', [
     'ngRoute',
-    'AppAirBermudes.users',
+    'AppAirBermudes.account',
     'AppAirBermudes.MessageFlashingService',
-    'AppAirBermudes.AuthentificationService',
-    //'AppAirBermudes.RouteAutorization',
-    'AppAirBermudes.courses'
+    'AppAirBermudes.places',
+    'AppAirBermudes.header',
+    'AppAirBermudes.courses',
+    'AppAirBermudes.travels',
+    'AppAirBermudes.RouteAutorization'
+
+    //'AppAirBermudes.AuthentificationService',
 ])
 .config(['$routeProvider', function ($routeProvider) {
 
+    /*
     $routeProvider.when('/login', {
         templateUrl: '/users/login.html',
         controller: 'ClientController'
@@ -16,18 +21,40 @@
         templateUrl: '/users/signup.html',
         controller: 'ClientController'
     });
-    //$routeProvider.when('/', {
-    //    templateUrl: '/users/user.html',
-    //    controller: 'ClientController'
-    //});
+    */
+
+    $routeProvider.when('/login', {
+        templateUrl: '/account/login.html',
+        controller: 'AccountController',
+        access: {
+            requireAuthentication: false
+        }
+    });
+    $routeProvider.when('/signup', {
+        templateUrl: '/account/signup.html',
+        controller: 'AccountController',
+        access: {
+            requireAuthentication: false
+        }
+    });
+
+    // !!! Test page for places !!!
+    $routeProvider.when('/testplaces', {
+        templateUrl: '/places/testPlaces.html',
+        controller: 'TestPlacesController',
+        access: {
+            requireAuthentication: true
+        }
+    });
+
     $routeProvider.when('/courses', {
         templateUrl: '/courses/courses.html',
-        controller: 'CourseController'
+        controller: 'CourseController',
+        access: {
+            requireAuthentication: true
+        }
     });
-    //$routeProvider.when('/addMemo', {
-    //    templateUrl: '/memos/addMemo.html',
-    //    controller: 'MemoController'
-    //});
+
 
     /*
         When the login will be implemented, add this attribute to all route with the right value.
@@ -39,39 +66,21 @@
 
     */
 
-    $routeProvider.otherwise({ redirectTo: '/index' });
+    //$routeProvider.otherwise({ redirectTo: '/index' });
+    $routeProvider.otherwise({ redirectTo: '/login' });
 }])
 
-//service for authentification, find out the current logged in user and if the user is logged in
-angular.module('AppAirBermudes.AuthentificationService', [])
-.service('AuthService', function () {
-
-    this.loggedInUser = "";
-    this.isLoggedIn = false;
-
-    this.setLoggedInUser = function (user) {
-        this.loggedInUser = user;
-        this.isLoggedIn = true;
-    }
-    this.getLoggedInUser = function () {
-        return this.loggedInUser;
-    }
-
-})
-
-
 // Route change listener to validate if the user is authenticated and can acces the next route.
-/*
 angular.module('AppAirBermudes.RouteAutorization', [])
-.run(['$rootScope', '$location', 'AuthService', function ($rootScope, $location, AuthService) {
+.run(['$rootScope', '$location', 'IdentityService', function ($rootScope, $location, IdentityService) {
 
-    var authS = AuthService;
+    var identityS = IdentityService;
 
     $rootScope.$on('$routeChangeStart', function (event, next) {
 
         if (next.access) {
 
-            if (next.access.requireAuthentication && !authS.isLoggedIn) {
+            if (next.access.requireAuthentication && !identityS.isAuthenticated()) {
 
                 $location.path("/login");
             }
@@ -79,7 +88,6 @@ angular.module('AppAirBermudes.RouteAutorization', [])
     });
 
 }])
-*/
 
 //created by William Cantin -Version 1.0
 angular.module('AppAirBermudes.MessageFlashingService', [])

@@ -1,0 +1,37 @@
+﻿
+<h2>Log in</h2>
+
+<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" ng-controller="AccountController">
+
+    <form ng-submit="login()" class="form-group">
+        <div ng-class="{'has-error' : errorMessage}">
+
+            <div class="form-group">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Email"
+                       ng-model="email"
+                       novalidate />
+            </div>
+
+            <div class="form-group">
+                <input type="password"
+                       class="form-control"
+                       placeholder="passw0rd"
+                       ng-model="password"
+                       novalidate />
+            </div>
+
+            <span ng-show="errorMessage" class="help-block">{{errorMessage}}</span>
+
+        </div>
+        
+            <input type="submit" class="btn btn-info input" value="Log in" />
+        
+    </form>
+
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <button ng-click="devSignin()" class="btn btn-danger btn-lg">skip login</button>
+</div>
