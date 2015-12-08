@@ -18,9 +18,10 @@ namespace AirBermudesAPI.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Days
-        public IQueryable<Day> GetDays()
+        public List<Day> GetDays()
         {
-            return db.Days;
+            List<Day> days = db.Days.ToList();
+            return days;
         }
 
         // GET: api/Days/5
