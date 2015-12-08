@@ -202,6 +202,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TravelsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DTOs\DayDTO.cs" />
+    <Compile Include="DTOs\DayListDTO.cs" />
     <Compile Include="DTOs\TravelDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

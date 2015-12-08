@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AirBermudesAPI.Models;
 using ProjetAirBermudes.Models;
+using AirBermudesAPI.DTOs;
 
 namespace AirBermudesAPI.Controllers
 {
@@ -18,9 +19,9 @@ namespace AirBermudesAPI.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Days
-        public List<Day> GetDays()
+        public DayListDTO GetDays()
         {
-            List<Day> days = db.Days.ToList();
+            DayListDTO days = new DayListDTO(db.Days.ToList());
             return days;
         }
 
