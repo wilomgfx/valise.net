@@ -213,6 +213,7 @@
     <Compile Include="Models\Day.cs" />
     <Compile Include="Models\Destination.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Transport.cs" />
     <Compile Include="Models\Travel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

@@ -147,7 +147,6 @@ function AccountService(IdentityService) {
             .success(function (data) {
 
                 if (successCallback) {
-
                     $('#loading').hide();
                     successCallback(data);
                 }

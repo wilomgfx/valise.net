@@ -22,15 +22,21 @@ function CourseController($scope, $rootScope, MsgFlashService, $timeout) {
 
     $scope.addCourse = function()
     {
+        $scope.starDate = "";
+        $scope.endDate = "";
+        $scope.destinationAddress = "";
+        $scope.departureAddress = "";
+
+
         $.ajax({
             method: 'POST',
             url: "http://localhost:53762/api/Course/",
             data:
                 {
-                    Startate: email,
-                    EndDate: password,
-                    DestinationAddress: confirmPassword,
-                    DepartureAddress: DepartureAddress
+                    Startate: starDate,
+                    EndDate: endDate,
+                    DestinationAddress: destinationAddress,
+                    DepartureAddress: departureAddress
                 }
             })
             .success(function (data) {
