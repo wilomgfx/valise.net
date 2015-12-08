@@ -9,8 +9,9 @@
                 <div ng-show="showTravels">
                     <h2>Your travels :</h2>
                     <div ng-repeat="travel in travels">
-                        <div class="col-md-4" style="border-color: black; border-style: double;border-width: 2px; background-color: beige;">
-                            <h3 style="text-align: center; font-weight: bold;">{{travel.Title}} </h3> <a href="#" ng-click="EditTravel(travel.TravelId)"></a>
+                        <div class="col-md-4" style="border-color: black; border-style: double;border-width: 2px; background-color: lightblue;">
+                            <h3 style="text-align: center; font-weight: bold;">{{travel.Title}} </h3> 
+                            <button class="col-md-12" style="text-align: center;" ng-click="goEditTravel(travel.TravelId)">Edit</button><br />
                             <hr style="border-top: 1px solid black;" />
                             <!--<h4 style="text-align: center;">{{travel.Content}} </h4>-->
                             <h4 style="text-align: center;">From: {{travel.DateBegin}} </h4>

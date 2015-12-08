@@ -2,10 +2,12 @@
     'ngRoute',
     'AppAirBermudes.account',
     'AppAirBermudes.MessageFlashingService',
+    'AppAirBermudes.DataTransferingService',
     'AppAirBermudes.places',
     'AppAirBermudes.header',
     'AppAirBermudes.courses',
     'AppAirBermudes.travels',
+    'AppAirBermudes.TravelsEdit',
     'AppAirBermudes.days',
     'AppAirBermudes.RouteAutorization'
 
@@ -69,6 +71,13 @@
         }
     });
 
+    $routeProvider.when('/travelsedit', {
+        templateUrl: '/travels/edit.html',
+        controller: 'TravelsEditController',
+        access: {
+            requireAuthentication: true
+        }
+    });
 
     /*
         When the login will be implemented, add this attribute to all route with the right value.
@@ -141,6 +150,45 @@ angular.module('AppAirBermudes.MessageFlashingService', [])
     this.hideMessages = function () {
         this.showMessage = false;
         this.showErrorMessage = false;
+    }
+
+})
+
+angular.module('AppAirBermudes.DataTransferingService', [])
+.service('DataTransfer', function ($timeout) {
+
+    this.object = null;
+    this.objectArray = [];
+
+    this.getObject = function () {
+        return this.object;
+    }
+
+    this.getObjectArray = function () {
+        return this.objectArray;
+    }
+
+    this.setObject = function (pObj) {
+        this.object = pObj;
+    }
+
+    this.setObjectArray = function (pObjAr) {
+        this.objectArray = pObjAr;
+    }
+
+    this.pushIntoObjectArray = function(pObj)
+    {
+        this.objectArray.push(pObj);
+    }
+
+    this.clearObjectArray = function()
+    {
+        this.objectArray = [];
+    }
+
+    this.clearObject = function()
+    {
+        this.object = null;
     }
 
 })
