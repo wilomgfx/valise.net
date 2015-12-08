@@ -2,7 +2,7 @@ angular.module('AppAirBermudes.days', ['ngRoute'])
 .controller('DaysController', DaysController)
 .service('DaysService', DaysService);
 
-function DaysController($scope, $rootScope, AuthService, MsgFlashService, DaysService, $timeout) {
+function DaysController($scope, $rootScope, IdentityService, MsgFlashService, DaysService, $timeout) {
 
     //messages from the msgservice
     $scope.flashMessage = MsgFlashService.getMessage();
@@ -33,6 +33,8 @@ function DaysController($scope, $rootScope, AuthService, MsgFlashService, DaysSe
     }
 
     $scope.dayList = DaysService.loadDays();
+
+
 };
 
 function DaysService($http) {
@@ -53,8 +55,8 @@ function DaysService($http) {
             method: 'GET',
             url: baseUrl,
             dataType: 'json',
-            contentType: 'application/json',
-            headers: headers
+            contentType: 'application/json'
+            //headers: headers
             
         })
         .success(function (data) {
@@ -78,11 +80,11 @@ function DaysService($http) {
             url: baseUrl,
             dataType: 'json',
             contentType: 'application/json',
-            headers: headers,
+            //headers: headers,
             data: day
         })
         .success(function (data) {
-            console.log("loadDays: OK");
+            console.log("saveDay: OK");
             console.log(data);
             return data;
         });
