@@ -13,18 +13,27 @@
     <!--<script src="https://maps.googleapis.com/maps/api/js"></script>-->
     <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
+    <link rel="stylesheet" href="css/site.css">
+
     <!-- ========== Modules ========== -->
     <script type="text/javascript" src="app.js"></script>
-    <script type="text/javascript" src="users/users.js"></script>
+    <script type="text/javascript" src="account/account.js"></script>
     <script type="text/javascript" src="travels/travels.js"></script>
     <script type="text/javascript" src="places/places.js"></script>
+    <script type="text/javascript" src="header/header.js"></script>
 
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>AirBermudes!</title>
 </head>
 <body ng-app="AppAirBermudes">
+
+    <div id="loading" >
+        <img src="Images/loading.gif" />
+    </div>
+
     <div>
+        <!--
         <nav class="navbar navbar-inverse" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -36,6 +45,10 @@
                 </div>
             </div>
         </nav>
+        -->
+
+        <header></header>
+
         <div class="container theme-showcase" role="main">
             <div class="row">
                 <div class="col-md-12">
@@ -43,7 +56,9 @@
                 </div>
             </div>
         </div>
+
     </div>
+
 </body>
 </html>
 

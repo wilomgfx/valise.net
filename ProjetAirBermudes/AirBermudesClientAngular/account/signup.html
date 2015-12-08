@@ -1,0 +1,39 @@
+﻿
+<h2>Sign up</h2>
+
+<div class="" ng-controller="AccountController">
+
+    <form ng-submit="signup()" class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+
+        <div ng-class="{'has-error' : errorMessage}">
+
+            <div class="form-group">
+                <input type="text"
+                       class="form-control input"
+                       placeholder="Email"
+                       ng-model="email" />
+            </div>
+
+            <div class="form-group">
+                <input type="password"
+                       class="form-control input"
+                       placeholder="Passw0rd"
+                       ng-model="password" />
+            </div>
+
+            <div class="form-group">
+                <input type="password"
+                       class="form-control input"
+                       placeholder="Confirm passw0rd"
+                       ng-model="confirmPassword" />
+            </div>
+
+            <span ng-show="errorMessage" class="help-block">{{errorMessage}}</span>
+
+        </div>
+
+        <input type="submit" class="btn btn-info input" value="Register" />
+
+    </form>
+
+</div>
