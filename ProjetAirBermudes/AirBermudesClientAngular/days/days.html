@@ -13,27 +13,24 @@
                     <form>
                         <div class="form-group">
                             <label class="label label-primary" for="email">Date</label>
-                            <input type="date" class="form-control" id="date" ng-model="currentDay.DayDate">
+                            <input type="date" class="form-control" id="date" ng-model="day.DayDate">
                         </div>
                         <div class="form-group">
                             <label class="label label-primary" for="budget">Budget</label>
-                            <input type="number" class="form-control" id="budget" ng-model="currentDay.Budget">
+                            <input type="number" class="form-control" id="budget" ng-model="day.Budget">
                         </div>
-                        <button type="button" class="button button-default" ng-click="saveDay()">Save day</button>
+                        <button type="button" class="button button-default" ng-click="saveDay(day)">Save day</button>
                     </form>
-                    
-                    <div id="list-memo" class="list-group">
-                        <button type="button" class="btn list-group-item" ng-repeat="day in DayList" ng-click="onClickDay(day)">
-                            {{day.DayDate}} Budget: {{day.Budget}}
-                        </button>
-                    </div>
-                    
                 </div>
             </div>
         </div>
-        
                 
         <div class="col-md-8">
+            <div id="list-days" class="list-group">
+                <button type="button" class="btn list-group-item" ng-repeat="day in dayList" ng-click="onClickDay(day)">
+                    {{day.DayDate}} Budget: {{day.Budget}}
+                </button>
+            </div>
         </div>
 
     </div>

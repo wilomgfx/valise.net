@@ -77,6 +77,8 @@
     <Content Include="places\places.js" />
     <Content Include="places\testPlaces.html" />
     <Content Include="Scripts\jquery.datetimepicker.js" />
+    <Content Include="travels\edit.html" />
+    <Content Include="travels\edit.js" />
     <Content Include="travels\home.html" />
     <Content Include="travels\travel.js" />
     <Content Include="Web.config" />

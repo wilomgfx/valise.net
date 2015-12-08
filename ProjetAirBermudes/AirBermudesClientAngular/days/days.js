@@ -1,8 +1,10 @@
 angular.module('AppAirBermudes.days', ['ngRoute'])
 .controller('DaysController', DaysController)
-.service('DaysService', DaysService);
+.service('DaysService', DaysService)
+.service('DataService', DataService);
 
-function DaysController($scope, $rootScope, IdentityService, MsgFlashService, DaysService, $timeout) {
+
+function DaysController($scope, $rootScope, IdentityService, MsgFlashService, DaysService, DataService, $timeout) {
 
     //messages from the msgservice
     $scope.flashMessage = MsgFlashService.getMessage();
@@ -13,7 +15,16 @@ function DaysController($scope, $rootScope, IdentityService, MsgFlashService, Da
     $scope.showAlertError = MsgFlashService.showErrorMessage;
     MsgFlashService.hideMessages();
     
+    $scope.DataService = DaysService;
+    $scope.DataService = DataService;
+    
     $scope.dayList = [];
+    $scope.$watch('DataService.dayList', function (newVal, oldVal, scope) {
+        if (newVal) {
+            $scope.dayList = DataService.dayList;
+        }
+    });
+
     $scope.currentDay = null;
 
     //examples
@@ -25,22 +36,28 @@ function DaysController($scope, $rootScope, IdentityService, MsgFlashService, Da
     
     
         
-    $scope.saveDay = function() {
-        if($scope.currentDay == null)
+    $scope.saveDay = function(day) {
+        if(day == null)
             return;
         
-        DaysService.saveDay($scope.currentDay);
+        alert(day);
+        DaysService.saveDay(day);
+        $scope.dayList.push(day);
     }
 
-    $scope.dayList = DaysService.loadDays();
+    DaysService.loadDays();
 
 
 };
 
-function DaysService($http) {
+function DataService() {
+    this.dayList = [];
+}
+
+function DaysService($http, DataService) {
     var baseUrl = "http://localhost:53762/api/Days";
-    var self = this;
-    var DayList = [];
+    //var self = this;
+    this.dayList = [];
     
     this.loadDays = function() {
         console.log("loadDays");
@@ -62,7 +79,7 @@ function DaysService($http) {
         .success(function (data) {
             console.log("loadDays: OK");
             console.log(data);
-            DayList = data;
+            DataService.dayList = data;
         });
     }
 
