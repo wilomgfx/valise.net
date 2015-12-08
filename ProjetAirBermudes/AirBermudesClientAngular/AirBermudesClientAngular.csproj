@@ -63,6 +63,7 @@
     <Content Include="account\signup.html" />
     <Content Include="app.js" />
     <Content Include="Content\jquery.datetimepicker.css" />
+    <Content Include="courses\addCourse.html" />
     <Content Include="courses\courses.html" />
     <Content Include="courses\courses.js" />
     <Content Include="css\site.css" />
@@ -70,6 +71,7 @@
     <Content Include="days\days.js" />
     <Content Include="header\header.html" />
     <Content Include="header\header.js" />
+    <Content Include="Images\loading.gif" />
     <Content Include="index.html" />
     <Content Include="places\markerPopup.html" />
     <Content Include="places\places.js" />
@@ -92,9 +94,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
