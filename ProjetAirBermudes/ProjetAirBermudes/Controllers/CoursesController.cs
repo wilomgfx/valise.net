@@ -45,7 +45,7 @@ namespace AirBermudesAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != course.Id)
+            if (id != course.CourseID)
             {
                 return BadRequest();
             }
@@ -83,7 +83,7 @@ namespace AirBermudesAPI.Controllers
             db.Courses.Add(course);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = course.Id }, course);
+            return CreatedAtRoute("DefaultApi", new { id = course.CourseID }, course);
         }
 
         // DELETE: api/Courses/5
@@ -113,7 +113,7 @@ namespace AirBermudesAPI.Controllers
 
         private bool CourseExists(int id)
         {
-            return db.Courses.Count(e => e.Id == id) > 0;
+            return db.Courses.Count(e => e.CourseID == id) > 0;
         }
     }
 }

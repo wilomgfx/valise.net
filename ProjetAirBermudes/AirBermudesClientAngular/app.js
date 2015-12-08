@@ -60,6 +60,13 @@
             requireAuthentication: true
         }
     });
+    $routeProvider.when('/addCourse', {
+        templateUrl: '/courses/addCourse.html',
+        controller: 'CourseController',
+        access: {
+            requireAuthentication: true
+        }
+    });
 
 
     /*

@@ -1,5 +1,5 @@
 ﻿<div class="container theme-showcase" role="main">
-    <div class="row" ng-controller="ClientController">
+    <div class="row">
         <div ng-show="showAlertSucess" class="alert alert-success" role="alert"><p>{{flashMessage}}</p></div>
         <div ng-show="showAlertError" class="alert alert-danger" role="alert"><p>{{flashErrors}}</p></div>
         <div class="row">
@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Courses</div>
                     <div class="panel-body">
-                       <a>Create new course</a>
+                        <a href="#/addCourse">Create new course</a>
                     </div>
             </div>
                 <!-- Table -->
@@ -50,6 +50,7 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
         </div>
     </div>
 </div>
