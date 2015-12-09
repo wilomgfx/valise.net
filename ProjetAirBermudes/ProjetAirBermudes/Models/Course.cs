@@ -17,6 +17,10 @@ namespace AirBermudesAPI.Models
 
         public string DepartureAddress { get; set; }
 
-        //public Travel Travel { get; set; }
+        public string TransportCompanyName { get; set; }
+
+        public virtual Transport Transport { get; set; }
+
+        public virtual Travel Travel { get; set; }
     }
 }

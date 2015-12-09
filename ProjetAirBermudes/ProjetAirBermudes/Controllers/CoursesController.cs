@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AirBermudesAPI.Models;
 using ProjetAirBermudes.Models;
+using AirBermudesAPI.DTOs;
 
 namespace AirBermudesAPI.Controllers
 {
@@ -18,9 +19,15 @@ namespace AirBermudesAPI.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Courses
-        public IQueryable<Course> GetCourses()
+        public IQueryable<CourseDTO> GetCourses()
         {
-            return db.Courses;
+            List<CourseDTO> listeCourseDTO = new List<CourseDTO>();
+            foreach (Course course in db.Courses.Include(c => c.Transport))
+            {
+                CourseDTO courseDTO = new CourseDTO(course);
+                listeCourseDTO.Add(courseDTO);
+            }
+            return listeCourseDTO.AsQueryable<CourseDTO>();
         }
 
         // GET: api/Courses/5
@@ -38,8 +45,17 @@ namespace AirBermudesAPI.Controllers
 
         // PUT: api/Courses/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCourse(int id, Course course)
+        public IHttpActionResult PutCourse(int id, CourseDTO courseDTO)
         {
+            Course course = new Course();
+            course.CourseID = courseDTO.Id;
+            course.DepartureAddress = courseDTO.DepartureAddress;
+            course.DestinationAddress = courseDTO.DestinationAddress;
+            course.Startate = courseDTO.Startate;
+            course.EndDate = courseDTO.EndDate;
+            course.TransportCompanyName = courseDTO.TransportCompanyName;
+            course.Transport = db.Transports.Find(courseDTO.TransportName);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
