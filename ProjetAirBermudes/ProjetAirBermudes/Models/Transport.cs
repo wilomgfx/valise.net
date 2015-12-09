@@ -9,8 +9,6 @@ namespace AirBermudesAPI.Models
     {
         public int TransportID { get; set; }
 
-        public decimal Budget { get; set; }
-
         public string TransportName { get; set; }
     }
 }

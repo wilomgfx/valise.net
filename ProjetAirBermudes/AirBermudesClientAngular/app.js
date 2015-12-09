@@ -77,6 +77,13 @@
             requireAuthentication: true
         }
     });
+    $routeProvider.when('/editCourse', {
+        templateUrl: '/courses/editCourse.html',
+        controller: 'CourseController',
+        access: {
+            requireAuthentication: true
+        }
+    });
 
     $routeProvider.when('/travelsedit', {
         templateUrl: '/travels/edit.html',
@@ -124,8 +131,8 @@ angular.module('AppAirBermudes.MessageFlashingService', [])
 .service('MsgFlashService', function ($timeout) {
 
     //for this service to show messages include this in your html
-    //<div ng-show="showAlertSucess" class="alert alert-success" role="alert"><p>{{flashMessage}}</p></div>
-    //<div ng-show="showAlertError" class="alert alert-danger" role="alert"><p>{{flashErrors}}</p></div>
+    //<div ng-show="showAlertSucess" class="alert alert-success alert-dismissible" role="alert"><p>{{flashMessage}}</p></div>
+    //<div ng-show="showAlertError" class="alert alert-danger alert-dismissible" role="alert"><p>{{flashErrors}}</p></div>
 
     this.message = "";
     this.errorMessage = "";

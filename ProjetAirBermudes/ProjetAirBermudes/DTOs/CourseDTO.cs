@@ -1,6 +1,7 @@
 ﻿using AirBermudesAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,16 +11,22 @@ namespace AirBermudesAPI.DTOs
     {
         public int Id { get; set; }
 
+        [Required]
         public string TransportName { get; set; }
 
+        [Required]
         public string TransportCompanyName { get; set; }
 
+        [Required]
         public DateTime? StartDate { get; set; }
 
+        [Required]
         public DateTime? EndDate { get; set; }
 
+        [Required]
         public string DestinationAddress { get; set; }
 
+        [Required]
         public string DepartureAddress { get; set; }
 
         public CourseDTO()

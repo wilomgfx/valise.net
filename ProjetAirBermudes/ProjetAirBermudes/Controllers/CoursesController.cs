@@ -11,6 +11,8 @@ using System.Web.Http.Description;
 using AirBermudesAPI.Models;
 using ProjetAirBermudes.Models;
 using AirBermudesAPI.DTOs;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AirBermudesAPI.Controllers
 {
@@ -21,6 +23,8 @@ namespace AirBermudesAPI.Controllers
         // GET: api/Courses
         public IQueryable<CourseDTO> GetCourses()
         {
+            // TODO: get the travel associated with that user, and return the right courses for that current travel
+
             List<CourseDTO> listeCourseDTO = new List<CourseDTO>();
             foreach (Course course in db.Courses.Include(c => c.Transport))
             {
