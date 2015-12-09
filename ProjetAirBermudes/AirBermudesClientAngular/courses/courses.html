@@ -1,45 +1,51 @@
 ﻿<div class="container theme-showcase" role="main">
     <div class="row">
-        <div ng-show="showAlertSucess" class="alert alert-success" role="alert"><p>{{flashMessage}}</p></div>
-        <div ng-show="showAlertError" class="alert alert-danger" role="alert"><p>{{flashErrors}}</p></div>
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Courses</div>
-                    <div class="panel-body">
-                        <a href="#/addCourse">Create new course</a>
-                        <button class="btn btn-default" ng-click="getCourses()">Get My courses</button>
-                    </div>
-            </div>
-                <!-- Table -->
-                <h3 class="text-center">All your courses for this travel</h3>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Starting point</th>
-                            <th>Departure date</th>
-                            <th>Arrival point</th>
-                            <th>Arrival date</th>
-                            <th>Transport method</th>
-                            <th>Transport Company</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="course in courses">
-                            <th scope="row">{{course.Position}}</th>
-                            <td>{{course.DepartureAddress}}</td>
-                            <td>{{course.Startate}}</td>
-                            <td>{{course.DestinationAddress}}</td>
-                            <td>{{course.EndDate}}</td>
-                            <td>{{course.TransportName}}</td>
-                            <td>{{course.TransportCompanyName}}</td>
-                            <td><a href="javascript:void(0)" ng-click="editCourse(course.Id,course)">Edit</a>|<a href="javascript:void(0)" ng-click="deleteCourse(course.Id)">Delete</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div ng-show="showAlertSucess" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p>{{flashMessage}}</p>
+        </div>
+        <div ng-show="showAlertError" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p>{{flashErrors}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Courses</div>
+                <div class="panel-body">
+                    <a href="#/addCourse">Create new course</a>
+                    <button class="btn btn-default" ng-click="getCourses()">Get My courses</button>
+                </div>
+        </div>
+            <!-- Table -->
+            <h3 class="text-center">All your courses for this travel</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Starting point</th>
+                        <th>Departure date</th>
+                        <th>Arrival point</th>
+                        <th>Arrival date</th>
+                        <th>Transport method</th>
+                        <th>Transport Company</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="course in courses">
+                        <th scope="row">{{course.Position}}</th>
+                        <td>{{course.DepartureAddress}}</td>
+                        <td>{{course.StartDate}}</td>
+                        <td>{{course.DestinationAddress}}</td>
+                        <td>{{course.EndDate}}</td>
+                        <td>{{course.TransportName}}</td>
+                        <td>{{course.TransportCompanyName}}</td>
+                        <td><a href="javascript:void(0)" ng-click="editCourse(course.Id,course)">Edit</a>|<a href="javascript:void(0)" ng-click="deleteCourse(course.Id)">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

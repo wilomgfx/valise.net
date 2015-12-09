@@ -1,7 +1,7 @@
 ﻿angular.module('AppAirBermudes.courses', ['ngRoute'])
 .controller('CourseController', CourseController);
 
-function CourseController($scope, $rootScope, IdentityService, MsgFlashService, $timeout) {
+function CourseController($scope, $rootScope, IdentityService, MsgFlashService, $timeout, $location) {
 
     //SelectList for TransportTypes
     $scope.selecListChoices = {
@@ -39,12 +39,21 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
     });
 
     //messages from the msgservice
-    $scope.flashMessage = MsgFlashService.getMessage();
-    $scope.flashErrors = MsgFlashService.getErrorMessage();
+    //$scope.flashMessage = MsgFlashService.getMessage();
+    //$scope.flashErrors = MsgFlashService.getErrorMessage();
+    $scope.flashMessage = "";
+    $scope.flashErrors = "";
+    $scope.showAlertSucess = false;
+    $scope.showAlertError = false;
 
-    //show or not to show the messages
-    $scope.showAlertSucess = MsgFlashService.showMessage;
-    $scope.showAlertError = MsgFlashService.showErrorMessage;
+    $scope.errorMessages = [];
+
+    $scope.hasErrors = false;
+
+    ////show or not to show the messages
+    //$scope.showAlertSucess = MsgFlashService.showMessage;
+    //$scope.showAlertError = MsgFlashService.showErrorMessage;
+    //MsgFlashService.hideMessages();
 
     var headers = {};
     headers.Authorization = 'Bearer ' + IdentityService.getToken();
@@ -60,18 +69,7 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
     //MsgFlashService.hideMessages();
 
 
-    $scope.addCourse = function (StartDate, DepartureAddress, DestinationAddress, EndDate, TransportCompanyName, TransportName) {
-
-
-        $scope.StartDate = StartDate;
-        $scope.endDate = EndDate;
-        $scope.destinationAddress = DestinationAddress;
-        $scope.departureAddress = DepartureAddress;
-        $scope.transportCompanyName = TransportCompanyName;
-        $scope.transPortName = TransportName;
-
-
-        //console.log(StartDate + " " + EndDate + " " + DestinationAddress + " " + DepartureAddress);
+    $scope.addCourse = function (TransportName) {
 
         $.ajax({
             method: 'POST',
@@ -84,18 +82,78 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
                     DestinationAddress: $scope.destinationAddress,
                     DepartureAddress: $scope.departureAddress,
                     TransportCompanyName: $scope.transportCompanyName,
-                    TransportName: $scope.transPortName
+                    TransportName: TransportName
                 }
         })
             .success(function (data) {
                 console.log(data);
+                MsgFlashService.setMessage("Succesfully added your course to this travel! You are now going to be redirected back to index");
+                $scope.flashMessage = MsgFlashService.getMessage();
+                $scope.showAlertSucess = MsgFlashService.showMessage;
+                $scope.$apply();
+                $timeout(function () {
+                    $location.path("/courses")
+                }, 2000);
             })
             .error(function (error) {
-                console.log(error);
+                MsgFlashService.setErrorMessage(error.responseText);
+                $scope.flashErrors = MsgFlashService.getErrorMessage();
+                $scope.showAlertError = MsgFlashService.showErrorMessage;
+                //console.log(error);
+
+                var modelState = $.parseJSON(error.responseText).ModelState
+                console.log(modelState);
+
+                if (modelState) {
+
+                    // Too short password
+                    var modelStateDepartureAddressRequired = modelState["courseDTO.DepartureAddress"];
+                    var modelStateDestinationAddressRequired = modelState["courseDTO.DestinationAddress"];
+                    var modelStateEndDateRequired = modelState["courseDTO.EndDate"];
+                    var modelStateStartDateRequired = modelState["courseDTO.StartDate"];
+                    var modelStateTransportCompanyNameRequired = modelState["courseDTO.TransportCompanyName"];
+
+                    // Too short password
+                    if (modelStateDepartureAddressRequired) {
+                        var DepartureMess = modelStateDepartureAddressRequired[0];
+                        if (DepartureMess) {
+                            $scope.errorMessages.push(DepartureMess);
+                        }
+                    }
+                    if (modelStateDestinationAddressRequired) {
+                        var DestinationMess = modelStateDestinationAddressRequired[0];
+                        if (DestinationMess) {
+                            $scope.errorMessages.push(DestinationMess);
+                        }
+                    }
+                    if (modelStateEndDateRequired) {
+                        var EndDateMess = modelStateEndDateRequired[0];
+                        if (EndDateMess) {
+                            $scope.errorMessages.push(EndDateMess);
+                        }
+                    }
+                    if (modelStateStartDateRequired) {
+                        var StartDateMess = modelStateStartDateRequired[0];
+                        if (StartDateMess) {
+                            $scope.errorMessages.push(StartDateMess);
+                        }
+                    }
+                    if (modelStateTransportCompanyNameRequired) {
+                        var TransportNameMess = modelStateTransportCompanyNameRequired[0];
+                        if (TransportNameMess) {
+                            $scope.errorMessages.push(TransportNameMess);
+                        }
+                    }
+
+                    $scope.hasErrors = true;
+                }
+                console.log($scope.errorMessages);
+                $scope.$apply();
             });
     }
 
     $scope.getCourses = function () {
+
         $.ajax({
             method: 'GET',
             url: "http://localhost:53762/api/Courses/",
@@ -104,14 +162,14 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
             .success(function (data) {
                 console.log("Data from API ", data);
                 $scope.courses = data;
-                console.log("Data from courses array ", $scope.courses);
-                //sets a pos field to items in the array for Listing on the index
+                //console.log("Data from courses array ", $scope.courses);
+                //sets a Position field to items in the array for Listing on the index
                 for (var i = 0; i < $scope.courses.length; i++) {
                     //$scope.courses[i].position = i;
                     var course = $scope.courses[i];
                     course.Position = i + 1;
                 }
-                console.log("Data from courses array ", $scope.courses);
+                //console.log("Data from courses array ", $scope.courses);
                 $scope.$apply();
             })
             .error(function (error) {
@@ -127,6 +185,9 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
         })
             .success(function (data) {
                 console.log("Data from API ", data);
+                MsgFlashService.setMessage("Succesfully added your course to this travel! You are now going to be redirected back to index");
+                $scope.flashMessage = MsgFlashService.getMessage();
+                $scope.showAlertSucess = MsgFlashService.showMessage;
                 $scope.getCourses();
             })
             .error(function (error) {
