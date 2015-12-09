@@ -45,8 +45,17 @@ namespace AirBermudesAPI.Controllers
 
         // PUT: api/Courses/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCourse(int id, Course course)
+        public IHttpActionResult PutCourse(int id, CourseDTO courseDTO)
         {
+            Course course = new Course();
+            course.CourseID = courseDTO.Id;
+            course.DepartureAddress = courseDTO.DepartureAddress;
+            course.DestinationAddress = courseDTO.DestinationAddress;
+            course.Startate = courseDTO.Startate;
+            course.EndDate = courseDTO.EndDate;
+            course.TransportCompanyName = courseDTO.TransportCompanyName;
+            course.Transport = db.Transports.Find(courseDTO.TransportName);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

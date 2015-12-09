@@ -8,7 +8,10 @@ namespace AirBermudesAPI.DTOs
 {
     public class CourseDTO
     {
+        public int Id { get; set; }
         public string TransportName { get; set; }
+
+        public string TransportCompanyName { get; set; }
 
         public DateTime Startate { get; set; }
 
@@ -20,7 +23,9 @@ namespace AirBermudesAPI.DTOs
 
         public CourseDTO(Course pCourse)
         {
+            this.Id = pCourse.CourseID;
             this.TransportName = pCourse.Transport.TransportName;
+            this.TransportCompanyName = pCourse.TransportCompanyName;
             this.Startate = pCourse.Startate;
             this.EndDate = pCourse.EndDate;
             this.DestinationAddress = pCourse.DestinationAddress;

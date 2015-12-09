@@ -11,8 +11,6 @@ namespace AirBermudesAPI.Models
 
         public decimal Budget { get; set; }
 
-        public string TransportCompanyName { get; set; }
-
         public string TransportName { get; set; }
     }
 }
