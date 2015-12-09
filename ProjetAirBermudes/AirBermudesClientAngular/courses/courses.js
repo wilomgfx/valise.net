@@ -13,10 +13,8 @@ function CourseController($scope, $rootScope,IdentityService, MsgFlashService, $
 
     var headers = {};
     headers.Authorization = 'Bearer ' + IdentityService.getToken();
-    
 
-    console.log(headers);
-    console.log(IdentityService.getToken());
+    $scope.courses = [];
 
     //examples
     //MsgFlashService.setMessage("Succesfull! Hurray you're now one of us");
@@ -57,5 +55,39 @@ function CourseController($scope, $rootScope,IdentityService, MsgFlashService, $
             });
     }
 
+    $scope.getCourses = function()
+    {
+        $.ajax({
+            method: 'GET',
+            url: "http://localhost:53762/api/Courses/",
+            headers: headers
+        })
+            .success(function (data) {
+                console.log("Data from API ", data);
+                $scope.courses = data;
+                console.log("Data from courses array ", $scope.courses);
+                //sets a pos field to items in the array for Listing on the index
+                for (var i = 0; i < $scope.courses.length; i++) {
+                    //$scope.courses[i].position = i;
+                    var course = $scope.courses[i];
+                    course.Position = i+1;
+                }
+                console.log("Data from courses array ", $scope.courses);
+                $scope.$apply();
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+    }
+
 
 };
+//added a indexofObject to Array
+//Array.prototype.indexOfObject = function (property, value)
+//{
+//    for (var i = 0, len = this.length; i < len; i++)
+//    {
+//        if (this[i][property] === value) return i;
+//    }
+//    return -1;
+//};

@@ -8,6 +8,7 @@
                     <div class="panel-heading">Courses</div>
                     <div class="panel-body">
                         <a href="#/addCourse">Create new course</a>
+                        <button class="btn btn-default" ng-click="getCourses()">Get My courses</button>
                     </div>
             </div>
                 <!-- Table -->
@@ -17,36 +18,20 @@
                         <tr>
                             <th>#</th>
                             <th>Starting point</th>
-                            <th>Departure date</th> 
-                            <th>Arrival point</th> 
-                            <th>Arrival date</th> 
-                            <th>Transport method</th> 
+                            <th>Departure date</th>
+                            <th>Arrival point</th>
+                            <th>Arrival date</th>
+                            <th>Transport method</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Guantanamo</td>
-                            <td>2015-12-07 15:30</td>
-                            <td>Bermudes</td>
-                            <td>2015-12-07 17:30</td>
-                            <td>Taxi</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Bermudes</td>
-                            <td>2015-12-08 21:00</td>
-                            <td>St-tite, Quebec</td>
-                            <td>2015-12-09 7:00</td>
-                            <td>Bus</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>St-tite, Quebec</td>
-                            <td>2015-12-08 13:00</td>
-                            <td>Montreal,Quebec</td>
-                            <td>2015-12-10 13:00</td>
-                            <td>Cow... Mouhhhhh mouhhhh</td>
+                        <tr ng-repeat="course in courses">
+                            <th scope="row">{{course.Position}}</th>
+                            <td>{{course.DepartureAddress}}</td>
+                            <td>{{course.Startate}}</td>
+                            <td>{{course.DestinationAddress}}</td>
+                            <td>{{course.EndDate}}</td>
+                            <td>{{course.TransportName}}</td>
                         </tr>
                     </tbody>
                 </table>

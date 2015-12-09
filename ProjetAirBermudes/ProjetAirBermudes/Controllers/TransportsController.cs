@@ -10,54 +10,47 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AirBermudesAPI.Models;
 using ProjetAirBermudes.Models;
-using AirBermudesAPI.DTOs;
 
 namespace AirBermudesAPI.Controllers
 {
-    public class CoursesController : ApiController
+    public class TransportsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Courses
-        public IQueryable<CourseDTO> GetCourses()
+        // GET: api/Transports
+        public IQueryable<Transport> GetTransports()
         {
-            List<CourseDTO> listeCourseDTO = new List<CourseDTO>();
-            foreach (Course course in db.Courses.Include(c => c.Transport))
-            {
-                CourseDTO courseDTO = new CourseDTO(course);
-                listeCourseDTO.Add(courseDTO);
-            }
-            return listeCourseDTO.AsQueryable<CourseDTO>();
+            return db.Transports;
         }
 
-        // GET: api/Courses/5
-        [ResponseType(typeof(Course))]
-        public IHttpActionResult GetCourse(int id)
+        // GET: api/Transports/5
+        [ResponseType(typeof(Transport))]
+        public IHttpActionResult GetTransport(int id)
         {
-            Course course = db.Courses.Find(id);
-            if (course == null)
+            Transport transport = db.Transports.Find(id);
+            if (transport == null)
             {
                 return NotFound();
             }
 
-            return Ok(course);
+            return Ok(transport);
         }
 
-        // PUT: api/Courses/5
+        // PUT: api/Transports/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCourse(int id, Course course)
+        public IHttpActionResult PutTransport(int id, Transport transport)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != course.CourseID)
+            if (id != transport.TransportID)
             {
                 return BadRequest();
             }
 
-            db.Entry(course).State = EntityState.Modified;
+            db.Entry(transport).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +58,7 @@ namespace AirBermudesAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CourseExists(id))
+                if (!TransportExists(id))
                 {
                     return NotFound();
                 }
@@ -78,35 +71,35 @@ namespace AirBermudesAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Courses
-        [ResponseType(typeof(Course))]
-        public IHttpActionResult PostCourse(Course course)
+        // POST: api/Transports
+        [ResponseType(typeof(Transport))]
+        public IHttpActionResult PostTransport(Transport transport)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Courses.Add(course);
+            db.Transports.Add(transport);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = course.CourseID }, course);
+            return CreatedAtRoute("DefaultApi", new { id = transport.TransportID }, transport);
         }
 
-        // DELETE: api/Courses/5
-        [ResponseType(typeof(Course))]
-        public IHttpActionResult DeleteCourse(int id)
+        // DELETE: api/Transports/5
+        [ResponseType(typeof(Transport))]
+        public IHttpActionResult DeleteTransport(int id)
         {
-            Course course = db.Courses.Find(id);
-            if (course == null)
+            Transport transport = db.Transports.Find(id);
+            if (transport == null)
             {
                 return NotFound();
             }
 
-            db.Courses.Remove(course);
+            db.Transports.Remove(transport);
             db.SaveChanges();
 
-            return Ok(course);
+            return Ok(transport);
         }
 
         protected override void Dispose(bool disposing)
@@ -118,9 +111,9 @@ namespace AirBermudesAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CourseExists(int id)
+        private bool TransportExists(int id)
         {
-            return db.Courses.Count(e => e.CourseID == id) > 0;
+            return db.Transports.Count(e => e.TransportID == id) > 0;
         }
     }
 }
