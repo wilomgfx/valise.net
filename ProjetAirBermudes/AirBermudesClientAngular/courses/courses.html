@@ -37,9 +37,9 @@
                     <tr ng-repeat="course in courses">
                         <th scope="row">{{course.Position}}</th>
                         <td>{{course.DepartureAddress}}</td>
-                        <td>{{course.StartDate}}</td>
+                        <td>{{course.StartDate | date : 'MM/dd/yyyy @ h:mma'}}</td>
                         <td>{{course.DestinationAddress}}</td>
-                        <td>{{course.EndDate}}</td>
+                        <td>{{course.EndDate | date : 'MM/dd/yyyy @ h:mma'}}</td>
                         <td>{{course.TransportName}}</td>
                         <td>{{course.TransportCompanyName}}</td>
                         <td><a href="#/editCourse">Edit</a>|<a href="javascript:void(0)" ng-click="deleteCourse(course.Id)">Delete</a></td>
