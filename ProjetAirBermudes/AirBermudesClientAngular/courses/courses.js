@@ -3,6 +3,41 @@
 
 function CourseController($scope, $rootScope, IdentityService, MsgFlashService, $timeout) {
 
+    //SelectList for TransportTypes
+    $scope.selecListChoices = {
+        availableOptions: [
+          //{ TransportID: '1', TransportName: 'Option A' },
+          //{ TransportID: '2', TransportName: 'Option B' },
+          //{ TransportID: '3', TransportName: 'Option C' }
+        ],
+        selectedOption: { TransportID: '1', TransportName: 'Taxi' } //This sets the default value of the select in the ui
+    };
+
+    $scope.getTransportTypes = function () {
+        $.ajax({
+            method: 'GET',
+            url: "http://localhost:53762/api/Transports/",
+            headers: headers
+        })
+            .success(function (data) {
+                //console.log("Data from API ", data);
+                for (var i = 0; i < data.length; i++) {
+                    $scope.selecListChoices.availableOptions[i] = data[i];
+                }
+                $scope.selecListChoices.selectedOption = $scope.selecListChoices.availableOptions[0];
+                //$scope.selecListChoices.availableOptions = data;
+                //console.log("Data from selecListChoices array ", $scope.selecListChoices);
+                $scope.$apply();
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+    }
+
+    angular.element(document).ready(function () {
+        $scope.getTransportTypes();
+    });
+
     //messages from the msgservice
     $scope.flashMessage = MsgFlashService.getMessage();
     $scope.flashErrors = MsgFlashService.getErrorMessage();
@@ -16,16 +51,6 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
 
     $scope.courses = [];
 
-    //SelectList for TransportTypes
-    $scope.selecListChoices = {
-        availableOptions: [
-          { id: '1', name: 'Option A' },
-          { id: '2', name: 'Option B' },
-          { id: '3', name: 'Option C' }
-        ],
-        selectedOption: { id: '1', name: 'Option A' } //This sets the default value of the select in the ui
-    };
-
 
     //examples
     //MsgFlashService.setMessage("Succesfull! Hurray you're now one of us");
@@ -35,14 +60,16 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
     //MsgFlashService.hideMessages();
 
 
-    $scope.addCourse = function (StartDate, DepartureAddress, DestinationAddress, EndDate, TransportCompanyName) {
+    $scope.addCourse = function (StartDate, DepartureAddress, DestinationAddress, EndDate, TransportCompanyName, TransportName) {
 
 
-        $scope.starDate = StartDate;
+        $scope.StartDate = StartDate;
         $scope.endDate = EndDate;
         $scope.destinationAddress = DestinationAddress;
         $scope.departureAddress = DepartureAddress;
         $scope.transportCompanyName = TransportCompanyName;
+        $scope.transPortName = TransportName;
+
 
         //console.log(StartDate + " " + EndDate + " " + DestinationAddress + " " + DepartureAddress);
 
@@ -52,11 +79,12 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
             headers: headers,
             data:
                 {
-                    Startate: $scope.starDate,
+                    StartDate: $scope.StartDate,
                     EndDate: $scope.endDate,
                     DestinationAddress: $scope.destinationAddress,
                     DepartureAddress: $scope.departureAddress,
-                    TransportCompanyName: $scope.transportCompanyName
+                    TransportCompanyName: $scope.transportCompanyName,
+                    TransportName: $scope.transPortName
                 }
         })
             .success(function (data) {
@@ -108,30 +136,42 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
 
     $scope.editCourse = function (Id, Course) {
 
-        console.log(Course);
+        //console.log(Course);
+        //console.log(Course.Id);
+        //console.log(Course.StartDate);
+        //console.log(Course.EndDate);
+        //console.log(Course.DestinationAddress);
+        //console.log(Course.DepartureAddress);
+        //console.log(Course.TransportCompanyName);
+        //console.log(Course.TransportName);
 
-        //    $.ajax({
-        //        method: 'PUT',
-        //        url: "http://localhost:53762/api/Courses/" + Id,
-        //        dataType: "json",
-        //        contentType: "application/json",
-        //        headers: headers,
-        //        data: {
-        //            CourseDTO: Course
-        //        }
-        //    })
-        //        .success(function (data) {
-        //            console.log("Data from API ", data);
-        //            $scope.getCourses();
-        //        })
-        //        .error(function (error) {
-        //            console.log(error);
-        //        });
-        //}
+        //return;
+
+            $.ajax({
+                method: 'PUT',
+                url: "http://localhost:53762/api/Courses/" + Id,
+                headers: headers,
+                data: {
+                    Id: Course.Id,
+                    Startate: Course.StartDate,
+                    EndDate: Course.EndDate,
+                    DestinationAddress: Course.DestinationAddress,
+                    DepartureAddress: Course.DepartureAddress,
+                    TransportCompanyName: Course.TransportCompanyName,
+                    TransportName: Course.TransportName
+                }
+            })
+                .success(function (data) {
+                    console.log("Data from API ", data);
+                    $scope.getCourses();
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+        }
 
 
-    };
-}
+};
 //added a indexofObject to Array
 //Array.prototype.indexOfObject = function (property, value)
 //{
