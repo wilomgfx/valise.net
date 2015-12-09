@@ -9,9 +9,9 @@ namespace AirBermudesAPI.Models
     {
         public int CourseID { get; set; }
 
-        public DateTime Startate { get; set; }
+        public DateTime? StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public string DestinationAddress { get; set; }
 

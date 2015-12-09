@@ -51,10 +51,11 @@ namespace AirBermudesAPI.Controllers
             course.CourseID = courseDTO.Id;
             course.DepartureAddress = courseDTO.DepartureAddress;
             course.DestinationAddress = courseDTO.DestinationAddress;
-            course.Startate = courseDTO.Startate;
+            course.StartDate = courseDTO.StartDate;
             course.EndDate = courseDTO.EndDate;
             course.TransportCompanyName = courseDTO.TransportCompanyName;
-            course.Transport = db.Transports.Find(courseDTO.TransportName);
+            Transport transport = (Transport)db.Transports.Where(t => t.TransportName == courseDTO.TransportName).First();
+            course.Transport = transport;
 
             if (!ModelState.IsValid)
             {
@@ -89,8 +90,18 @@ namespace AirBermudesAPI.Controllers
 
         // POST: api/Courses
         [ResponseType(typeof(Course))]
-        public IHttpActionResult PostCourse(Course course)
+        public IHttpActionResult PostCourse(CourseDTO courseDTO)
         {
+            Course course = new Course();
+            course.CourseID = courseDTO.Id;
+            course.DepartureAddress = courseDTO.DepartureAddress;
+            course.DestinationAddress = courseDTO.DestinationAddress;
+            course.StartDate = courseDTO.StartDate;
+            course.EndDate = courseDTO.EndDate;
+            course.TransportCompanyName = courseDTO.TransportCompanyName;
+            Transport transport = (Transport)db.Transports.Where(t => t.TransportName == courseDTO.TransportName).First();
+            course.Transport = transport;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

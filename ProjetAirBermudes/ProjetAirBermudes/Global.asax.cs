@@ -18,6 +18,9 @@ namespace ProjetAirBermudes
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //json stuff
+            ValueProviderFactories.Factories.Add(new JsonValueProviderFactory());
         }
     }
 }
