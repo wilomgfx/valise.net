@@ -70,7 +70,6 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
 
 
     $scope.addCourse = function (TransportName) {
-
         $.ajax({
             method: 'POST',
             url: "http://localhost:53762/api/Courses/",
@@ -78,10 +77,10 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
             data:
                 {
                     StartDate: $scope.StartDate,
-                    EndDate: $scope.endDate,
-                    DestinationAddress: $scope.destinationAddress,
-                    DepartureAddress: $scope.departureAddress,
-                    TransportCompanyName: $scope.transportCompanyName,
+                    EndDate: $scope.EndDate,
+                    DestinationAddress: $scope.DestinationAddress,
+                    DepartureAddress: $scope.DepartureAddress,
+                    TransportCompanyName: $scope.TransportCompanyName,
                     TransportName: TransportName
                 }
         })
@@ -102,7 +101,9 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
                 //console.log(error);
 
                 var modelState = $.parseJSON(error.responseText).ModelState
-                console.log(modelState);
+                //console.log(modelState);
+
+                $scope.errorMessages = [];
 
                 if (modelState) {
 
@@ -147,7 +148,7 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
 
                     $scope.hasErrors = true;
                 }
-                console.log($scope.errorMessages);
+                console.log("ErrorMessages Array: " ,$scope.errorMessages);
                 $scope.$apply();
             });
     }
@@ -195,26 +196,26 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
             });
     }
 
-    $scope.editCourse = function (Id, Course) {
+    $scope.editCourse = function (Course) {
 
-        //console.log(Course);
-        //console.log(Course.Id);
-        //console.log(Course.StartDate);
-        //console.log(Course.EndDate);
-        //console.log(Course.DestinationAddress);
-        //console.log(Course.DepartureAddress);
-        //console.log(Course.TransportCompanyName);
-        //console.log(Course.TransportName);
+        // console.log(Course);
+        // console.log(Course.Id);
+        // console.log(Course.StartDate);
+        // console.log(Course.EndDate);
+        // console.log(Course.DestinationAddress);
+        // console.log(Course.DepartureAddress);
+        // console.log(Course.TransportCompanyName);
+        // console.log(Course.TransportName);
 
-        //return;
+        // return;
 
             $.ajax({
                 method: 'PUT',
-                url: "http://localhost:53762/api/Courses/" + Id,
+                url: "http://localhost:53762/api/Courses/" + Course.Id,
                 headers: headers,
                 data: {
                     Id: Course.Id,
-                    Startate: Course.StartDate,
+                    StartDate: Course.StartDate,
                     EndDate: Course.EndDate,
                     DestinationAddress: Course.DestinationAddress,
                     DepartureAddress: Course.DepartureAddress,
@@ -223,7 +224,7 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
                 }
             })
                 .success(function (data) {
-                    console.log("Data from API ", data);
+                    console.log("Successfully updated the course");
                     $scope.getCourses();
                 })
                 .error(function (error) {

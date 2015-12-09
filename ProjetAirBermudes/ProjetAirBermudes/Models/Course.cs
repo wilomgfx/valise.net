@@ -28,6 +28,8 @@ namespace AirBermudesAPI.Models
         [Required]
         public virtual Transport Transport { get; set; }
 
+        //public decimal Budget { get; set; }
+
         public virtual Travel Travel { get; set; }
     }
 }

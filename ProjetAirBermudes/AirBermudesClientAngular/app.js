@@ -77,6 +77,13 @@
             requireAuthentication: true
         }
     });
+    $routeProvider.when('/editCourse', {
+        templateUrl: '/courses/editCourse.html',
+        controller: 'CourseController',
+        access: {
+            requireAuthentication: true
+        }
+    });
 
     $routeProvider.when('/travelsedit', {
         templateUrl: '/travels/edit.html',

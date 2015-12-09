@@ -1,5 +1,6 @@
 namespace AirBermudesAPI.Migrations
 {
+    using Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -26,6 +27,15 @@ namespace AirBermudesAPI.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            context.Transports.AddOrUpdate
+                (   t => t.TransportName,
+                    new Transport { TransportName = "Taxi" },
+                    new Transport { TransportName = "Plane"},
+                    new Transport { TransportName = "Bus" },
+                    new Transport { TransportName = "Car" },
+                    new Transport { TransportName = "Cow" },
+                    new Transport { TransportName = "Bike" }
+                );
         }
     }
 }
