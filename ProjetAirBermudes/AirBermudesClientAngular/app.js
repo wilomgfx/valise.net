@@ -1,4 +1,4 @@
-﻿angular.module('AppAirBermudes', [
+angular.module('AppAirBermudes', [
     'ngRoute',
     'AppAirBermudes.account',
     'AppAirBermudes.MessageFlashingService',
@@ -43,9 +43,28 @@
 
     $routeProvider.when('/days', {
         templateUrl: '/days/days.html',
-        controller: 'DaysController'
+        controller: 'DaysController',
+         access: {
+            requireAuthentication: true
+        }
     });
 
+    $routeProvider.when('/days/:action', {
+        templateUrl: '/days/addDay.html',
+        controller: 'DaysController',
+         access: {
+            requireAuthentication: true
+        }
+    });
+    
+    $routeProvider.when('/days/:action/:id', {
+        templateUrl: '/days/editDay.html',
+        controller: 'DaysController',
+         access: {
+            requireAuthentication: true
+        }
+    });
+    
     $routeProvider.when('/travels', {
         templateUrl: '/travels/home.html',
         controller: 'TravelsController',

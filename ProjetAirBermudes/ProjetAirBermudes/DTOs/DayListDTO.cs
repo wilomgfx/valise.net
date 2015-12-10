@@ -12,7 +12,7 @@ namespace AirBermudesAPI.DTOs
         {
            foreach(Day d in list) 
            {
-               Add(new DayDTO(d));
+               Add(new DayDTO(Count + 1, d));
            }
         }
     }

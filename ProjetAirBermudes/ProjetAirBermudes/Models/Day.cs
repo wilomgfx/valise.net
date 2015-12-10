@@ -9,7 +9,7 @@ namespace AirBermudesAPI.Models
     {
         public int DayID { get; set; }
 
-        public DateTime DayDate { get; set; }
+        public DateTime Date { get; set; }
 
         public decimal Budget { get; set; }
 

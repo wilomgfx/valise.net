@@ -1,0 +1,28 @@
+<div class="container theme-showcase" role="main">
+    <div class="row">
+        <div ng-show="showAlertSucess" class="alert alert-success" role="alert"><p>{{flashMessage}}</p></div>
+        <div ng-show="showAlertError" class="alert alert-danger" role="alert"><p>{{flashErrors}}</p></div>
+        
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Edit day</h2>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="label label-primary" for="email">Date</label>
+                            <input type="text" class="form-control" datetime="yyyy-MM-dd" id="date" ng-model="currentDay.Date">
+                        </div>
+                        <div class="form-group">
+                            <label class="label label-primary" for="budget">Budget</label>
+                            <input type="number" class="form-control" id="budget" ng-model="currentDay.Budget">
+                        </div>
+                        <span ng-show="hasErrors" class="help-block" ng-repeat="message in errorMessages">{{message}}</span>
+                        <button type="button" class="button button-default" ng-click="saveDay()">Save day</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

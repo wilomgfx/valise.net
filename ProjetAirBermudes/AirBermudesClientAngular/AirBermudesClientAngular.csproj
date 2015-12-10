@@ -67,6 +67,8 @@
     <Content Include="courses\courses.html" />
     <Content Include="courses\courses.js" />
     <Content Include="css\site.css" />
+    <Content Include="days\addDay.html" />
+    <Content Include="days\editDay.html" />
     <Content Include="days\days.html" />
     <Content Include="days\days.js" />
     <Content Include="header\header.html" />
