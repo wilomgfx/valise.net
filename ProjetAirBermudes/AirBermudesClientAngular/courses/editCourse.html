@@ -1,0 +1,58 @@
+<div class="container theme-showcase" role="main">
+    <div class="row">
+        <div ng-show="showAlertSucess" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p>{{flashMessage}}</p>
+        </div>
+        <div ng-show="showAlertError" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p>{{flashErrors}}</p>
+        </div>
+     </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Edit this course</div>
+                <div class="panel-body">
+                    <form ng-submit="editCourse(selecListChoices.selectedOption.TransportName)" class="form-group">
+
+                        <div ng-class="{'has-error' : hasErrors}">
+
+                            <label for="StartDate">StartDate</label>
+                            <input type="text" name="StartDate" class="form-control" ng-model="StartDate" value="{{StartDate}}"/>
+
+                            <label for="DepartureAdress">Departure address</label>
+                            <input type="text" name="DepartureAdress" class="form-control" ng-model="DepartureAddress" />
+
+                            <label for="DestinationAddress">Destination address</label>
+                            <input type="text" name="DestinationAddress" class="form-control" ng-model="DestinationAddress" />
+
+                            <label for="EndDate">EndDate</label>
+                            <input type="text" name="EndDate" class="form-control" ng-model="EndDate" />
+
+                            <label for="TransportCompanyName">TransportCompanyName</label>
+                            <input type="text" name="TransportCompanyName" class="form-control" ng-model="TransportCompanyName" />
+
+                            <input type="hidden" name="CourseID" value="{{Course.Id}}">
+
+                            <span ng-show="hasErrors" class="help-block" ng-repeat="message in errorMessages">{{message}}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="TransportType">Choose transport type :</label>
+                            <select class="form-control" name="mySelect" id="mySelect"
+                                    ng-options="option.TransportName for option in selecListChoices.availableOptions track by option.TransportID"
+                                    ng-model="selecListChoices.selectedOption"></select>
+                        </div>
+                        <tt>option = {{selecListChoices.selectedOption}}</tt><br />
+                        <tt>TransportName = {{selecListChoices.selectedOption.TransportName}}</tt><br />
+
+
+                        <br />
+                        <input type="submit" class="btn btn-default" value="Add course" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

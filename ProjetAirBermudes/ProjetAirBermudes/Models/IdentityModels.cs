@@ -43,5 +43,8 @@ namespace ProjetAirBermudes.Models
         public DbSet<Destination> Destinations { get; set; }
 
         public DbSet<Travel> Travels { get; set; }
+
+        public System.Data.Entity.DbSet<AirBermudesAPI.Models.Transport> Transports { get; set; }
+
     }
 }

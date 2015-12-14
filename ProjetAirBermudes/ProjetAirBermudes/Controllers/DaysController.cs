@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AirBermudesAPI.Models;
 using ProjetAirBermudes.Models;
+using AirBermudesAPI.DTOs;
 
 namespace AirBermudesAPI.Controllers
 {
@@ -18,14 +19,14 @@ namespace AirBermudesAPI.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Days
-        public List<Day> GetDays()
+        public DayListDTO GetDays()
         {
-            List<Day> days = db.Days.ToList();
+            DayListDTO days = new DayListDTO(db.Days.ToList());
             return days;
         }
 
         // GET: api/Days/5
-        [ResponseType(typeof(Day))]
+        [ResponseType(typeof(DayDTO))]
         public IHttpActionResult GetDay(int id)
         {
             Day day = db.Days.Find(id);
@@ -34,23 +35,28 @@ namespace AirBermudesAPI.Controllers
                 return NotFound();
             }
 
-            return Ok(day);
+            return Ok(new DayDTO(day));
         }
 
         // PUT: api/Days/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutDay(int id, Day day)
+        public IHttpActionResult PutDay(int id, DayDTO model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != day.DayID)
+            if (id != model.Id)
             {
                 return BadRequest();
             }
 
+            Day day = db.Days.Where(d => d.DayID == id).FirstOrDefault();
+            if(day == null)
+                return NotFound();
+
+            model.CopyToDay(day);
             db.Entry(day).State = EntityState.Modified;
 
             try
@@ -59,14 +65,7 @@ namespace AirBermudesAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DayExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -74,17 +73,18 @@ namespace AirBermudesAPI.Controllers
 
         // POST: api/Days
         [ResponseType(typeof(Day))]
-        public IHttpActionResult PostDay(Day day)
+        public IHttpActionResult PostDay(DayDTO model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            Day day = model.ToDay();
             db.Days.Add(day);
             db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = day.DayID }, day);
+                        
+            return CreatedAtRoute("DefaultApi", new { id = day.DayID }, new DayDTO(day));
         }
 
         // DELETE: api/Days/5
@@ -112,9 +112,9 @@ namespace AirBermudesAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool DayExists(int id)
+        /*private bool DayExists(int id)
         {
             return db.Days.Count(e => e.DayID == id) > 0;
-        }
+        }*/
     }
 }

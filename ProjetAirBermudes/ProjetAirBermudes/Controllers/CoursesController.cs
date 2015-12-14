@@ -10,6 +10,9 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AirBermudesAPI.Models;
 using ProjetAirBermudes.Models;
+using AirBermudesAPI.DTOs;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AirBermudesAPI.Controllers
 {
@@ -18,9 +21,17 @@ namespace AirBermudesAPI.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Courses
-        public IQueryable<Course> GetCourses()
+        public IQueryable<CourseDTO> GetCourses()
         {
-            return db.Courses;
+            // TODO: get the travel associated with that user, and return the right courses for that current travel
+
+            List<CourseDTO> listeCourseDTO = new List<CourseDTO>();
+            foreach (Course course in db.Courses.Include(c => c.Transport))
+            {
+                CourseDTO courseDTO = new CourseDTO(course);
+                listeCourseDTO.Add(courseDTO);
+            }
+            return listeCourseDTO.AsQueryable<CourseDTO>();
         }
 
         // GET: api/Courses/5
@@ -38,14 +49,24 @@ namespace AirBermudesAPI.Controllers
 
         // PUT: api/Courses/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCourse(int id, Course course)
+        public IHttpActionResult PutCourse(int id, CourseDTO courseDTO)
         {
+            Course course = new Course();
+            course.CourseID = courseDTO.Id;
+            course.DepartureAddress = courseDTO.DepartureAddress;
+            course.DestinationAddress = courseDTO.DestinationAddress;
+            course.StartDate = courseDTO.StartDate;
+            course.EndDate = courseDTO.EndDate;
+            course.TransportCompanyName = courseDTO.TransportCompanyName;
+            Transport transport = (Transport)db.Transports.Where(t => t.TransportName == courseDTO.TransportName).First();
+            course.Transport = transport;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != course.Id)
+            if (id != course.CourseID)
             {
                 return BadRequest();
             }
@@ -73,8 +94,18 @@ namespace AirBermudesAPI.Controllers
 
         // POST: api/Courses
         [ResponseType(typeof(Course))]
-        public IHttpActionResult PostCourse(Course course)
+        public IHttpActionResult PostCourse(CourseDTO courseDTO)
         {
+            Course course = new Course();
+            course.CourseID = courseDTO.Id;
+            course.DepartureAddress = courseDTO.DepartureAddress;
+            course.DestinationAddress = courseDTO.DestinationAddress;
+            course.StartDate = courseDTO.StartDate;
+            course.EndDate = courseDTO.EndDate;
+            course.TransportCompanyName = courseDTO.TransportCompanyName;
+            Transport transport = (Transport)db.Transports.Where(t => t.TransportName == courseDTO.TransportName).First();
+            course.Transport = transport;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -83,7 +114,7 @@ namespace AirBermudesAPI.Controllers
             db.Courses.Add(course);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = course.Id }, course);
+            return CreatedAtRoute("DefaultApi", new { id = course.CourseID }, course);
         }
 
         // DELETE: api/Courses/5
@@ -113,7 +144,7 @@ namespace AirBermudesAPI.Controllers
 
         private bool CourseExists(int id)
         {
-            return db.Courses.Count(e => e.Id == id) > 0;
+            return db.Courses.Count(e => e.CourseID == id) > 0;
         }
     }
 }
