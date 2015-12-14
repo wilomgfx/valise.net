@@ -12,18 +12,42 @@ using AirBermudesAPI.Models;
 using ProjetAirBermudes.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ProjetAirBermudes;
 
 namespace AirBermudesAPI.Controllers
 {
+    [Authorize]
     public class TravelsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        /*
         // GET: api/Travels
         public IQueryable<Travel> GetTravels()
         {
             return db.Travels;
         }
+        */
+        
+        // GET api/Travels
+        [ResponseType(typeof(IEnumerable<Travel>))]
+        public IHttpActionResult GetTravels()
+        {
+            UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(db);
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+
+            List<TravelDTO> travelsDTO = new List<TravelDTO>();
+            List<Travel> travels = db.Travels.Where(t => t.ApplicationUsers.Any(au => au.Id == user.Id)).ToList();
+
+            foreach(Travel travel in travels)
+            {
+                travelsDTO.Add(new TravelDTO(travel));
+            }
+
+            return Ok(travelsDTO);
+        }
+        
 
         // GET: api/Travels/5
         [ResponseType(typeof(Travel))]

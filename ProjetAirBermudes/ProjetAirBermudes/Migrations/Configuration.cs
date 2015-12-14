@@ -10,6 +10,7 @@ namespace AirBermudesAPI.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(ProjetAirBermudes.Models.ApplicationDbContext context)

@@ -2,10 +2,11 @@
     'ngRoute',
     'AppAirBermudes.account',
     'AppAirBermudes.MessageFlashingService',
-    'AppAirBermudes.places',
+    'AppAirBermudes.mapService',
     'AppAirBermudes.header',
     'AppAirBermudes.courses',
     'AppAirBermudes.travels',
+    'AppAirBermudes.travelsMarc',
     'AppAirBermudes.days',
     'AppAirBermudes.RouteAutorization'
 
@@ -13,16 +14,6 @@
 ])
 .config(['$routeProvider', function ($routeProvider) {
 
-    /*
-    $routeProvider.when('/login', {
-        templateUrl: '/users/login.html',
-        controller: 'ClientController'
-    });
-    $routeProvider.when('/signup', {
-        templateUrl: '/users/signup.html',
-        controller: 'ClientController'
-    });
-    */
 
     $routeProvider.when('/login', {
         templateUrl: '/account/login.html',
@@ -44,10 +35,9 @@
         controller: 'DaysController'
     });
 
-    // !!! Test page for places !!!
-    $routeProvider.when('/testplaces', {
-        templateUrl: '/places/testPlaces.html',
-        controller: 'TestPlacesController',
+    $routeProvider.when('/travels', {
+        templateUrl: '/travelsMarc/travels.html',
+        controller: 'TravelsMarcController',
         access: {
             requireAuthentication: true
         }
@@ -61,16 +51,22 @@
         }
     });
 
-
-    /*
-        When the login will be implemented, add this attribute to all route with the right value.
-        The RouteAutorization module must be uncommented
-
+    // !!! Test page !!!
+    $routeProvider.when('/testmaps', {
+        templateUrl: '/mapService/testmaps.html',
+        controller: 'TestPlacesController',
         access: {
             requireAuthentication: true
         }
+    });
 
-    */
+    $routeProvider.when('/travelsold', {
+        templateUrl: '/travels/home.html',
+        controller: 'TravelsController',
+        access: {
+            requireAuthentication: true
+        }
+    });
 
     //$routeProvider.otherwise({ redirectTo: '/index' });
     $routeProvider.otherwise({ redirectTo: '/login' });

@@ -7,6 +7,8 @@ namespace AirBermudesAPI.Models
 {
     public class TravelDTO
     {
+        public int TravelId { get; set; }
+
         public string Title { get; set; }
 
         public string DateBegin { get; set; }
@@ -15,5 +17,14 @@ namespace AirBermudesAPI.Models
         public decimal Budget { get; set; }
 
         public string username { get; set; }
+
+        public TravelDTO(Travel travel)
+        {
+            this.TravelId = travel.TravelId;
+            this.Title = travel.Title;
+            this.DateBegin = travel.DateBegin.ToLongDateString();
+            this.DateEnd = travel.DateEnd.ToLongDateString();
+            this.Budget = travel.Budget;
+        }
     }
 }

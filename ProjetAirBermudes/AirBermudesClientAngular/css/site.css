@@ -17,3 +17,9 @@ div#loading > img {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+
+.travelListItemMap {
+
+    height: 500px;
+}

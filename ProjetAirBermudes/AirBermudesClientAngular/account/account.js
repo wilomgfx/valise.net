@@ -34,7 +34,7 @@ function AccountController($scope, $location, AccountService, IdentityService) {
                     $scope.confirmPassword = "";
 
                     $scope.$apply(function () {
-                        $location.path("/testplaces");
+                        $location.path("/travels");
                     });
                 });
 
@@ -99,7 +99,7 @@ function AccountController($scope, $location, AccountService, IdentityService) {
                 $scope.confirmPassword = "";
 
                 $scope.$apply(function () {
-                    $location.path("/testplaces");
+                    $location.path("/travels");
                 });
 
                 if (callback) {
@@ -115,6 +115,7 @@ function AccountController($scope, $location, AccountService, IdentityService) {
             });
     };
 
+    /* TODO: SUPPRESS THIS FUNCTION before any releasse */
     $scope.devSignin = function () {
         $scope.email = "test@test.test";
         $scope.password = "Passw0rd/";

@@ -1,0 +1,44 @@
+﻿
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title" style="line-height: 34px;">
+
+            {{travel.Title}}
+
+            <button class="btn btn-default pull-right">
+                <span class="glyphicon glyphicon-share"></span>
+                Share
+            </button>
+
+            <button class="btn btn-default pull-right">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Edit
+            </button>
+
+        </h3>
+    </div>
+
+    <div class="panel-body">
+
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+
+            <h4>Départ :</h4>
+            <p>{{travel.DateBegin}}</p>
+            <br />
+
+            <h4>Retour :</h4>
+            <p>{{travel.DateEnd}}</p>
+            <br />
+
+            <h4>Budget :</h4>
+            <h2>{{travel.Budget}} $</h2>
+
+        </div>
+
+        <div id="{{'map' + travel.TravelId}}"
+             class="col-xs-12 col-sm-9 col-md-9 col-lg-9 travelListItemMap"
+             ></div>
+
+    </div>
+
+</div>

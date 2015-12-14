@@ -71,12 +71,16 @@
     <Content Include="header\header.html" />
     <Content Include="header\header.js" />
     <Content Include="index.html" />
-    <Content Include="places\markerPopup.html" />
-    <Content Include="places\places.js" />
-    <Content Include="places\testPlaces.html" />
+    <Content Include="mapService\courseMarkerPopup.html" />
+    <Content Include="mapService\suggestionMarkerPopup.html" />
+    <Content Include="mapService\mapService.js" />
+    <Content Include="mapService\testmaps.html" />
     <Content Include="Scripts\jquery.datetimepicker.js" />
+    <Content Include="travelsMarc\travels.html" />
+    <Content Include="travelsMarc\travels.js" />
     <Content Include="travels\home.html" />
     <Content Include="travels\travel.js" />
+    <Content Include="travelsMarc\travelMinDetails.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
