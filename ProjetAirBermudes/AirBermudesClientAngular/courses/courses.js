@@ -70,14 +70,18 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
 
 
     $scope.addCourse = function (TransportName) {
+
+      //Format the result of chromes date picker
+      var StartDateFormated = $scope.StartDate.toISOString();
+      var EndDateFormated = $scope.EndDate.toISOString();
         $.ajax({
             method: 'POST',
             url: "http://localhost:53762/api/Courses/",
             headers: headers,
             data:
                 {
-                    StartDate: $scope.StartDate,
-                    EndDate: $scope.EndDate,
+                    StartDate: StartDateFormated,
+                    EndDate: EndDateFormated,
                     DestinationAddress: $scope.DestinationAddress,
                     DepartureAddress: $scope.DepartureAddress,
                     TransportCompanyName: $scope.TransportCompanyName,
@@ -107,14 +111,12 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
 
                 if (modelState) {
 
-                    // Too short password
                     var modelStateDepartureAddressRequired = modelState["courseDTO.DepartureAddress"];
                     var modelStateDestinationAddressRequired = modelState["courseDTO.DestinationAddress"];
                     var modelStateEndDateRequired = modelState["courseDTO.EndDate"];
                     var modelStateStartDateRequired = modelState["courseDTO.StartDate"];
                     var modelStateTransportCompanyNameRequired = modelState["courseDTO.TransportCompanyName"];
 
-                    // Too short password
                     if (modelStateDepartureAddressRequired) {
                         var DepartureMess = modelStateDepartureAddressRequired[0];
                         if (DepartureMess) {

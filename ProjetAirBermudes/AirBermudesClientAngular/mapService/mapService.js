@@ -76,7 +76,7 @@ function MapService($compile) {
 
     /*
         Show somme suggestions as markers on the specified map and set a popup window on each marker.
-        
+
         Parametters :
         - scope The current scope.
         - map The specified map object.
@@ -88,7 +88,7 @@ function MapService($compile) {
         {
             location: {
                 lat: ,
-                lng: 
+                lng:
             },
             radius: '2000',
             types: ['type', 'type']
@@ -111,7 +111,7 @@ function MapService($compile) {
             -museum
 
         'restaurant', 'lodging', 'amusement_park', 'park', 'aquarium', 'casino', 'museum'
-        
+
     */
     this.showSuggestions = function (scope, map, settings, maxResult) {
 
@@ -154,7 +154,7 @@ function MapService($compile) {
     };
 
     /*
-        Trace the courses on the specified map. Also, place some markers with popup on each 
+        Trace the courses on the specified map. Also, place some markers with popup on each
         course starting marker.
 
         Parametters :
@@ -164,7 +164,7 @@ function MapService($compile) {
         - courcesInfo A jsObject contaning the required information described below.
 
         courcesInfo : [
-    
+
             {
                 startingPoint : {
                     latitude: 37.772323,

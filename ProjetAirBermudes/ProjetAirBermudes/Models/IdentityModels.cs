@@ -28,7 +28,7 @@ namespace ProjetAirBermudes.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-            
+            //Database.SetInitializer<ApplicationDbContext>(new DatabaseInitializer());
         }
         
         public static ApplicationDbContext Create()
