@@ -46,6 +46,12 @@ function DaysController($scope, $rootScope, $routeParams, $location, IdentitySer
         console.log("onDeleteDay");
         DaysService.deleteDay(id);
     }
+    
+    $scope.onDestinations = function (day) {
+        console.log("onDestinations");
+        DataService.currentDay = day;
+        $location.path("/destinations/" + day.Id);
+    }
 
     $scope.saveDay = function() {
         if($scope.currentDay == null)
@@ -94,11 +100,6 @@ function DaysController($scope, $rootScope, $routeParams, $location, IdentitySer
     } else if ($routeParams.action === undefined) {
         DaysService.loadDays();
     }
-}
-
-function DataService() {
-    this.days = [];
-    this.currentDay = {};
 }
 
 function DaysService($http, $q, DataService) {
@@ -161,7 +162,7 @@ function DaysService($http, $q, DataService) {
         .success(function (data) {
             console.log("getDay: OK");
             console.log(data);
-            DataService.currentDay = data;
+            DataService.setCurrentDay(data);
         });
     }
 

@@ -24,7 +24,11 @@
                         <th>{{day.Position}}</th>
                         <td>{{day.Date}}</td>
                         <td>{{day.Budget}} $</td>
-                        <td><a href="javascript:void(0)" ng-click="onEditDay(day.Id)" >Edit</a> | <a href="javascript:void(0)" ng-click="onDeleteDay(day.Id)">Delete</a></td>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="onDestinations(day)" >Destinations</a>
+                            | <a href="javascript:void(0)" ng-click="onEditDay(day.Id)" >Edit</a>
+                            | <a href="javascript:void(0)" ng-click="onDeleteDay(day.Id)">Delete</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
