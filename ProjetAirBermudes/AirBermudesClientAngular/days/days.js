@@ -14,12 +14,12 @@ function DaysController($scope, $rootScope, $routeParams, $location, IdentitySer
     $scope.showAlertSucess = MsgFlashService.showMessage;
     $scope.showAlertError = MsgFlashService.showErrorMessage;
     MsgFlashService.hideMessages();
-    
+
     $scope.DataService = DataService;
-        
+
     $scope.days = [];
     $scope.currentDay = DataService.currentDay;
-    
+
     $scope.$watch('DataService.days', function (newVal, oldVal, scope) {
         if (newVal) {
             $scope.days = DataService.days;
@@ -31,7 +31,7 @@ function DaysController($scope, $rootScope, $routeParams, $location, IdentitySer
             $scope.currentDay = DataService.currentDay;
         }
     });
-        
+
     $scope.onAddDay = function () {
         console.log("onAddDay");
         $location.path("/days/add")
@@ -46,11 +46,11 @@ function DaysController($scope, $rootScope, $routeParams, $location, IdentitySer
         console.log("onDeleteDay");
         DaysService.deleteDay(id);
     }
-    
+
     $scope.onDestinations = function (day) {
         console.log("onDestinations");
         DataService.currentDay = day;
-        $location.path("/destinations/" + day.Id);
+        $location.path("/destinations/forDays/" + day.Id);
     }
 
     $scope.saveDay = function() {
@@ -104,7 +104,7 @@ function DaysController($scope, $rootScope, $routeParams, $location, IdentitySer
 
 function DaysService($http, $q, DataService) {
     var baseUrl = "http://localhost:53762/api/Days";
-    
+
     /////////////////////////////////////////////////////////////////////////////
     // GET - ASYNCHRONOUS
     /////////////////////////////////////////////////////////////////////////////
@@ -123,14 +123,14 @@ function DaysService($http, $q, DataService) {
         if (token) {
             headers.Authorization = 'Bearer ' + token;
         }*/
-        
+
         $http({
             method: 'GET',
             url: baseUrl,
             dataType: 'json',
             contentType: 'application/json'
             //headers: headers
-            
+
         })
         .success(function (data) {
             console.log("loadDays: OK");
@@ -261,7 +261,7 @@ function DaysService($http, $q, DataService) {
         .success(function (data) {
             console.log("deleteDay: OK");
             console.log(data);
-            
+
             console.log('Current list length: ' + DataService.days.length);
 
             for (index = 0; index < DataService.days.length; index++) {

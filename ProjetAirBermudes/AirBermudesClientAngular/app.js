@@ -117,6 +117,13 @@ angular.module('AppAirBermudes', [
             requireAuthentication: true
         }
     });
+    $routeProvider.when('/destinations/:action/:id', {
+        templateUrl: '/destinations/day_destinationsDetails.html',
+        controller: 'DestinationsController',
+        access: {
+            requireAuthentication: true
+        }
+    });
 
     $routeProvider.when('/travelsedit', {
         templateUrl: '/travels/edit.html',
@@ -255,16 +262,16 @@ function DataService(IdentityService) {
 
     //////////////////////////////////////////////////////////////////////////////////
     // BEGIN: MARC'S CODE, Copied by: Andres
-     
+
 
      var identityS = IdentityService;
      var token = identityS.getToken();
-    
+
      /*
          Get the latest travels, associated with the current user, from the API.
      */
      this.getLatestTravels = function (successCallback, errorCallback) {
-    
+
          $.ajax({
              type: 'GET',
              url: 'http://localhost:53762/api/Travels',
@@ -274,31 +281,31 @@ function DataService(IdentityService) {
              }
          })
          .success(function (data) {
-    
+
              if (successCallback) {
                  successCallback(data);
              }
          })
          .error(function (error) {
-    
+
              if (errorCallback) {
                  errorCallback(error);
              }
          });
      };
-    
-    
+
+
      // Allows to calculate the total expenses of the current travel
      this.getTotalExpenses = function() {
          var totalExpenses = 0;
-    
+
          if(this.currentTravel) {
              if(this.currentTravel.Courses) {
                  for(index = 0; index < this.currentTravel.Courses.length; index++) {
                      totalExpenses += this.currentTravel.Courses[index].Budget;
                  }
              }
-    
+
              if(this.currentTravel.Days) {
                  for(index = 0; index < this.currentTravel.Days.length; index++) {
                      totalExpenses += this.currentTravel.Days[index].Budget;

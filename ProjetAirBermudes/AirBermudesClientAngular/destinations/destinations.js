@@ -58,6 +58,30 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
       });
   }
 
+  $scope.getDestinationsForSpecificDay = function(DayId){
+
+    $.ajax({
+        method: 'GET',
+        url: "http://localhost:53762/api/Destinations/",
+        headers: headers
+    })
+        .success(function (data) {
+            console.log("Data from API ", data);
+            $scope.destinations = data;
+            console.log("Data from destinations array ", $scope.destinations);
+            //sets a Position field to items in the array for Listing on the index
+            for (var i = 0; i < $scope.destinations.length; i++) {
+                var destination = $scope.destinations[i];
+                destination.Position = i + 1;
+            }
+            //console.log("Data from destinations array ", $scope.destinations);
+            $scope.$apply();
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+  }
 
   $scope.getDestinations = function(){
 
@@ -72,8 +96,8 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
             console.log("Data from destinations array ", $scope.destinations);
             //sets a Position field to items in the array for Listing on the index
             for (var i = 0; i < $scope.destinations.length; i++) {
-                var course = $scope.destinations[i];
-                course.Position = i + 1;
+                var destination = $scope.destinations[i];
+                destination.Position = i + 1;
             }
             //console.log("Data from destinations array ", $scope.destinations);
             $scope.$apply();
@@ -223,6 +247,8 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
 
         } else if ($routeParams.action == "edit") {
             $scope.getDestination($routeParams.id);
+        }else if ($routeParams.action == "forDays") {
+               console.log("Destinations for days");
         } else if ($routeParams.action === undefined) {
             $scope.getDestinations();
         }
