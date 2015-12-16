@@ -1,5 +1,8 @@
-﻿using System;
+﻿using AirBermudesAPI.Models;
+using ProjetAirBermudes.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -13,6 +16,10 @@ namespace ProjetAirBermudes
     {
         protected void Application_Start()
         {
+
+            //DB initializer
+            //Database.SetInitializer<ApplicationDbContext>(new DatabaseInitializer());
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

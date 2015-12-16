@@ -10,8 +10,9 @@ angular.module('AppAirBermudes', [
     'AppAirBermudes.mapService',
     'AppAirBermudes.travelsMarc',
     'AppAirBermudes.days',
+    'AppAirBermudes.destinations',
     'AppAirBermudes.RouteAutorization'
-    
+
 
     //'AppAirBermudes.AuthentificationService',
 ])
@@ -48,7 +49,7 @@ angular.module('AppAirBermudes', [
             requireAuthentication: true
         }
     });
-    
+
     $routeProvider.when('/days/:action/:id', {
         templateUrl: '/days/editDay.html',
         controller: 'DaysController',
@@ -56,7 +57,7 @@ angular.module('AppAirBermudes', [
             requireAuthentication: true
         }
     });
-    
+
     $routeProvider.when('/travels', {
         templateUrl: '/travels/home.html',
         controller: 'TravelsController',
@@ -90,6 +91,20 @@ angular.module('AppAirBermudes', [
     $routeProvider.when('/editCourse', {
         templateUrl: '/courses/editCourse.html',
         controller: 'CourseController',
+        access: {
+            requireAuthentication: true
+        }
+    });
+    $routeProvider.when('/destinations', {
+        templateUrl: '/destinations/destinations.html',
+        controller: 'DestinationsController',
+        access: {
+            requireAuthentication: true
+        }
+    });
+    $routeProvider.when('/addDestination', {
+        templateUrl: '/destinations/addDestination.html',
+        controller: 'DestinationsController',
         access: {
             requireAuthentication: true
         }
@@ -216,3 +231,90 @@ angular.module('AppAirBermudes.DataTransferingService', [])
     }
 
 })
+
+////////////////////////////////////////////////////////////////
+// DATA SERVICE
+////////////////////////////////////////////////////////////////
+angular.module('AppAirBermudes.DataService', [])
+.service('DataService', DataService);
+
+function DataService() {
+    // Add here all the fields to share data
+    // between controllers and services
+    // Format: this.XXXX;
+    var service = this;
+
+    // TRAVEL
+    this.currerntTravel = {};
+
+    //////////////////////////////////////////////////////////////////////////////////
+    // BEGIN: MARC'S CODE, Copied by: Andres
+    // Marc: please check if this fits your needs
+    // var identityS = IdentityService;
+    // var token = identityS.getToken();
+    //
+    // /*
+    //     Get the latest travels, associated with the current user, from the API.
+    // */
+    // service.getLatestTravels = function (successCallback, errorCallback) {
+    //
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: 'http://localhost:53762/api/Travels',
+    //         headers: { Authorization: 'Bearer ' + token },
+    //         data: {
+    //             grant_type: 'password',
+    //         }
+    //     })
+    //     .success(function (data) {
+    //
+    //         if (successCallback) {
+    //             successCallback(data);
+    //         }
+    //     })
+    //     .error(function (error) {
+    //
+    //         if (errorCallback) {
+    //             errorCallback(error);
+    //         }
+    //     });
+    //
+    // };
+    //
+    //
+    //
+    // service.getLatestTravels();
+    //
+    //
+    // // Allows to calculate the total expenses of the current travel
+    // function getTotalExpenses() {
+    //     var totalExpenses = 0;
+    //
+    //     if(this.currentTravel) {
+    //         if(this.currentTravel.Courses) {
+    //             for(index = 0; index < this.currentTravel.Courses.length; index++) {
+    //                 totalExpenses += this.currentTravel.Courses[index].Budget;
+    //             }
+    //         }
+    //
+    //         if(this.currentTravel.Days) {
+    //             for(index = 0; index < this.currentTravel.Days.length; index++) {
+    //                 totalExpenses += this.currentTravel.Days[index].Budget;
+    //             }
+    //         }
+    //     }
+    //     return totalExpenses;
+    // }
+
+    // END OF MARC'S CODE
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    // DAYS AND CURRENT DAYS
+    this.days = [];
+    this.currentDay = {};
+
+    function setCurrentDay(data) {
+        this.currentDay.Id = data.Id;
+        this.currentDay.Date = new Date(data.Date);
+    }
+};

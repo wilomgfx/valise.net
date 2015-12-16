@@ -1,0 +1,48 @@
+<div class="container theme-showcase" role="main">
+    <div class="row">
+        <div ng-show="showAlertSucess" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p>{{flashMessage}}</p>
+        </div>
+        <div ng-show="showAlertError" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p>{{flashErrors}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Destinations</div>
+                <div class="panel-body">
+                    <a href="#/addDestination">Create new destination</a>
+                    <button class="btn btn-default" ng-click="getDestinations()">Get My destinations</button>
+                </div>
+        </div>
+            <!-- Table -->
+            <h3 class="text-center">All your destinations for this travel</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Destination type</th>
+                        <th>Destination name</th>
+                        <th>Destination adress</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="dest in destinations">
+                        <th scope="row">{{dest.Position}}</th>
+                        <td>{{dest.Type}}</td>
+                        <td>{{dest.Name}}</td>
+                        <td>{{dest.Address}}</td>
+                        <td><a href="#/editCourse">Edit</a>|
+                          <a href="javascript:void(0)" ng-click="deleteCourse(course.Id)">Delete</a>|
+                          <a href="javascript:void(0)" onClick="alert('Not implemented')">View associated day</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
