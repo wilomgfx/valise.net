@@ -12,8 +12,9 @@ namespace AirBermudesAPI.Models
 
         public string Title { get; set; }
 
-        public DateTime DateBegin { get; set; }
-        public DateTime DateEnd { get; set; }
+        public DateTime? DateBegin { get; set; }
+        public DateTime? DateEnd { get; set; }
+        public int? nbDays { get; set; }
 
         public decimal Budget { get; set; }
 

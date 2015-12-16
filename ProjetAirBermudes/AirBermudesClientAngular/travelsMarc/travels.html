@@ -6,6 +6,15 @@
     <p>New</p>
 </a>
 
+<div ng-if="requestError" class="alert alert-danger alert-dismissible fade in" role="alert">
+    <h4>Oh snap! You request to the server get lost in the Bermuda Triangle!</h4>
+    <p>Or perhabs the server is not open. Did you check the busines hour?</p>
+    <br />
+    <p style="font-size: 10px;">
+        {{requestError}}
+    </p>
+</div>
+
 <div ng-repeat="travel in Travels">
 
     <travel-min-details travel="travel"></travel-min-details>

@@ -6,51 +6,35 @@
 ;
 
 
-function TravelsController($scope, TravelsService, IdentityService) {
+function TravelsController($scope, TravelsService, IdentityService, DataService) {
 
     $scope.travelsS = TravelsService;
-    $scope.identityS = IdentityService;
-
-    var token = $scope.identityS.getToken();
+    $scope.dataS = DataService;
 
     $scope.Travels = [];
 
-    $scope.travelsS.clearTravels();
+    $scope.requestError = "";
 
-    /*
-        Get the latest travels, associated with the current user, from the API.
-    */
-    this.getLatestTravels = function () {
 
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:53762/api/Travels',
-            headers: { Authorization: 'Bearer ' + token },
-            data: {
-                grant_type: 'password',
-            }
-        })
-        .success(function (data) {
+    $scope.dataS.getLatestTravels(
+        function (data) {
+            $scope.requestError = "";
 
-            for (var i = 0; i < data.length ; i++) {
-
-                $scope.travelsS.addTravel(data[i]);
-            }
-
+            $scope.travelsS.setTravels(data)
+            $scope.Travels = data;
             $scope.$apply();
-        })
-        .error(function (error) {
+        },
+        function (error) {
 
-            console.log(error);
-        });
-    };
+            $scope.requestError = error;
+            $scope.$apply();
+        }
+    );
 
-    $scope.$watch('travelsS.getTravels()', function (data) {
+    $scope.$watch('travelsS.getTravels', function (data) {
 
         $scope.Travels = data;
     });
-
-    this.getLatestTravels();
 };
 
 
@@ -61,6 +45,10 @@ function TravelsService() {
 
     service.addTravel = function (travel) {
         travels.push(travel);
+    };
+
+    service.setTravels = function (travelArray) {
+        travels = travelArray;
     };
 
     service.getTravels = function () {
@@ -256,19 +244,23 @@ function CreateTravelDirectiveController($scope, IdentityService, TravelsService
             }
 
             if ($scope.showByDays) {
-                //data.
+                data.NbDays = $scope.nbrofdays;
+                data.DateBegin = "";
+                data.DateEnd = "";
+            }
+            else if ($scope.showByDates) {
+
+                data.DateBegin = $scope.data.dateTakeOffDropDownInput.toLocaleDateString("fr-CA") + " " + $scope.data.dateTakeOffDropDownInput.toLocaleTimeString("fr-CA");
+                data.DateEnd = $scope.data.dateArrivaleDropDownInput.toLocaleDateString("fr-CA") + " " + $scope.data.dateArrivaleDropDownInput.toLocaleTimeString("fr-CA");
+
+                data.NbDays = "";
             }
 
             $.ajax({
                 method: 'POST',
                 url: $scope.baseURLTravels,
                 headers: { Authorization: 'Bearer ' + token },
-                data:
-                {
-                    DateBegin: $scope.datebegin,
-                    DateEnd: $scope.dateend,
-                }
-
+                data: data
             }).fail(function (error) {
 
                 console.log(error);
@@ -282,6 +274,7 @@ function CreateTravelDirectiveController($scope, IdentityService, TravelsService
                 */
 
                 $scope.$apply();
+
             }).success(function (data) {
 
                 // Puisque c'est un success, on ajoute le voyage dans la liste locale
