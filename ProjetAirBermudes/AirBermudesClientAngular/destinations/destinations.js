@@ -1,7 +1,7 @@
-angular.module('AppAirBermudes.destinations',[])
+angular.module('AppAirBermudes.destinations',['ngRoute'])
 .controller('DestinationsController',DestinationsController)
 
-function DestinationsController($scope,IdentityService,MsgFlashService,$location,$timeout)
+function DestinationsController($scope,$routeParams,IdentityService,MsgFlashService,$location,$timeout )
 {
 
   //messages from the msgservice
@@ -25,6 +25,38 @@ function DestinationsController($scope,IdentityService,MsgFlashService,$location
   headers.Authorization = 'Bearer ' + IdentityService.getToken();
 
   $scope.destinations = [];
+
+  //TODO change move ajax calls to a service
+
+  $scope.currentDestination = {};
+
+  $scope.onEdit = function (id){
+    console.log("onEditDestination");
+    $location.path("/destinations/edit/" + id)
+  }
+
+  $scope.getDestination = function (id) {
+      console.log("getDestination ID = " + id);
+
+      $.ajax({
+          method: 'GET',
+          url: "http://localhost:53762/api/Destinations/"+id,
+          dataType: 'json',
+          contentType: 'application/json',
+          headers: headers
+
+      })
+      .success(function (data) {
+          console.log("getDestination: OK");
+          //console.log(data);
+          $scope.currentDestination = data;
+          console.log("Current destination : ", $scope.currentDestination);
+          $scope.$apply();
+      })
+      .fail(function (error){
+        consoloe.log("oups ",error);
+      });
+  }
 
 
   $scope.getDestinations = function(){
@@ -137,6 +169,62 @@ function DestinationsController($scope,IdentityService,MsgFlashService,$location
               console.log("ErrorMessages Array: " ,$scope.errorMessages);
               $scope.$apply();
           });
+        }
+
+        $scope.deleteDistination = function (Id) {
+            $.ajax({
+                method: 'DELETE',
+                url: "http://localhost:53762/api/Destinations/" + Id,
+                headers: headers
+            })
+                .success(function (data) {
+                    console.log("Data from API ", data);
+                    MsgFlashService.setMessage("Succesfully added your destination to this travel!");
+                    $scope.flashMessage = MsgFlashService.getMessage();
+                    $scope.showAlertSucess = MsgFlashService.showMessage;
+                    $scope.getDestinations();
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+        }
+
+        $scope.editDestination = function () {
+
+              //dest type toLowerCase for seemingless integration to google maps API
+              var DestTypeToLower = $scope.currentDestination.Type.toLowerCase();
+              //checking if the destype is amusement park
+              if(DestTypeToLower === "amusement park"){
+                 DestTypeToLower = "amusement_park"
+              }
+                $.ajax({
+                    method: 'PUT',
+                    url: "http://localhost:53762/api/Destinations/" + $scope.currentDestination.DestinationID,
+                    headers: headers,
+                    data: {
+                      DestinationID : $scope.currentDestination.DestinationID,
+                      Type: DestTypeToLower,
+                      Name: $scope.currentDestination.Name,
+                      Address: $scope.currentDestination.Address,
+                    }
+                })
+                    .success(function (data) {
+                        console.log("Successfully updated the course");
+                        $scope.getDestinations();
+                    })
+                    .error(function (error) {
+                        console.log(error);
+                    });
+            }
+
+
+        console.log("Action: " + $routeParams.action);
+        if ($routeParams.action == "add") {
+
+        } else if ($routeParams.action == "edit") {
+            $scope.getDestination($routeParams.id);
+        } else if ($routeParams.action === undefined) {
+            $scope.getDestinations();
         }
 
 

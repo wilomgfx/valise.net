@@ -1,7 +1,7 @@
 ﻿angular.module('AppAirBermudes.courses', ['ngRoute'])
 .controller('CourseController', CourseController);
 
-function CourseController($scope, $rootScope, IdentityService, MsgFlashService, $timeout, $location) {
+function CourseController($scope, $rootScope,$routeParams, IdentityService, MsgFlashService, $timeout, $location) {
 
     //SelectList for TransportTypes
     $scope.selecListChoices = {
@@ -12,6 +12,16 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
         ],
         selectedOption: { TransportID: '1', TransportName: 'Taxi' } //This sets the default value of the select in the ui
     };
+
+    //TODO change move ajax calls to a service
+
+    $scope.currentCourse = {};
+
+    $scope.onEdit = function (id){
+      console.log("onEditCourse");
+      $location.path("/courses/edit/" + id)
+    }
+
 
     $scope.getTransportTypes = function () {
         $.ajax({
@@ -68,6 +78,28 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
     //MsgFlashService.setErrorMessage("an error occured, please try again");
     //MsgFlashService.hideMessages();
 
+    $scope.getCourse = function (id) {
+        console.log("getCourse ID = " + id);
+
+        $.ajax({
+            method: 'GET',
+            url: "http://localhost:53762/api/Courses/"+id,
+            dataType: 'json',
+            contentType: 'application/json',
+            headers: headers
+
+        })
+        .success(function (data) {
+            console.log("getCourse: OK");
+            //console.log(data);
+            $scope.currentCourse = data;
+            console.log("Current course : ", $scope.currentCourse);
+            $scope.$apply();
+        })
+        .fail(function (error){
+          consoloe.log("oups ",error);
+        });
+    }
 
     $scope.addCourse = function (TransportName) {
 
@@ -188,7 +220,7 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
         })
             .success(function (data) {
                 console.log("Data from API ", data);
-                MsgFlashService.setMessage("Succesfully added your course to this travel! You are now going to be redirected back to index");
+                MsgFlashService.setMessage("Succesfully deleted your course to this travel!");
                 $scope.flashMessage = MsgFlashService.getMessage();
                 $scope.showAlertSucess = MsgFlashService.showMessage;
                 $scope.getCourses();
@@ -198,7 +230,8 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
             });
     }
 
-    $scope.editCourse = function (Course) {
+
+    $scope.editCourse = function (TransportName) {
 
         // console.log(Course);
         // console.log(Course.Id);
@@ -213,16 +246,16 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
 
             $.ajax({
                 method: 'PUT',
-                url: "http://localhost:53762/api/Courses/" + Course.Id,
+                url: "http://localhost:53762/api/Courses/" + $scope.currentCourse.CourseID,
                 headers: headers,
                 data: {
-                    Id: Course.Id,
-                    StartDate: Course.StartDate,
-                    EndDate: Course.EndDate,
-                    DestinationAddress: Course.DestinationAddress,
-                    DepartureAddress: Course.DepartureAddress,
-                    TransportCompanyName: Course.TransportCompanyName,
-                    TransportName: Course.TransportName
+                    Id: $scope.currentCourse.CourseID,
+                    StartDate: $scope.currentCourse.StartDate,
+                    EndDate: $scope.currentCourse.EndDate,
+                    DestinationAddress: $scope.currentCourse.DestinationAddress,
+                    DepartureAddress: $scope.currentCourse.DepartureAddress,
+                    TransportCompanyName: $scope.currentCourse.TransportCompanyName,
+                    TransportName: TransportName
                 }
             })
                 .success(function (data) {
@@ -235,7 +268,16 @@ function CourseController($scope, $rootScope, IdentityService, MsgFlashService, 
         }
 
 
-};
+    console.log("Action: " + $routeParams.action);
+    if ($routeParams.action == "add") {
+
+    } else if ($routeParams.action == "edit") {
+        $scope.getCourse($routeParams.id);
+    } else if ($routeParams.action === undefined) {
+        $scope.getCourses();
+    }
+
+}
 //added a indexofObject to Array
 //Array.prototype.indexOfObject = function (property, value)
 //{

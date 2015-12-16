@@ -10,5 +10,7 @@ namespace AirBermudesAPI.Models
         public int TransportID { get; set; }
 
         public string TransportName { get; set; }
+
+        public Travel Travel { get; set; }
     }
 }
