@@ -161,6 +161,8 @@ function DaysService($http, $q, DataService) {
         .success(function (data) {
             console.log("getDay: OK");
             console.log(data);
+
+            data.Date = new Date(data.Date);
             DataService.currentDay = data;
         });
     }

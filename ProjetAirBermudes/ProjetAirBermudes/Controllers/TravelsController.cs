@@ -98,29 +98,27 @@ namespace AirBermudesAPI.Controllers
         }
 
         // POST: api/Travels
-        [ResponseType(typeof(Travel))]
-        public IHttpActionResult PostTravel(TravelDTO travelDTO)
+        [ResponseType(typeof(TravelDTO))]
+        public IHttpActionResult PostTravel(Travel travel)
         {
 
-            UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-            //ApplicationUser user = UserManager.FindByEmail(travelDTO.username);
+            UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(db);
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
 
-            ApplicationUser user = db.Users.Where(u => u.Email.Equals(travelDTO.username)).Include(u => u.Travels).SingleOrDefault();
+            if (travel.ApplicationUsers == null)
+            {
+                travel.ApplicationUsers = new List<ApplicationUser>();
+            }
 
-            Travel trav = new Travel();
-
-            trav.Budget = travelDTO.Budget;
-            trav.DateBegin = DateTime.Parse(travelDTO.DateBegin);
-            trav.DateEnd = DateTime.Parse(travelDTO.DateEnd);
-            trav.Title = travelDTO.Title;
-
+            travel.ApplicationUsers.Add(user);
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Travels.Add(trav);
+            db.Travels.Add(travel);
             db.SaveChanges();
 
             if(user.Travels == null)
@@ -128,10 +126,12 @@ namespace AirBermudesAPI.Controllers
                 user.Travels = new List<Travel>();
             }
 
-            user.Travels.Add(trav);
+            user.Travels.Add(travel);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = trav.TravelId }, trav);
+            TravelDTO travelDTO = new TravelDTO(travel);
+
+            return Ok(travelDTO);
         }
 
         // DELETE: api/Travels/5
@@ -181,3 +181,53 @@ namespace AirBermudesAPI.Controllers
         //}
     }
 }
+
+
+
+
+/*
+
+ // POST: api/Travels
+        //[ResponseType(typeof(Travel))]
+        public IHttpActionResult PostTravel(TravelDTO travelDTO)
+        {
+
+            //UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //ApplicationUser user = UserManager.FindByEmail(travelDTO.username);
+
+            //ApplicationUser user = db.Users.Where(u => u.Email.Equals(travelDTO.username)).Include(u => u.Travels).SingleOrDefault();
+
+            UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(db);
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+
+            Travel trav = new Travel();
+
+            trav.Budget = travelDTO.Budget;
+            trav.DateBegin = DateTime.Parse(travelDTO.DateBegin);
+            trav.DateEnd = DateTime.Parse(travelDTO.DateEnd);
+            trav.Title = travelDTO.Title;
+
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Travels.Add(trav);
+            db.SaveChanges();
+
+            if(user.Travels == null)
+            {
+                user.Travels = new List<Travel>();
+            }
+
+            user.Travels.Add(trav);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = trav.TravelId }, trav);
+        }
+
+
+
+*/

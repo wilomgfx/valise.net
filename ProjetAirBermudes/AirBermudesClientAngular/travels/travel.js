@@ -28,6 +28,8 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, $location, I
     $scope.dateStartIsGood = false;
     $scope.dateEndIsGood = false;
 
+    var token = IdentityService.getToken();
+
     $scope.onTimeSetStart = function (newDate, oldDate) {
 
         var thedate = "" + newDate;
@@ -526,10 +528,12 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, $location, I
         }
 
         $.ajax({
-            type: 'POST',
+            method: 'POST',
             url: $scope.baseURLTravels,
+            headers: { Authorization: 'Bearer ' + token },
             data:
             {
+                TravelId: 0,
                 Title: $scope.traveltitle,
                 DateBegin: $scope.datebegin,
                 DateEnd: $scope.dateend,

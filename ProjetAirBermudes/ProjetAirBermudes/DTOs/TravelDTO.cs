@@ -16,7 +16,7 @@ namespace AirBermudesAPI.Models
 
         public decimal Budget { get; set; }
 
-        public string username { get; set; }
+        //public string username { get; set; }
 
         public TravelDTO(Travel travel)
         {

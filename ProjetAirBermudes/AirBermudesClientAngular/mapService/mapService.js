@@ -284,7 +284,11 @@ function SuggestionMarkerPopup() {
         },
         controller: function ($scope) {
 
-            $scope.addToDestinations = function () {
+            $scope.addToDestinations = function (callback) {
+
+                if (callback) {
+                    callback(/* name + address */);
+                }
 
                 alert("Not implemented !!!");
             }
