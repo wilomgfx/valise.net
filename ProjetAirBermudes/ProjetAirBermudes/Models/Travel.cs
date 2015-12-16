@@ -1,23 +1,27 @@
-﻿using ProjetAirBermudes.Models;
+﻿using AirBermudesAPI.Validation;
+using ProjetAirBermudes.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace AirBermudesAPI.Models
 {
-    public class Travel
+    public class Travel : TravelValidation
     {
-        public int TravelId { get; set; }
+        public override int TravelId { get; set; }
 
-        public string Title { get; set; }
+        [Required]
+        public override string Title { get; set; }
 
-        public DateTime? DateBegin { get; set; }
-        public DateTime? DateEnd { get; set; }
-        public int? nbDays { get; set; }
+        public override DateTime? DateBegin { get; set; }
+        public override DateTime? DateEnd { get; set; }
+        public override int? nbDays { get; set; }
 
-        public decimal Budget { get; set; }
+        [Required]
+        public override decimal Budget { get; set; }
 
-        public List<ApplicationUser> ApplicationUsers { get; set; }
+        public override List<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

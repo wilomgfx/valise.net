@@ -263,17 +263,7 @@ function CreateTravelDirectiveController($scope, IdentityService, TravelsService
                 data: data
             }).fail(function (error) {
 
-                console.log(error);
-
-                /*
-                //$scope.errorHappened = true;
-                MsgFlashService.setErrorMessage("Une erreur est survenue lors de la création : " + error.responseText);
-                $scope.flashErrors = MsgFlashService.getErrorMessage();
-                $scope.showAlertError = MsgFlashService.showErrorMessage;
-                $scope.showAlertSucess = MsgFlashService.showMessage;
-                */
-
-                $scope.$apply();
+                alert(error);
 
             }).success(function (data) {
 
@@ -376,7 +366,7 @@ function CreateTravelDirectiveController($scope, IdentityService, TravelsService
         if ($scope.budget && $scope.budget != undefined) {
 
             if ($scope.budget < 1) {
-                $scope.budgetErrorMessage = "How can you go travelling if you don't have any money?";
+                $scope.budgetErrorMessage = "You must have a budget to start traveling.";
                 isValid = false;
                 return false;
             }
