@@ -36,8 +36,8 @@
                         <td>{{dest.Type}}</td>
                         <td>{{dest.Name}}</td>
                         <td>{{dest.Address}}</td>
-                        <td><a href="#/editCourse">Edit</a>|
-                          <a href="javascript:void(0)" ng-click="deleteCourse(course.Id)">Delete</a>|
+                        <td><a href="javascript:void(0)" ng-click="onEdit(dest.DestinationID)">Edit</a>|
+                          <a href="javascript:void(0)" ng-click="deleteDistination(dest.DestinationID)">Delete</a>|
                           <a href="javascript:void(0)" onClick="alert('Not implemented')">View associated day</a>
                         </td>
                     </tr>

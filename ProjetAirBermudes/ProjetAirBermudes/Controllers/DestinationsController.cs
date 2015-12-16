@@ -10,6 +10,9 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AirBermudesAPI.Models;
 using ProjetAirBermudes.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using AirBermudesAPI.DTOs;
 
 namespace AirBermudesAPI.Controllers
 {
@@ -17,10 +20,28 @@ namespace AirBermudesAPI.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Destinations
-        public IQueryable<Destination> GetDestinations()
+        //// GET: api/Destinations
+        //public IQueryable<Destination> GetDestinations()
+        //{
+        //    return db.Destinations;
+        //}
+
+        [ResponseType(typeof(IEnumerable<Destination>))]
+        public IHttpActionResult GetDestinations()
         {
-            return db.Destinations;
+            UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(db);
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+            //List<Destination> destinations = db.Destinations.Where(t => t.ApplicationUsers.Any(au => au.Id == user.Id)).ToList();
+            List<DestinationDTO> destinationDTOs = new List<DestinationDTO>();
+            List<Destination> destinations = db.Destinations.ToList();
+
+            foreach (Destination destination in destinations)
+            {
+                destinationDTOs.Add(new DestinationDTO(destination));
+            }
+
+            return Ok(destinationDTOs);
         }
 
         // GET: api/Destinations/5

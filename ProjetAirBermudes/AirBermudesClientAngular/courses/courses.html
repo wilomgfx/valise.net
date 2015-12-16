@@ -42,7 +42,7 @@
                         <td>{{course.EndDate | date : 'MM/dd/yyyy @ h:mma'}}</td>
                         <td>{{course.TransportName}}</td>
                         <td>{{course.TransportCompanyName}}</td>
-                        <td><a href="#/editCourse">Edit</a>|<a href="javascript:void(0)" ng-click="deleteCourse(course.Id)">Delete</a></td>
+                        <td><a href="javascript:void(0)" ng-click="onEdit(course.Id)">Edit</a>|<a href="javascript:void(0)" ng-click="deleteCourse(course.Id)">Delete</a></td>
                     </tr>
                 </tbody>
             </table>

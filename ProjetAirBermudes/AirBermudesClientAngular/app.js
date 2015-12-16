@@ -88,7 +88,7 @@ angular.module('AppAirBermudes', [
             requireAuthentication: true
         }
     });
-    $routeProvider.when('/editCourse', {
+    $routeProvider.when('/courses/:action/:id', {
         templateUrl: '/courses/editCourse.html',
         controller: 'CourseController',
         access: {
@@ -104,6 +104,14 @@ angular.module('AppAirBermudes', [
     });
     $routeProvider.when('/addDestination', {
         templateUrl: '/destinations/addDestination.html',
+        controller: 'DestinationsController',
+        access: {
+            requireAuthentication: true
+        }
+    });
+
+    $routeProvider.when('/destinations/:action/:id', {
+        templateUrl: '/destinations/editDestination.html',
         controller: 'DestinationsController',
         access: {
             requireAuthentication: true

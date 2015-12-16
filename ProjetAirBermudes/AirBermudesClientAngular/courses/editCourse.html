@@ -19,19 +19,19 @@
                         <div ng-class="{'has-error' : hasErrors}">
 
                             <label for="StartDate">StartDate</label>
-                            <input type="text" name="StartDate" class="form-control" ng-model="StartDate" value="{{StartDate}}"/>
+                            <input type="text" name="StartDate" datetime="yyyy-MM-dd" class="form-control" ng-model="currentCourse.StartDate"/>
 
                             <label for="DepartureAdress">Departure address</label>
-                            <input type="text" name="DepartureAdress" class="form-control" ng-model="DepartureAddress" />
+                            <input type="text" name="DepartureAdress" class="form-control" ng-model="currentCourse.DepartureAddress"/>
 
                             <label for="DestinationAddress">Destination address</label>
-                            <input type="text" name="DestinationAddress" class="form-control" ng-model="DestinationAddress" />
+                            <input type="text" name="DestinationAddress" class="form-control" ng-model="currentCourse.DestinationAddress"/>
 
                             <label for="EndDate">EndDate</label>
-                            <input type="text" name="EndDate" class="form-control" ng-model="EndDate" />
+                            <input type="text" name="EndDate" datetime="yyyy-MM-dd" class="form-control" ng-model="currentCourse.EndDate" />
 
                             <label for="TransportCompanyName">TransportCompanyName</label>
-                            <input type="text" name="TransportCompanyName" class="form-control" ng-model="TransportCompanyName" />
+                            <input type="text" name="TransportCompanyName" class="form-control" ng-model="currentCourse.TransportCompanyName"/>
 
                             <input type="hidden" name="CourseID" value="{{Course.Id}}">
 
@@ -49,7 +49,7 @@
 
 
                         <br />
-                        <input type="submit" class="btn btn-default" value="Add course" />
+                        <input type="submit" class="btn btn-default" value="Edit course" />
                     </form>
                 </div>
             </div>
