@@ -22,8 +22,6 @@ function AccountController($scope, $location, AccountService, IdentityService) {
             // success
             function (data) {
 
-                console.log(data);
-
                 $scope.errorMessage = "";
                 $scope.$apply();
 

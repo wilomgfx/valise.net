@@ -18,6 +18,7 @@ function TravelsController($scope, TravelsService, IdentityService, DataService)
 
     $scope.dataS.getLatestTravels(
         function (data) {
+
             $scope.requestError = "";
 
             $scope.travelsS.setTravels(data)
@@ -71,7 +72,7 @@ function TravelsService() {
 };
 
 
-function TravelMinDetailsDirective($timeout) {
+function TravelMinDetailsDirective($timeout, MapService) {
 
     return {
 
@@ -87,18 +88,48 @@ function TravelMinDetailsDirective($timeout) {
         },
         link: function ($scope) {
 
-            var mapContainer;
+            var mapS = MapService;
+
+            function showCourses(map) {
+
+                var courcesInfo = [];
+
+                for (var i = 0; i < $scope.travel.CourseDTOs.length; i++) {
+
+                    var course = $scope.travel.CourseDTOs[i];
+
+                    courcesInfo.push(
+                        {
+                            "startingAddress": course.DepartureAddress,
+                            "arrivalAddress": course.DestinationAddress,
+                            "transportType": course.TransportName,
+                            "transporter": course.TransportCompanyName,
+                            "id": course.Id
+                            /*
+                            ,
+                            "startDate": course.StartDate,
+                            "endDate": course.EndDate
+                            */
+                        }
+                    );
+                }
+                
+                if (typeof courcesInfo !== 'undefined' && courcesInfo.length > 0) {
+                    mapS.showCourses($scope, map, courcesInfo);
+                }
+            };
 
             $timeout(function () {
 
-                mapContainer = document.getElementById('map' + $scope.travel.TravelId);
+                var mapContainer = document.getElementById('map' + $scope.travel.TravelId);
 
                 var map = new google.maps.Map(mapContainer, {
                     zoom: 2,
                     center: { lat: 45.501459, lng: -73.567543 },
                 });
-            });
 
+                showCourses(map);
+            });
 
         }
     };
@@ -205,6 +236,8 @@ function CreateTravelDirectiveController($scope, IdentityService, TravelsService
         $scope.showByDays = false;
     };
 
+    // ========== Create ==========
+
     $scope.CreateTravel = function () {
 
         isValid = true;
@@ -276,6 +309,8 @@ function CreateTravelDirectiveController($scope, IdentityService, TravelsService
         }
     };
 
+    // ========== Validation functions ==========
+
     $scope.$watch('data.dateTakeOffDropDownInput', validateDateTakeOff);
     $scope.$watch('data.dateArrivaleDropDownInput', validateDateArrival);
     $scope.$watch('nbrofdays', validateNbDays);
@@ -285,8 +320,6 @@ function CreateTravelDirectiveController($scope, IdentityService, TravelsService
     function validateDateTakeOff() {
 
         if ($scope.data && $scope.data.dateTakeOffDropDownInput) {
-
-            console.log(new Date($scope.data.dateTakeOffDropDownInput));
 
             var date = new Date($scope.data.dateTakeOffDropDownInput);
 

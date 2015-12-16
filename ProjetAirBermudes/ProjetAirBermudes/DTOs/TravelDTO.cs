@@ -1,4 +1,5 @@
-﻿using AirBermudesAPI.Validation;
+﻿using AirBermudesAPI.DTOs;
+using AirBermudesAPI.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,38 +19,32 @@ namespace AirBermudesAPI.Models
 
         public decimal Budget { get; set; }
 
-        //public string username { get; set; }
+        public List<CourseDTO> CourseDTOs { get; set; }
 
         public TravelDTO(Travel travel)
         {
             this.TravelId = travel.TravelId;
-            this.Title = travel.Title;
-            
-            if (travel.DateBegin.HasValue)
-            {
-                this.DateBegin = travel.DateBegin.Value.ToLongDateString();
-            }
-            else
-            {
-                this.DateBegin = "";
-            }
-            
-            //this.DateBegin = travel.DateBegin.ToLongDateString();
-            
-            if (travel.DateEnd.HasValue)
-            {
-                this.DateEnd = travel.DateEnd.Value.ToLongDateString();
-            }
-            else
-            {
-                this.DateEnd = "";
-            }
-            
-            //this.DateEnd = travel.DateEnd.ToLongDateString();
 
+            this.Title = travel.Title;            
+
+            this.DateBegin = travel.DateBegin.HasValue ? travel.DateBegin.Value.ToLongDateString() : "";
+
+            this.DateEnd = travel.DateEnd.HasValue ? travel.DateEnd.Value.ToLongDateString() : "";
+            
             this.NbDays = travel.nbDays;
 
             this.Budget = travel.Budget;
+
+            if(travel.Courses != null)
+            {
+                this.CourseDTOs = new List<CourseDTO>();
+
+                foreach(Course course in travel.Courses){
+
+                    this.CourseDTOs.Add(new CourseDTO(course));
+                }
+            }
+
         }
     }
 }

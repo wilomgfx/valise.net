@@ -10,8 +10,6 @@ function TravelsController($scope, $rootScope, $http, $route, $sce, $location, I
 
     $scope.dateValues = [];
 
-    
-
     //messages from the msgservice
     $scope.flashMessage = MsgFlashService.getMessage();
     $scope.flashErrors = MsgFlashService.getErrorMessage();

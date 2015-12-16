@@ -23,5 +23,7 @@ namespace AirBermudesAPI.Models
         public override decimal Budget { get; set; }
 
         public override List<ApplicationUser> ApplicationUsers { get; set; }
+
+        public override List<Course> Courses { get; set; }
     }
 }

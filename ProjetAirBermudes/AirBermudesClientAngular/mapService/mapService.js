@@ -24,49 +24,24 @@ function TestPlacesController($scope, MapService) {
     };
 
     var courcesInfo = [
-        {
-            "startingPoint": {
-                "latitude": 37.772323,
-                "longitude": -122.214897
+            {
+                startingAddress: "3800 Chemin Queen Mary, Montréal, QC H3V 1H6",
+                arrivalAddress: "200 McIntyre St E, North Bay, ON P1B 8V6",
+                transportType: "train",
+                transporter: "Via Rail Canada"
             },
-            "arrivalPoint": {
-                "latitude": 21.291982,
-                "longitude": -157.821856
-            },
-            "transportType": "train",
-            "transporter": "Via Rail Canada"
-        },
-        {
-            "startingPoint": {
-                "latitude": 21.291982,
-                "longitude": -157.821856
-            },
-            "arrivalPoint": {
-                "latitude": -18.142599,
-                "longitude": 178.431
-            },
-            "transportType": "Bull",
-            "transporter": "Rent a bull India"
-        },
-        {
-            "startingPoint": {
-                "latitude": -18.142599,
-                "longitude": 178.431
-            },
-            "arrivalPoint": {
-                "latitude": -27.46758,
-                "longitude": 153.027892
-            },
-            "transportType": "Canoe",
-            "transporter": "Hawaii canoe"
-        }
+            {
+                startingAddress: "200 McIntyre St E, North Bay, ON P1B 8V6",
+                arrivalAddress: "Le Domaine, Parc-de-la-Verendrye, QC J0W 1E0",
+                transportType: "Other",
+                transporter: "Other trans-canadian services"
+            }
     ];
 
 
     placesS.showSuggestions($scope, map, settings, 99);
 
     placesS.showCourses($scope, map, courcesInfo);
-
 };
 
 
@@ -113,7 +88,7 @@ function MapService($compile) {
         'restaurant', 'lodging', 'amusement_park', 'park', 'aquarium', 'casino', 'museum'
 
     */
-    this.showSuggestions = function (scope, map, settings, maxResult) {
+    service.showSuggestions = function (scope, map, settings, maxResult) {
 
         if (!scope) return;
         if (!map) return;
@@ -131,7 +106,7 @@ function MapService($compile) {
 
                 for (i = 0; i < maxResult; i++) {
 
-                    //bounds.extend(results[i].geometry.location);
+                    bounds.extend(results[i].geometry.location);
 
                     var marker = new google.maps.Marker({
                         position: results[i].geometry.location,
@@ -160,103 +135,130 @@ function MapService($compile) {
         Parametters :
         - scope The current scope.
         - map The specified map object.
-        - settings A jsObject contaning the required settings.
         - courcesInfo A jsObject contaning the required information described below.
 
         courcesInfo : [
 
             {
-                startingPoint : {
-                    latitude: 37.772323,
-                    longitude: -122.214897
-                },
-                arrivalPoint : {
-                    latitude: 21.291982,
-                    longitude: -157.821856
-                },
+                startingAddress: "3800 Chemin Queen Mary, Montréal, QC H3V 1H6",
+                arrivalAddress: "200 McIntyre St E, North Bay, ON P1B 8V6",
                 transportType: train,
                 transporter: Via Rail Canada
             },
             {
-                startingPoint : {
-                    latitude: 21.291982,
-                    longitude: -157.821856
-                },
-                arrivalPoint : {
-                    latitude: -18.142599,
-                    longitude: 178.431
-                },
-                transportType: Bull,
-                transporter: Rent a bull India
+                . . . 
             }
         ]
 
     */
-    this.showCourses = function (scope, map, courcesInfo) {
+    service.showCourses = function (scope, map, coursesInfo) {
 
         if (!scope) return;
         if (!map) return;
-        if (!courcesInfo) return;
+        if (!coursesInfo) return;
 
-        var routesCoordinates = [];
         var infoWindow = new google.maps.InfoWindow();
-
-        for (i = 0; i < courcesInfo.length; i++) {
-
-            var routeInfo = courcesInfo[i];
-
-            var startingPoint = new google.maps.LatLng(
-                routeInfo.startingPoint.latitude,
-                routeInfo.startingPoint.longitude
-                );
-
-            var arrivalPoint = new google.maps.LatLng(
-                routeInfo.arrivalPoint.latitude,
-                routeInfo.arrivalPoint.longitude
-                );
-
-            if ($.inArray(startingPoint, routesCoordinates) == -1) {
-
-                routesCoordinates.push(startingPoint);
-
-
-                var marker = new google.maps.Marker({
-                    position: startingPoint,
-                    map: map
-                });
-
-                var content = '<course-marker-popup'
-                + ' transporter="' + routeInfo.transporter + '"'
-                + ' transporttype="' + routeInfo.transportType + '"'
-                + ' ></course-marker-popup>';
-
-                google.maps.event.addListener(marker, 'click', markerOnCLickListener(marker, content, infoWindow, map, scope));
-
-            }
-
-            routesCoordinates.push(arrivalPoint);
-        }
 
         var lineSymbol = {
             path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
             scale: 4,
         };
 
-        var routes = new google.maps.Polyline({
-            path: routesCoordinates,
-            strokeColor: "#FF0000",
-            strokeOpacity: 1.0,
-            strokeWeight: 2,
-            icons: [
-                {
-                    icon: lineSymbol,
-                    offset: '0%',
-                    repeat: '25%'
-                }
-            ],
-        });
+        var icons = [
+            {
+                icon: lineSymbol,
+                offset: '100%'
+            }
+        ];
 
-        routes.setMap(map);
+        function asyncLoop(i) {
+
+            var courseAddresses = [coursesInfo[i].startingAddress, coursesInfo[i].arrivalAddress];
+
+            getLatLngListFromAddresses(courseAddresses, function (cords) {
+
+                var routes = new google.maps.Polyline({
+                    path: cords,
+                    strokeColor: "#FF0000",
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2,
+                    icons: icons
+                });
+
+                routes.setMap(map);
+
+                var marker = new google.maps.Marker({
+                    position: cords[0],
+                    map: map
+                });
+
+                console.log(coursesInfo[i]);
+
+                var content = '<course-marker-popup'
+                + ' transporter="' + coursesInfo[i].transporter + '"'
+                + ' transporttype="' + coursesInfo[i].transportType + '"'
+                + ' address="' + coursesInfo[i].startingAddress + '"'
+                + ' id="' + coursesInfo[i].id + '"'
+                /*
+                + ' startDate="' + coursesInfo[i].startDate + '"'
+                + ' endDate="' + coursesInfo[i].endDate + '"'
+                */
+                + ' ></course-marker-popup>';
+
+                google.maps.event.addListener(marker, 'click', markerOnCLickListener(marker, content, infoWindow, map, scope));
+
+                if (i < coursesInfo.length - 1) {
+                    asyncLoop(i += 1);
+                }
+            });
+        };
+
+        asyncLoop(0);
+    };
+
+    service.geocodeAddress = function (address, callback) {
+
+        var geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({ 'address': address }, function (results, status) {
+
+            if (status == google.maps.GeocoderStatus.OK) {
+
+
+                if (callback) {
+                    callback(results[0].geometry.location);
+                }
+            }
+            else {
+                return null;
+            }
+        });
+    };
+
+    function getLatLngListFromAddresses(AddressesList, callback) {
+
+        var result = [];
+        
+        function asyncLoop(i) {
+
+            var address = AddressesList[i];
+
+            service.geocodeAddress(address, function (data) {
+
+                if (data != null) {
+                    result.push(data);
+                }
+
+                if (i == AddressesList.length - 1 && callback) {
+                    callback(result);
+                }
+                else {
+                    asyncLoop(i += 1);
+                }
+            });
+        };
+
+        asyncLoop(0);
     };
 
     function markerOnCLickListener(marker, content, infoWindow, map, scope) {
@@ -303,9 +305,20 @@ function CourseMarkerPopup() {
         templateUrl: "mapService/courseMarkerPopup.html",
         scope: {
             transporter: '@transporter',
-            transportType: '@transporttype'
+            transporttype: '@transporttype',
+            address: '@address',
+            id: '@id'
+            /*
+            ,
+            startDate: '=startDate',
+            endDate: '=endDate'
+            */
         },
-        controller: function ($scope) {
+        controller: function ($scope, $location) {
+
+            $scope.edit = function () {
+                $location.path("/courses/edit/" + $scope.id);
+            };
 
         }
 
