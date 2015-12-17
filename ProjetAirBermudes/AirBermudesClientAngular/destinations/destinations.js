@@ -4,6 +4,15 @@ angular.module('AppAirBermudes.destinations',['ngRoute'])
 function DestinationsController($scope,$routeParams,IdentityService,MsgFlashService,$location,$timeout )
 {
 
+  //SelectList for TransportTypes
+  $scope.selecListChoices = {
+      availableOptions: [
+        // { DayID: '1', Date: '2015-12-17' },
+        // { DayID: '2', Date: '2015-12-19' },
+        // { DayID: '3', Date: '2015-12-21' }
+      ],
+      selectedOption: {  } //This sets the default value of the select in the ui
+  };
   //messages from the msgservice
   //$scope.flashMessage = MsgFlashService.getMessage();
   //$scope.flashErrors = MsgFlashService.getErrorMessage();
@@ -16,6 +25,12 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
 
   $scope.hasErrors = false;
 
+
+  $scope.onEditDestination = function (id){
+    console.log("onEditDestination");
+    $location.path("/destinations/edit/" + id)
+  }
+
   ////show or not to show the messages
   //$scope.showAlertSucess = MsgFlashService.showMessage;
   //$scope.showAlertError = MsgFlashService.showErrorMessage;
@@ -25,6 +40,31 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
   headers.Authorization = 'Bearer ' + IdentityService.getToken();
 
   $scope.destinations = [];
+
+  $scope.getDays = function () {
+      $.ajax({
+          method: 'GET',
+          url: "http://localhost:53762/api/Days/",
+          headers: headers
+      })
+          .success(function (data) {
+              //console.log("Data from API ", data);
+              for (var i = 0; i < data.length; i++) {
+                  $scope.selecListChoices.availableOptions[i] = data[i];
+              }
+              $scope.selecListChoices.selectedOption = $scope.selecListChoices.availableOptions[0];
+              //$scope.selecListChoices.availableOptions = data;
+              //console.log("Data from selecListChoices array ", $scope.selecListChoices);
+              $scope.$apply();
+          })
+          .error(function (error) {
+              console.log(error);
+          });
+  }
+
+  angular.element(document).ready(function () {
+      $scope.getDays();
+  });
 
   //TODO change move ajax calls to a service
 
@@ -51,10 +91,13 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
           //console.log(data);
           $scope.currentDestination = data;
           console.log("Current destination : ", $scope.currentDestination);
+
+          //TODO set the selected day to the destination's current day
+
           $scope.$apply();
       })
       .fail(function (error){
-        consoloe.log("oups ",error);
+        console.log("oups ",error);
       });
   }
 
@@ -62,7 +105,7 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
 
     $.ajax({
         method: 'GET',
-        url: "http://localhost:53762/api/Destinations/",
+        url: "http://localhost:53762/api/Destinations/DestinationsForSpecificDay/"+DayId,
         headers: headers
     })
         .success(function (data) {
@@ -108,7 +151,7 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
 
   }
 
-  $scope.addDestination = function () {
+  $scope.addDestination = function (Day) {
 
       //dest type toLowerCase for seemingless integration to google maps API
       var DestTypeToLower = $scope.DestType.toLowerCase();
@@ -126,6 +169,7 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
                   Type: DestTypeToLower,
                   Name: $scope.DestName,
                   Address: $scope.DestinationAddress,
+                  DayID : Day.Id
               }
       })
           .success(function (data) {
@@ -213,7 +257,7 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
                 });
         }
 
-        $scope.editDestination = function () {
+        $scope.editDestination = function (Day) {
 
               //dest type toLowerCase for seemingless integration to google maps API
               var DestTypeToLower = $scope.currentDestination.Type.toLowerCase();
@@ -230,11 +274,20 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
                       Type: DestTypeToLower,
                       Name: $scope.currentDestination.Name,
                       Address: $scope.currentDestination.Address,
+                      Day : Day
                     }
                 })
                     .success(function (data) {
                         console.log("Successfully updated the course");
                         $scope.getDestinations();
+                        $scope.$apply(function(){
+                          MsgFlashService.setMessage("Succesfully edit this destination to this travel! You are now going to be redirected back to index");
+                          $scope.flashMessage = MsgFlashService.getMessage();
+                          $scope.showAlertSucess = MsgFlashService.showMessage;
+                          $timeout(function () {
+                              $location.path("/destinations")
+                          }, 2000);
+                        })
                     })
                     .error(function (error) {
                         console.log(error);
@@ -243,12 +296,11 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
 
 
         console.log("Action: " + $routeParams.action);
-        if ($routeParams.action == "add") {
-
-        } else if ($routeParams.action == "edit") {
+        if ($routeParams.action == "edit") {
+            console.log("edit");
             $scope.getDestination($routeParams.id);
-        }else if ($routeParams.action == "forDays") {
-               console.log("Destinations for days");
+        }else if ($routeParams.action == "seeDests") {
+            $scope.getDestinationsForSpecificDay($routeParams.id);
         } else if ($routeParams.action === undefined) {
             $scope.getDestinations();
         }

@@ -29,9 +29,9 @@ namespace AirBermudesAPI.Controllers
         [ResponseType(typeof(IEnumerable<Destination>))]
         public IHttpActionResult GetDestinations()
         {
-            UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(db);
-            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
-            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+            //UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(db);
+            //UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
+            //ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             //List<Destination> destinations = db.Destinations.Where(t => t.ApplicationUsers.Any(au => au.Id == user.Id)).ToList();
             List<DestinationDTO> destinationDTOs = new List<DestinationDTO>();
             List<Destination> destinations = db.Destinations.ToList();
@@ -44,17 +44,42 @@ namespace AirBermudesAPI.Controllers
             return Ok(destinationDTOs);
         }
 
+        [HttpGet]
+        [Route("api/Destinations/DestinationsForSpecificDay/{id}")]
+        // GET: api/Destinations/DestinationsForSpecificDay/5
+        [ResponseType(typeof(IEnumerable<Destination>))]
+        public IHttpActionResult GetDestinationsForSpecificDay(int id)
+        {
+            //UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(db);
+            //UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
+            //ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+            //List<Destination> destinations = db.Destinations.Where(t => t.ApplicationUsers.Any(au => au.Id == user.Id)).ToList();
+            List<DestinationDTO> destinationDTOs = new List<DestinationDTO>();
+            List<Destination> destinations = db.Days.Where(d => d.DayID == id).Include(d => d.Destinations).First().Destinations.ToList();
+
+            foreach (Destination destination in destinations)
+            {
+                destinationDTOs.Add(new DestinationDTO(destination));
+            }
+
+            return Ok(destinationDTOs);
+        }
+
         // GET: api/Destinations/5
-        [ResponseType(typeof(Destination))]
+        [ResponseType(typeof(DestinationDTO))]
         public IHttpActionResult GetDestination(int id)
         {
             Destination destination = db.Destinations.Find(id);
+
             if (destination == null)
             {
                 return NotFound();
             }
 
-            return Ok(destination);
+            //found
+            DestinationDTO destDTO = new DestinationDTO(destination);
+
+            return Ok(destDTO);
         }
 
         // PUT: api/Destinations/5
@@ -94,17 +119,25 @@ namespace AirBermudesAPI.Controllers
 
         // POST: api/Destinations
         [ResponseType(typeof(Destination))]
-        public IHttpActionResult PostDestination(Destination destination)
+        public IHttpActionResult PostDestination(DestinationDTO destinationDTO)
         {
+            Destination newDestination = new Destination();
+            newDestination.Address = destinationDTO.Address;
+            newDestination.Name = destinationDTO.Name;
+            newDestination.Type = destinationDTO.Type;
+            Day associatedDay = db.Days.Where(d => d.DayID == destinationDTO.DayID).First();
+            newDestination.Day = associatedDay;
+
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Destinations.Add(destination);
+            db.Destinations.Add(newDestination);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = destination.DestinationID }, destination);
+            return CreatedAtRoute("DefaultApi", new { id = newDestination.DestinationID }, destinationDTO);
         }
 
         // DELETE: api/Destinations/5

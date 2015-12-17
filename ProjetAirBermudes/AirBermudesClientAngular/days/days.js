@@ -50,7 +50,7 @@ function DaysController($scope, $rootScope, $routeParams, $location, IdentitySer
     $scope.onDestinations = function (day) {
         console.log("onDestinations");
         DataService.currentDay = day;
-        $location.path("/destinations/forDays/" + day.Id);
+        $location.path("/destinations/seeDests/forDay/" + day.Id);
     }
 
     $scope.saveDay = function() {

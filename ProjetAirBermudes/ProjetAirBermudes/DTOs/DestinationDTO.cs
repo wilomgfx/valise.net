@@ -1,6 +1,7 @@
 ﻿using AirBermudesAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,12 +11,16 @@ namespace AirBermudesAPI.DTOs
     {
         public int DestinationID { get; set; }
 
+        [Required]
         public string Type { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Address { get; set; }
 
+        [Required]
         public int DayID { get; set; }
 
         public DestinationDTO()
@@ -29,7 +34,7 @@ namespace AirBermudesAPI.DTOs
             this.Type = pDestination.Type;
             this.Name = pDestination.Name;
             this.Address = pDestination.Address;
-            //this.DayID = pDestination.Day.DayID;
+            this.DayID = pDestination.Day.DayID;
             
         }
     }

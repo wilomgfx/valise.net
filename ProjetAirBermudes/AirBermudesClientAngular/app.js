@@ -117,7 +117,7 @@ angular.module('AppAirBermudes', [
             requireAuthentication: true
         }
     });
-    $routeProvider.when('/destinations/:action/:id', {
+    $routeProvider.when('/destinations/:action/forDay/:id', {
         templateUrl: '/destinations/day_destinationsDetails.html',
         controller: 'DestinationsController',
         access: {

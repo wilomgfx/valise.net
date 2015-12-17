@@ -15,7 +15,8 @@ namespace AirBermudesAPI.Models
 
         public string Address { get; set; }
 
-        public Day Day { get; set; }
+        
+        public virtual Day Day { get; set; }
 
 
     }

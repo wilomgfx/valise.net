@@ -14,12 +14,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Edit this destination for this trip</div>
                 <div class="panel-body">
-                    <form ng-submit="editDestination()" class="form-group">
+                    <form ng-submit="editDestination(selecListChoices.selectedOption)" class="form-group">
 
                         <div ng-class="{'has-error' : hasErrors}">
 
                             <label for="DestType">Destination type</label>
-                            <input type="text"name="DestType" class="form-control" ng-model="currentDestination.Type" placeholder="restaurant ,lodging ,amusement park ,park ,aquarium ,casino ,museum"/>
+                            <input type="text"name="DestType" class="form-control" ng-model="currentDestination.Type"
+                            placeholder="restaurant ,lodging ,amusement park ,park ,aquarium ,casino ,museum"/>
 
                             <label for="DestName">Destination name</label>
                             <input type="text" name="DestName" class="form-control" ng-model="currentDestination.Name" />
@@ -29,6 +30,15 @@
 
                             <span ng-show="hasErrors" class="help-block" ng-repeat="message in errorMessages">{{message}}</span>
                         </div>
+
+                        <div class="form-group">
+                            <label for="TransportType">Choose Associated Day :</label>
+                            <select class="form-control" name="mySelect" id="mySelect"
+                                    ng-options="option.Date for option in selecListChoices.availableOptions track by option.Id"
+                                    ng-model="selecListChoices.selectedOption"></select>
+                        </div>
+                        <tt>option = {{selecListChoices.selectedOption}}</tt><br />
+                        <tt>Date = {{selecListChoices.selectedOption.Date}}</tt><br />
                         <br />
                         <input type="submit" class="btn btn-default" value="Edit destination" />
                     </form>
