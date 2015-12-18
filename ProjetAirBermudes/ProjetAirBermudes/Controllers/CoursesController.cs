@@ -77,7 +77,7 @@ namespace AirBermudesAPI.Controllers
             course.EndDate = courseDTO.EndDate;
             course.TransportCompanyName = courseDTO.TransportCompanyName;
             Transport transport = (Transport)db.Transports.Where(t => t.TransportName == courseDTO.TransportName).First();
-            course.Transport = transport;
+            course.Travel = (Travel)db.Travels.Where(t => t.TravelId == courseDTO.TravelID).First();
 
             if (!ModelState.IsValid)
             {
@@ -123,6 +123,7 @@ namespace AirBermudesAPI.Controllers
             course.TransportCompanyName = courseDTO.TransportCompanyName;
             Transport transport = (Transport)db.Transports.Where(t => t.TransportName == courseDTO.TransportName).First();
             course.Transport = transport;
+            course.Travel = (Travel)db.Travels.Where(t => t.TravelId == courseDTO.TravelID).First();
 
             if (!ModelState.IsValid)
             {

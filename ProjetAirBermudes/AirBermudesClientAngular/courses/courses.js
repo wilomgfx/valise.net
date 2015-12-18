@@ -1,7 +1,7 @@
 ﻿angular.module('AppAirBermudes.courses', ['ngRoute'])
 .controller('CourseController', CourseController);
 
-function CourseController($scope, $rootScope,$routeParams, IdentityService, MsgFlashService, $timeout, $location) {
+function CourseController($scope, $rootScope, $routeParams, IdentityService, MsgFlashService, $timeout, $location, DataService) {
 
     //SelectList for TransportTypes
     $scope.selecListChoices = {
@@ -17,11 +17,15 @@ function CourseController($scope, $rootScope,$routeParams, IdentityService, MsgF
 
     $scope.currentCourse = {};
 
+
     $scope.onEdit = function (id){
       console.log("onEditCourse");
       $location.path("/courses/edit/" + id)
     }
 
+    $scope.Travel = DataService.currentTravel;
+    console.log($scope.Travel);
+    console.log($scope.Travel.TravelId)
 
     $scope.getTransportTypes = function () {
         $.ajax({
@@ -117,7 +121,8 @@ function CourseController($scope, $rootScope,$routeParams, IdentityService, MsgF
                     DestinationAddress: $scope.DestinationAddress,
                     DepartureAddress: $scope.DepartureAddress,
                     TransportCompanyName: $scope.TransportCompanyName,
-                    TransportName: TransportName
+                    TransportName: TransportName,
+                    TravelID: DataService.currentTravel
                 }
         })
             .success(function (data) {

@@ -29,6 +29,9 @@ namespace AirBermudesAPI.DTOs
         [Required]
         public string DepartureAddress { get; set; }
 
+        [Required]
+        public int TravelID { get; set; }
+
         public CourseDTO()
         {
 

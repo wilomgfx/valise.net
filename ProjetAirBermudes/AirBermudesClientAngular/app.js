@@ -274,7 +274,7 @@ function DataService(IdentityService) {
     // between controllers and services
 
     // TRAVEL
-    this.currerntTravel = {};
+    this.currentTravel = {};
 
     //////////////////////////////////////////////////////////////////////////////////
     // BEGIN: MARC'S CODE, Copied by: Andres
