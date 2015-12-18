@@ -81,6 +81,13 @@ angular.module('AppAirBermudes', [
             requireAuthentication: true
         }
     });
+    $routeProvider.when('/courses/forTravel/:id', {
+        templateUrl: '/courses/courses.html',
+        controller: 'CourseController',
+        access: {
+            requireAuthentication: true
+        }
+    });
     $routeProvider.when('/addCourse', {
         templateUrl: '/courses/addCourse.html',
         controller: 'CourseController',

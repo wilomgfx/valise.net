@@ -187,11 +187,11 @@ function CourseController($scope, $rootScope,$routeParams, IdentityService, MsgF
             });
     }
 
-    $scope.getCourses = function () {
+    $scope.getCourses = function (travelId) {
 
         $.ajax({
             method: 'GET',
-            url: "http://localhost:53762/api/Courses/",
+            url: "http://localhost:53762/api/Courses/CoursesForSpecificTravel/"+travelId,
             headers: headers
         })
             .success(function (data) {
@@ -281,8 +281,10 @@ function CourseController($scope, $rootScope,$routeParams, IdentityService, MsgF
 
     } else if ($routeParams.action == "edit") {
         $scope.getCourse($routeParams.id);
+    } else if ($routeParams.action == "forTravel") {
+        $scope.getCourses($routeParams.id);
     } else if ($routeParams.action === undefined) {
-        $scope.getCourses();
+        $scope.getCourses($routeParams.id);
     }
 
 }
