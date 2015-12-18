@@ -261,6 +261,14 @@ function CourseController($scope, $rootScope,$routeParams, IdentityService, MsgF
                 .success(function (data) {
                     console.log("Successfully updated the course");
                     $scope.getCourses();
+                    $scope.$apply(function(){
+                      MsgFlashService.setMessage("Succesfully update your course to this travel! You are now going to be redirected back to index");
+                      $scope.flashMessage = MsgFlashService.getMessage();
+                      $scope.showAlertSucess = MsgFlashService.showMessage;
+                      $timeout(function () {
+                          $location.path("/courses")
+                      }, 2000);
+                    });
                 })
                 .error(function (error) {
                     console.log(error);
