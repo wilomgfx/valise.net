@@ -117,6 +117,15 @@ angular.module('AppAirBermudes', [
             requireAuthentication: true
         }
     });
+
+    $routeProvider.when('/destinations/:id', {
+        templateUrl: '/destinations/destinations.html',
+        controller: 'DestinationsController',
+        access: {
+            requireAuthentication: true
+        }
+    });
+
     $routeProvider.when('/destinations/:action/forDay/:id', {
         templateUrl: '/destinations/day_destinationsDetails.html',
         controller: 'DestinationsController',
@@ -321,6 +330,7 @@ function DataService(IdentityService) {
     // DAYS AND CURRENT DAYS
     this.days = [];
     this.currentDay = {};
+    this.currentDayId = {};
 
     function setCurrentDay(data) {
         this.currentDay.Id = data.Id;

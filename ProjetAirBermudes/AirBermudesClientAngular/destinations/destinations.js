@@ -1,10 +1,9 @@
 angular.module('AppAirBermudes.destinations',['ngRoute'])
 .controller('DestinationsController',DestinationsController)
 
-function DestinationsController($scope,$routeParams,IdentityService,MsgFlashService,$location,$timeout )
+function DestinationsController($scope,$routeParams,IdentityService,MsgFlashService,$location,$timeout, MapService, DataService )
 {
-
-  //SelectList for TransportTypes
+    //SelectList for TransportTypes
   $scope.selecListChoices = {
       availableOptions: [
         // { DayID: '1', Date: '2015-12-17' },
@@ -25,11 +24,17 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
 
   $scope.hasErrors = false;
 
+  $scope.scope = $scope;
+    // Map suggestions
+    // Andres Ahumada: 2015-12-17
+    $scope.mapService = MapService;
 
   $scope.onEditDestination = function (id){
     console.log("onEditDestination");
     $location.path("/destinations/edit/" + id)
   }
+
+
 
   ////show or not to show the messages
   //$scope.showAlertSucess = MsgFlashService.showMessage;
@@ -119,6 +124,8 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
             }
             //console.log("Data from destinations array ", $scope.destinations);
             $scope.$apply();
+            $scope.showDestinations();
+            $scope.showSuggestions();
         })
         .error(function (error) {
             console.log(error);
@@ -144,11 +151,41 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
             }
             //console.log("Data from destinations array ", $scope.destinations);
             $scope.$apply();
+            $scope.showDestinations();
+            $scope.showSuggestions();
         })
         .error(function (error) {
             console.log(error);
         });
 
+  }
+
+  $scope.addSuggestion = function(type, name, address) {
+        //dest type toLowerCase for seemingless integration to google maps API
+        var DestTypeToLower = type.toLowerCase();
+        
+        DestTypeToLower = DestTypeToLower.replace('_', ' ');
+
+        $.ajax({
+            method: 'POST',
+            url: "http://localhost:53762/api/Destinations/",
+            headers: headers,
+            data:
+                {
+                    Type: DestTypeToLower,
+                    Name: name,
+                    Address: address,
+                    DayID: DataService.currentDayId
+                }
+        })
+        .success(function (data) {
+            console.log(data);
+            var suggestion = data;
+            suggestion.Position = $scope.destinations.length + 1;
+            $scope.destinations.push(suggestion);
+            $scope.$apply();
+            $scope.showDestinations();
+        })
   }
 
   $scope.addDestination = function (Day) {
@@ -179,7 +216,7 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
               $scope.showAlertSucess = MsgFlashService.showMessage;
               $scope.$apply();
               $timeout(function () {
-                  $location.path("/destinations")
+                  $location.path("/destinations/" + Day.Id)
               }, 2000);
           })
           .error(function (error) {
@@ -247,10 +284,20 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
             })
                 .success(function (data) {
                     console.log("Data from API ", data);
-                    MsgFlashService.setMessage("Succesfully added your destination to this travel!");
+                    MsgFlashService.setMessage("Succesfully deleted your destination for this day!");
                     $scope.flashMessage = MsgFlashService.getMessage();
                     $scope.showAlertSucess = MsgFlashService.showMessage;
-                    $scope.getDestinations();
+                    // Avoid full page reload
+                    //$scope.getDestinations();
+
+                    for (index = 0; index < $scope.destinations.length; index++) {
+                        if ($scope.destinations[index].DestinationID == Id) {
+                            $scope.destinations.splice(index, 1);
+                            $scope.$apply();
+                            break;
+                        }
+                    }
+
                 })
                 .error(function (error) {
                     console.log(error);
@@ -292,18 +339,58 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
                     .error(function (error) {
                         console.log(error);
                     });
+        }
+
+
+        $scope.doAlert = function () {
+            alert("msg");
+        }
+
+        $scope.showSuggestions = function () {
+            var geoCenter = {};
+            var address = 'Montreal, Canada';
+
+            if ($scope.destinations != null && $scope.destinations.length > 0) {
+                address = $scope.destinations[0].Address;
             }
 
+            var geocoder = new google.maps.Geocoder();
+
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    geoCenter = results[0].geometry.location;
+
+                    var map = new google.maps.Map(document.getElementById('suggestions-map'), {
+                        zoom: 12,
+                        center: geoCenter,
+                    });
+
+                    var settings = {
+                        location: geoCenter,
+                        radius: '20000',
+                        types: ['restaurant', 'lodging', 'amusement_park', 'park', 'aquarium', 'casino', 'museum']
+                    };
+
+                    $scope.mapService.showSuggestions($scope, map, settings, 20);
+                }
+            });
+        }
+
+        $scope.showDestinations = function() {
+            // Do nothing
+        }
 
         console.log("Action: " + $routeParams.action);
         if ($routeParams.action == "edit") {
             console.log("edit");
             $scope.getDestination($routeParams.id);
-        }else if ($routeParams.action == "seeDests") {
+        } else if ($routeParams.action == "forDay") {
+            $scope.getDestinationsForSpecificDay($routeParams.id);
+        } else if ($routeParams.action == "seeDests") {
             $scope.getDestinationsForSpecificDay($routeParams.id);
         } else if ($routeParams.action === undefined) {
-            $scope.getDestinations();
+            DataService.currentDayId = $routeParams.id;
+            $scope.getDestinationsForSpecificDay($routeParams.id);
+            //$scope.getDestinations();
         }
-
-
 }

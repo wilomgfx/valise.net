@@ -136,6 +136,7 @@ namespace AirBermudesAPI.Controllers
 
             db.Destinations.Add(newDestination);
             db.SaveChanges();
+            destinationDTO.DestinationID = newDestination.DestinationID;
 
             return CreatedAtRoute("DefaultApi", new { id = newDestination.DestinationID }, destinationDTO);
         }

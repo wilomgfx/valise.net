@@ -108,15 +108,26 @@ function MapService($compile) {
 
                     bounds.extend(results[i].geometry.location);
 
+                    var image = {
+                        url: results[i].icon,
+                        size: google.maps.Point(71, 71),
+                        origin: google.maps.Point(0, 0),
+                        anchor: google.maps.Point(0, 0),
+                        scaledSize: new google.maps.Size(20, 20)
+                    };
+
                     var marker = new google.maps.Marker({
                         position: results[i].geometry.location,
                         map: map,
-                        icon: results[i].icon
+                        icon: image
                     });
+
+                    var type = (results[i].types != null && results[i].types.length > 0) ? results[i].types[0] : 'other';
 
                     var content = '<suggestion-marker-popup'
                     + ' name="' + results[i].name + '"'
                     + ' address="' + results[i].vicinity + '"'
+                    + ' type="' + type   + '"'
                     //+ ' address="' + results[i].formatted_address + '"'  /* L'adresse formatée ne fonctionne pas */
                     + ' ></suggestion-marker-popup>';
 
@@ -216,6 +227,10 @@ function MapService($compile) {
         asyncLoop(0);
     };
 
+    service.showDestinations = function (scope, map, destinations) {
+        // Do nothing
+    };
+
     service.geocodeAddress = function (address, callback) {
 
         var geocoder = new google.maps.Geocoder();
@@ -282,15 +297,15 @@ function SuggestionMarkerPopup() {
         templateUrl: "mapService/suggestionMarkerPopup.html",
         scope: {
             name: '@name',
-            address: '@address'
+            address: '@address',
+            type: '@type'
         },
         controller: function ($scope) {
-
-            $scope.addToDestinations = function () {
-
-                alert("Not implemented !!!");
+            
+            $scope.addSuggestion = function () {
+                $scope.$parent.addSuggestion($scope.type, $scope.name, $scope.address);
             }
-
+            
         }
 
     };

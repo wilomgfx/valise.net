@@ -71,6 +71,11 @@
     <Content Include="days\editDay.html" />
     <Content Include="days\days.html" />
     <Content Include="days\days.js" />
+    <Content Include="destinations\addDestination.html" />
+    <Content Include="destinations\day_destinationsDetails.html" />
+    <Content Include="destinations\destinations.html" />
+    <Content Include="destinations\destinations.js" />
+    <Content Include="destinations\editDestination.html" />
     <Content Include="header\header.html" />
     <Content Include="header\header.js" />
     <Content Include="Images\loading.gif" />
