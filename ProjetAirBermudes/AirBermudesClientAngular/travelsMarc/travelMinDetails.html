@@ -40,11 +40,13 @@
 
             <h4>Budget :</h4>
             <h2>{{travel.Budget}} $</h2>
-            <button type="button" ng-click="onClickCourses(travel)">Plan your courses</button>
+
+            <button type="button" ng-click="onCourses(travel.TravelId)">Plan your courses</button>
             <button type="button" ng-click="onClickDays(travel)">Plan your days</button>
 
+            
             <h4>Courses: </h4>
-            <a href="javascript:void(0)" ng-click="onCourses(travel.TravelId)">Courses for this travel</a>
+            <!-- <a href="javascript:void(0)" ng-click="onCourses(travel.TravelId)">Courses for this travel</a> -->
 
         </div>
 
