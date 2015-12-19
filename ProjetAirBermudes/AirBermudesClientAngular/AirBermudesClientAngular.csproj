@@ -85,14 +85,14 @@
     <Content Include="mapService\testMaps.html" />
     <Content Include="mapService\mapService.js" />
     <Content Include="Scripts\jquery.datetimepicker.js" />
-    <Content Include="travelsMarc\createTravel.html" />
-    <Content Include="travels\edit.html" />
-    <Content Include="travels\edit.js" />
-    <Content Include="travels\home.html" />
-    <Content Include="travels\travel.js" />
-    <Content Include="travelsMarc\travels.js" />
-    <Content Include="travelsMarc\travels.html" />
-    <Content Include="travelsMarc\travelMinDetails.html" />
+    <Content Include="travels\createTravel.html" />
+    <Content Include="travelsOld\edit.html" />
+    <Content Include="travelsOld\edit.js" />
+    <Content Include="travelsOld\home.html" />
+    <Content Include="travelsOld\travel.js" />
+    <Content Include="travels\travels.js" />
+    <Content Include="travels\travels.html" />
+    <Content Include="travels\travelMinDetails.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,106 @@
+﻿<div>
+    <div class="container theme-showcase" role="main" ng-controller="TravelsController">
+        <div class="row">
+            <div class="col-md-12">
+                <div ng-show="showAlertSucess" class="alert alert-success" role="alert"><p>{{flashMessage}}</p></div>
+                <div ng-show="showAlertError" class="alert alert-danger" role="alert"><p>{{flashErrors}}</p></div>
+                <h1>Obtenez vos voyages!</h1>
+                <button ng-click="FetchTravels()">Appuyer Ici.</button>
+                <div ng-show="showTravels">
+                    <h2>Your travels :</h2>
+                    <div ng-repeat="travel in travels">
+                        <div class="col-md-4" style="border-color: black; border-style: double;border-width: 2px; background-color: lightblue;">
+                            <h3 style="text-align: center; font-weight: bold;">{{travel.Title}} </h3> 
+                            <button class="col-md-12" style="text-align: center;" ng-click="goEditTravel(travel.TravelId)">Edit</button><br />
+                            <hr style="border-top: 1px solid black;" />
+                            <!--<h4 style="text-align: center;">{{travel.Content}} </h4>-->
+                            <h4 style="text-align: center;">From: {{travel.DateBegin}} </h4>
+                            <h4 style="text-align: center;">To: {{travel.DateEnd}} </h4>
+                            <h4 style="text-align: center;">Budget: {{travel.Budget}} $</h4>
+                            <!--<p style="text-align: center">{{memo.Texte}}</p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="">
+                <hr />
+                <h2>Create a travel</h2>
+                <br />
+                <br />
+                <p style="color: red;" ng-show="errorShow">{{error}}</p>
+
+                <form ng-submit="CreateTravel()">
+                    <label>Title :</label>
+                    <br />
+                    <input type="text" name="title" ng-model="traveltitle" />
+                    <br />
+                    <br />
+                    <br />
+                    <button type="button" name="btn_createbydays" ng-click="SetChoiceByDays()" style="width: 100px">Set duration by days...</button>
+                    
+                    <button type="button" name="btn_createbydays" ng-click="SetChoiceByDates()" style="width: 100px">Set duration from dates...</button>
+                    <br />
+                    <br />
+                    <br />
+                    <div ng-show="showByDates">
+                        <!-- <label>Take off :</label>
+                        <br />
+                        <input type="datetime-local" name="travelstart" ng-model="travelstart"/>
+                        <br />
+                        <br />
+                        <label>Arrival :</label>
+                        <br />
+                        <input type="datetime-local" name="travelend" ng-model="travelend" />       -->    
+                        <label>Take off :</label>
+                        <br />
+                        <!--<datetimepicker data-ng-model="datetest"></datetimepicker>-->
+
+                        <div class="dropdown" style="width: 400px">
+                            <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" data-ng-model="data.dateDropDownInput"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="data.dateDropDownInput" data-on-set-time="onTimeSetStart(newDate, oldDate)" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }" />
+                            </ul>
+                        </div>
+                        <!--<input id="traveldatestart" name="travelstart" ng-model="travelstart" />-->
+                        <br />
+                        <br />
+                        <label>Arrival :</label>
+                        <br />
+                        <div class="dropdown" style="width: 400px">
+                            <a class="dropdown-toggle" id="dropdown3" role="button" data-toggle="dropdown" data-target="#">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" data-ng-model="data.dateDropDownInput2"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="data.dateDropDownInput2" data-on-set-time="onTimeSetEnd(newDate, oldDate)" data-datetimepicker-config="{ dropdownSelector: '#dropdown3' }" />
+                            </ul>
+                        </div>
+                        <!--<input id="traveldateend" name="travelend" ng-model="travelend" />-->                   
+                    </div>
+                    <div ng-show="showByDays">
+                        <label>Number of days :</label>
+                        <br />
+                        <input type="number" name="nbrofdays" ng-model="nbrofdays" min="1"/>
+                    </div>
+                    <br />
+                    <br />
+                    <label>Budget :</label>
+                    <br />
+                    <input type="number" name="budget" ng-model="budget" min="1" /><label>&nbsp;$</label>
+                    <br />
+                    <br />
+                    <button type="submit" style="width: 200px">Create</button>
+                </form>
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+</div>

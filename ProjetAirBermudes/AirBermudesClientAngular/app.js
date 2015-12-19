@@ -5,10 +5,10 @@ angular.module('AppAirBermudes', [
     'AppAirBermudes.DataTransferingService',
     'AppAirBermudes.header',
     'AppAirBermudes.courses',
-    'AppAirBermudes.travels',
-    'AppAirBermudes.TravelsEdit',
+    'AppAirBermudes.travelsOld',
+    'AppAirBermudes.travelsOldEdit',
     'AppAirBermudes.mapService',
-    'AppAirBermudes.travelsMarc',
+    'AppAirBermudes.travels',
     'AppAirBermudes.days',
     'AppAirBermudes.destinations',
     'AppAirBermudes.RouteAutorization'
@@ -59,16 +59,8 @@ angular.module('AppAirBermudes', [
     });
 
     $routeProvider.when('/travels', {
-        templateUrl: '/travels/home.html',
+        templateUrl: '/travels/travels.html',
         controller: 'TravelsController',
-        access: {
-            requireAuthentication: true
-        }
-    });
-
-    $routeProvider.when('/travelsmarc', {
-        templateUrl: '/travelsMarc/travels.html',
-        controller: 'TravelsMarcController',
         access: {
             requireAuthentication: true
         }
@@ -133,9 +125,17 @@ angular.module('AppAirBermudes', [
         }
     });*/
 
-    $routeProvider.when('/travelsedit', {
-        templateUrl: '/travels/edit.html',
-        controller: 'TravelsEditController',
+    $routeProvider.when('/travelsOld', {
+        templateUrl: '/travelsOld/home.html',
+        controller: 'TravelsOldControllers',
+        access: {
+            requireAuthentication: true
+        }
+    });
+
+    $routeProvider.when('/travelsOldEdit', {
+        templateUrl: '/travelsOld/edit.html',
+        controller: 'TravelsOldEditController',
         access: {
             requireAuthentication: true
         }
