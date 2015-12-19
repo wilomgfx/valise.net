@@ -34,6 +34,23 @@ namespace AirBermudesAPI.Controllers
             return listeCourseDTO.AsQueryable<CourseDTO>();
         }
 
+        [HttpGet]
+        [Route("api/Courses/CoursesForSpecificTravel/{id}")]
+        [ResponseType(typeof(IEnumerable<CourseDTO>))]
+        // GET: api/Courses
+        public IQueryable<CourseDTO> GetCoursesForSpecificTravel(int? id)
+        {
+            // TODO: get the travel associated with that user, and return the right courses for that current travel
+
+            List<CourseDTO> listeCourseDTO = new List<CourseDTO>();
+            foreach (Course course in db.Courses.Include(c => c.Transport).Where(t => t.Travel.TravelId == id))
+            {
+                CourseDTO courseDTO = new CourseDTO(course);
+                listeCourseDTO.Add(courseDTO);
+            }
+            return listeCourseDTO.AsQueryable<CourseDTO>();
+        }
+
         // GET: api/Courses/5
         [ResponseType(typeof(Course))]
         public IHttpActionResult GetCourse(int id)
@@ -60,7 +77,7 @@ namespace AirBermudesAPI.Controllers
             course.EndDate = courseDTO.EndDate;
             course.TransportCompanyName = courseDTO.TransportCompanyName;
             Transport transport = (Transport)db.Transports.Where(t => t.TransportName == courseDTO.TransportName).First();
-            course.Transport = transport;
+            course.Travel = (Travel)db.Travels.Where(t => t.TravelId == courseDTO.TravelID).First();
 
             if (!ModelState.IsValid)
             {
@@ -106,6 +123,7 @@ namespace AirBermudesAPI.Controllers
             course.TransportCompanyName = courseDTO.TransportCompanyName;
             Transport transport = (Transport)db.Transports.Where(t => t.TransportName == courseDTO.TransportName).First();
             course.Transport = transport;
+            course.Travel = (Travel)db.Travels.Where(t => t.TravelId == courseDTO.TravelID).First();
 
             if (!ModelState.IsValid)
             {

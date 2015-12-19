@@ -33,6 +33,8 @@
                             <label for="TransportCompanyName">TransportCompanyName</label>
                             <input type="text" name="TransportCompanyName" class="form-control" ng-model="TransportCompanyName" />
 
+                            <input type="hidden" name="travelId" ng-model="travelId" value="travelId" />{{travelId}}
+
                             <span ng-show="hasErrors" class="help-block" ng-repeat="message in errorMessages">{{message}}</span>
                         </div>
 

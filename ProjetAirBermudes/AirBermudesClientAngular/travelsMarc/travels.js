@@ -15,6 +15,11 @@ function TravelsController($scope, TravelsService, IdentityService, DataService)
 
     $scope.requestError = "";
 
+    //$scope.onCourses = function (travelId) {
+    //    console.log("onCourses");
+    //    $location.path("/courses/forTravel/" + travelId)
+    //};
+
 
     $scope.dataS.getLatestTravels(
         function (data) {
@@ -72,8 +77,7 @@ function TravelsService() {
 };
 
 
-function TravelMinDetailsDirective($timeout, MapService, DataService) {
-
+function TravelMinDetailsDirective($timeout, $location, MapService, DataService) {
     return {
 
         restrict: "E",
@@ -137,6 +141,11 @@ function TravelMinDetailsDirective($timeout, MapService, DataService) {
 
                 showCourses(map);
             });
+
+            $scope.onCourses = function (travelId) {
+                console.log("onCourses");
+                $location.path("/courses/forTravel/" + travelId)
+            };
 
         }
     };
