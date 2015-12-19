@@ -36,15 +36,17 @@ namespace AirBermudesAPI.Controllers
             UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(db);
             UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
-
             List<TravelDTO> travelsDTO = new List<TravelDTO>();
-            List<Travel> travels = db.Travels.Where(t => t.ApplicationUsers.Any(au => au.Id == user.Id)).ToList();
 
-            foreach(Travel travel in travels)
+            if (user != null)
             {
-                travelsDTO.Add(new TravelDTO(travel));
-            }
+                List<Travel> travels = db.Travels.Where(t => t.ApplicationUsers.Any(au => au.Id == user.Id)).ToList();
 
+                foreach (Travel travel in travels)
+                {
+                    travelsDTO.Add(new TravelDTO(travel));
+                }
+            }
             return Ok(travelsDTO);
         }
         

@@ -37,23 +37,23 @@ angular.module('AppAirBermudes', [
     $routeProvider.when('/days', {
         templateUrl: '/days/days.html',
         controller: 'DaysController',
-         access: {
+        access: {
             requireAuthentication: true
         }
     });
 
-    $routeProvider.when('/days/:action', {
+    $routeProvider.when('/addDay', {
         templateUrl: '/days/addDay.html',
         controller: 'DaysController',
-         access: {
+        access: {
             requireAuthentication: true
         }
     });
 
-    $routeProvider.when('/days/:action/:id', {
+    $routeProvider.when('/editDay', {
         templateUrl: '/days/editDay.html',
         controller: 'DaysController',
-         access: {
+        access: {
             requireAuthentication: true
         }
     });
@@ -118,21 +118,13 @@ angular.module('AppAirBermudes', [
         }
     });
 
-    $routeProvider.when('/destinations/:id', {
-        templateUrl: '/destinations/destinations.html',
-        controller: 'DestinationsController',
-        access: {
-            requireAuthentication: true
-        }
-    });
-
-    $routeProvider.when('/destinations/:action/forDay/:id', {
+    /*$routeProvider.when('/destinations/:action/forDay/:id', {
         templateUrl: '/destinations/day_destinationsDetails.html',
         controller: 'DestinationsController',
         access: {
             requireAuthentication: true
         }
-    });
+    });*/
 
     $routeProvider.when('/travelsedit', {
         templateUrl: '/travels/edit.html',
@@ -268,7 +260,7 @@ function DataService(IdentityService) {
 
     // TRAVEL
     this.currerntTravel = {};
-
+    
     //////////////////////////////////////////////////////////////////////////////////
     // BEGIN: MARC'S CODE, Copied by: Andres
 

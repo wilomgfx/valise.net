@@ -19,6 +19,8 @@ namespace AirBermudesAPI.DTOs
         [Required]
         public decimal Budget { get; set; }
 
+        public int TravelID { get; set; }
+
         // Empty constructor
         public DayDTO() { }
 

@@ -29,12 +29,12 @@ namespace AirBermudesAPI.Migrations
             //    );
             //
 
-            context.Transports.AddOrUpdate(
+            /*context.Transports.AddOrUpdate(
                 p => p.TransportID,
                 new Transport { TransportName = "Plane" },
                 new Transport { TransportName = "Ship" },
                 new Transport { TransportName = "Broom" }                
-            );
+            );*/
         }
     }
 }

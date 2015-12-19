@@ -14,10 +14,7 @@ namespace AirBermudesAPI.Models
         public decimal Budget { get; set; }
 
         public ICollection<Destination> Destinations { get; set; }
-        
-        // For later use:
-        //[Foreignkey("Travel")]
-        //public int TravelID { get; set; }
-        //public Travel Travel { get; set; }
+
+        public Travel Travel { get; set; }
     }
 }

@@ -28,6 +28,13 @@ namespace ProjetAirBermudes
 
             //json stuff
             ValueProviderFactories.Factories.Add(new JsonValueProviderFactory());
+
+            // Initialize DB
+            Database.SetInitializer <ApplicationDbContext>(new DatabaseInitializer());
+            using (var context = new ApplicationDbContext())
+            {
+                context.Database.Initialize(false);
+            }
         }
     }
 }

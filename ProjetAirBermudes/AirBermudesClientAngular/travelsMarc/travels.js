@@ -1,4 +1,4 @@
-﻿angular.module('AppAirBermudes.travelsMarc', ['ui.bootstrap.datetimepicker'])
+angular.module('AppAirBermudes.travelsMarc', ['ui.bootstrap.datetimepicker'])
 .controller('TravelsMarcController', TravelsController)
 .service('TravelsService', TravelsService)
 .directive('travelMinDetails', TravelMinDetailsDirective)
@@ -72,7 +72,7 @@ function TravelsService() {
 };
 
 
-function TravelMinDetailsDirective($timeout, MapService) {
+function TravelMinDetailsDirective($timeout, MapService, DataService) {
 
     return {
 
@@ -81,10 +81,17 @@ function TravelMinDetailsDirective($timeout, MapService) {
             travel: '=travel'
         },
         templateUrl: "travelsMarc/travelMinDetails.html",
-        controller: function ($scope) {
+        controller: function ($scope, $location) {
 
-
-
+            $scope.onClickCourses = function (travel) {
+                DataService.currentTravel = travel;
+                $location.path('/courses');
+            }
+            
+            $scope.onClickDays = function (travel) {
+                DataService.currentTravel = travel;
+                $location.path('/days');
+            }
         },
         link: function ($scope) {
 

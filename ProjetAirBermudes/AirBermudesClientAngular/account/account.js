@@ -1,4 +1,4 @@
-﻿angular.module('AppAirBermudes.account', ['ngRoute'])
+angular.module('AppAirBermudes.account', ['ngRoute'])
 .controller('AccountController', AccountController)
 .service('AccountService', AccountService)
 .service('IdentityService', IdentityService)
@@ -115,7 +115,7 @@ function AccountController($scope, $location, AccountService, IdentityService) {
 
     /* TODO: SUPPRESS THIS FUNCTION before any releasse */
     $scope.devSignin = function () {
-        $scope.email = "test@test.test";
+        $scope.email = "test@test.com";
         $scope.password = "Passw0rd/";
         $scope.login();
     }

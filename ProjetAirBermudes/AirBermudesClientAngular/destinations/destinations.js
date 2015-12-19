@@ -34,8 +34,6 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
     $location.path("/destinations/edit/" + id)
   }
 
-
-
   ////show or not to show the messages
   //$scope.showAlertSucess = MsgFlashService.showMessage;
   //$scope.showAlertError = MsgFlashService.showErrorMessage;
@@ -47,9 +45,12 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
   $scope.destinations = [];
 
   $scope.getDays = function () {
+      if(DataService.currentTravel === undefined)
+          return;
+      
       $.ajax({
           method: 'GET',
-          url: "http://localhost:53762/api/Days/",
+          url: "http://localhost:53762/api/Days/?travelId=" + DataService.currentTravel.TravelId,
           headers: headers
       })
           .success(function (data) {
@@ -175,7 +176,7 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
                     Type: DestTypeToLower,
                     Name: name,
                     Address: address,
-                    DayID: DataService.currentDayId
+                    DayID: DataService.currentDay.Id
                 }
         })
         .success(function (data) {
@@ -216,7 +217,7 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
               $scope.showAlertSucess = MsgFlashService.showMessage;
               $scope.$apply();
               $timeout(function () {
-                  $location.path("/destinations/" + Day.Id)
+                  $location.path("/destinations")
               }, 2000);
           })
           .error(function (error) {
@@ -380,8 +381,9 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
             // Do nothing
         }
 
+        
         console.log("Action: " + $routeParams.action);
-        if ($routeParams.action == "edit") {
+        /*if ($routeParams.action == "edit") {
             console.log("edit");
             $scope.getDestination($routeParams.id);
         } else if ($routeParams.action == "forDay") {
@@ -392,5 +394,9 @@ function DestinationsController($scope,$routeParams,IdentityService,MsgFlashServ
             DataService.currentDayId = $routeParams.id;
             $scope.getDestinationsForSpecificDay($routeParams.id);
             //$scope.getDestinations();
+        }*/
+    
+        if($location.path() == '/destinations' && DataService.currentDay !== undefined) {
+            $scope.getDestinationsForSpecificDay(DataService.currentDay.Id);
         }
 }

@@ -19,9 +19,9 @@ namespace AirBermudesAPI.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Days
-        public DayListDTO GetDays()
+        public DayListDTO GetDays(int travelId)
         {
-            DayListDTO days = new DayListDTO(db.Days.ToList());
+            DayListDTO days = new DayListDTO(db.Days.Where(d => d.Travel.TravelId == travelId).ToList());
             return days;
         }
 
@@ -80,7 +80,9 @@ namespace AirBermudesAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            Travel travel = db.Travels.Find(model.TravelID);
             Day day = model.ToDay();
+            day.Travel = travel;
             db.Days.Add(day);
             db.SaveChanges();
                         

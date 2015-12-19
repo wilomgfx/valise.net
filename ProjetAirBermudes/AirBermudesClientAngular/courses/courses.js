@@ -1,4 +1,4 @@
-﻿angular.module('AppAirBermudes.courses', ['ngRoute'])
+angular.module('AppAirBermudes.courses', ['ngRoute'])
 .controller('CourseController', CourseController);
 
 function CourseController($scope, $rootScope,$routeParams, IdentityService, MsgFlashService, $timeout, $location) {
@@ -97,7 +97,7 @@ function CourseController($scope, $rootScope,$routeParams, IdentityService, MsgF
             $scope.$apply();
         })
         .fail(function (error){
-          consoloe.log("oups ",error);
+          console.log("oups ",error);
         });
     }
 

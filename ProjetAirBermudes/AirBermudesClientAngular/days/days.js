@@ -34,12 +34,14 @@ function DaysController($scope, $rootScope, $routeParams, $location, IdentitySer
 
     $scope.onAddDay = function () {
         console.log("onAddDay");
-        $location.path("/days/add")
+        DataService.currentDay = {};
+        $location.path("/addDay")
     }
 
-    $scope.onEditDay = function (id) {
+    $scope.onEditDay = function (day) {
         console.log("onEditDay");
-        $location.path("/days/edit/" + id)
+        DataService.currentDay = day;
+        $location.path("/editDay");
     }
 
     $scope.onDeleteDay = function (id) {
@@ -50,8 +52,7 @@ function DaysController($scope, $rootScope, $routeParams, $location, IdentitySer
     $scope.onDestinations = function (day) {
         console.log("onDestinations");
         DataService.currentDay = day;
-        DataService.currentDayId = day.Id;
-        $location.path("/destinations/" + day.Id);
+        $location.path("/destinations");
     }
 
     $scope.saveDay = function() {
@@ -59,6 +60,7 @@ function DaysController($scope, $rootScope, $routeParams, $location, IdentitySer
             return;
 
         // Synchronous call
+        $scope.currentDay.TravelID = DataService.currentTravel.TravelId;
         DaysService.saveDay($scope.currentDay)
         .success(function(response) {
             $location.path("/days");
@@ -94,13 +96,19 @@ function DaysController($scope, $rootScope, $routeParams, $location, IdentitySer
     }
 
     console.log("Action: " + $routeParams.action);
-    if ($routeParams.action == "add") {
-        DaysService.newDay();
-    } else if ($routeParams.action == "edit") {
+    /*if ($routeParams.action == "edit") {
         DaysService.getDay($routeParams.id);
-    } else if ($routeParams.action === undefined) {
-        DaysService.loadDays();
-    }
+    } else if ($routeParams.action === undefined && $routeParams.id !== undefined) {
+        
+            
+    } else if ($routeParams.action === undefined && $routeParams.id === undefined) {
+        DaysService.newDay();
+    }*/
+    if($location.path() == '/days' && DataService.currentTravel !== undefined)
+        DaysService.loadDays(DataService.currentTravel.TravelId);
+    
+    if($location.path() == '/editDay' && DataService.currentDay !== undefined)
+        DataService.currentDay.Date = new Date(DataService.currentDay.Date.replace('-', '/'));
 }
 
 function DaysService($http, $q, DataService) {
@@ -116,7 +124,7 @@ function DaysService($http, $q, DataService) {
     /////////////////////////////////////////////////////////////////////////////
     // LOAD - ASYNCHRONOUS
     /////////////////////////////////////////////////////////////////////////////
-    this.loadDays = function() {
+    this.loadDays = function(travelId) {
         console.log("loadDays");
         var headers = {};
         // For use later
@@ -127,7 +135,7 @@ function DaysService($http, $q, DataService) {
 
         $http({
             method: 'GET',
-            url: baseUrl,
+            url: baseUrl + '?travelId=' + travelId,
             dataType: 'json',
             contentType: 'application/json'
             //headers: headers
@@ -146,7 +154,9 @@ function DaysService($http, $q, DataService) {
     this.getDay = function (id) {
         console.log("getDay ID = " + id);
         var headers = {};
-        // For use later
+         var deferred = $q.defer();
+        var promise = deferred.promise;    
+        
         /*var token =   IdentityService.getToken();
         if (token) {
             headers.Authorization = 'Bearer ' + token;
@@ -164,6 +174,7 @@ function DaysService($http, $q, DataService) {
             console.log("getDay: OK");
             console.log(data);
             DataService.setCurrentDay(data);
+
         });
     }
 

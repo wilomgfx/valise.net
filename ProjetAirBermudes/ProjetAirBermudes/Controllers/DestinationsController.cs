@@ -55,7 +55,8 @@ namespace AirBermudesAPI.Controllers
             //ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             //List<Destination> destinations = db.Destinations.Where(t => t.ApplicationUsers.Any(au => au.Id == user.Id)).ToList();
             List<DestinationDTO> destinationDTOs = new List<DestinationDTO>();
-            List<Destination> destinations = db.Days.Where(d => d.DayID == id).Include(d => d.Destinations).First().Destinations.ToList();
+            //List<Destination> destinations = db.Days.Where(d => d.DayID == id).Include(d => d.Destinations).First().Destinations.ToList();
+            List<Destination> destinations = db.Destinations.Where(d => d.Day.DayID == id).ToList();
 
             foreach (Destination destination in destinations)
             {
