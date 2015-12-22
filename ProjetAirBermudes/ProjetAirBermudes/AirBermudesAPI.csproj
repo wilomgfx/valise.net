@@ -227,7 +227,9 @@
     <Compile Include="DTOs\DayListDTO.cs" />
     <Compile Include="DTOs\DestinationDTO.cs" />
     <Compile Include="DTOs\ShareDTO.cs" />
+    <Compile Include="DTOs\ShareUsersDTO.cs" />
     <Compile Include="DTOs\TravelDTO.cs" />
+    <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -347,24 +347,21 @@ function DataService(IdentityService) {
     // Users
     this.users = [];
     
-    function setUsers(data) {
+    this.setUsers = function (data) {
         this.users = data;
-    }
+    };
 
-    function pushUser(user) {
+    this.pushUser = function (user) {
         this.users.push(user);
-    }
+    };
 
-    function removeUser(user)
-    {
-        for(u in this.users)
-        {
+    this.removeUser = function (user) {
+        for (u in this.users) {
             var us = this.users[u];
 
-            if(us.username === user.username)
-            {
+            if (us.Username === user.Username) {
                 this.users.splice(u, 1);
             }
         }
-    }
+    };
 };

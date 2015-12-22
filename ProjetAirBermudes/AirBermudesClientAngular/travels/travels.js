@@ -37,6 +37,11 @@ function TravelsController($scope, TravelsService, IdentityService, DataService)
         }
     );
 
+    $scope.onClickShare = function (travel) {
+        DataService.currentTravel = travel;
+        $location.path('/share');
+    };
+
     $scope.$watch('travelsS.getTravels', function (data) {
 
         $scope.Travels = data;

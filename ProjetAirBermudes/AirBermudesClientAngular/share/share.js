@@ -43,7 +43,7 @@ function ShareController($scope, $rootScope, $routeParams, $location, IdentitySe
             alert(error);
 
         }).success(function (data) {
-            DataService.users = data;
+            DataService.users = data.Users;
             $scope.$apply();
         });
     }
@@ -70,10 +70,10 @@ function ShareController($scope, $rootScope, $routeParams, $location, IdentitySe
         }).success(function (data) {
 
             var user2 = {
-                username: $scope.userToAdd
+                Username: $scope.userToAdd
             }
 
-            DataService.users.pushUser(user2);
+            DataService.pushUser(user2);
             $scope.$apply();
         });
 
@@ -85,7 +85,7 @@ function ShareController($scope, $rootScope, $routeParams, $location, IdentitySe
         // CALL API!
 
         var data = {
-            username: $scope.userToAdd,
+            username: user.Username,
             travelid: DataService.currentTravel.TravelId
         };
 
@@ -101,7 +101,7 @@ function ShareController($scope, $rootScope, $routeParams, $location, IdentitySe
         }).success(function (data) {
 
             var user2 = {
-                username: $scope.userToAdd
+                Username: user.Username
             }
 
             DataService.removeUser(user2);

@@ -27,7 +27,7 @@ namespace AirBermudesAPI.Controllers
         }
 
         // GET: api/Share/5
-        [ResponseType(typeof(IEnumerable<ApplicationUser>))]
+        [ResponseType(typeof(ShareUsersDTO))]
         public IHttpActionResult GetUsersOfTravel(int id)
         {
             Travel travel = db.Travels.Find(id);
@@ -36,7 +36,21 @@ namespace AirBermudesAPI.Controllers
                 return NotFound();
             }
 
-            return Ok(travel.ApplicationUsers);
+            ShareUsersDTO dto = new ShareUsersDTO();
+            dto.Users = new List<UserDTO>();
+
+            foreach (ApplicationUser user in travel.ApplicationUsers)
+            {
+                UserDTO us = new UserDTO();
+                us.UserId = user.Id;
+                us.Username = user.UserName;
+
+                dto.Users.Add(us);
+            }
+
+            return Json(dto);
+
+            //return Ok(travel.ApplicationUsers.ToList());
         }
 
         // PUT: api/Share/5
@@ -75,7 +89,7 @@ namespace AirBermudesAPI.Controllers
         }
 
         // POST: api/Share
-        [ResponseType(typeof(Travel))]
+        [ResponseType(typeof(TravelDTO))]
         public IHttpActionResult PostTravel(ShareDTO infos)
         {
 
@@ -91,16 +105,22 @@ namespace AirBermudesAPI.Controllers
             
             if(!trav.ApplicationUsers.Contains(user))
             {
-                trav.ApplicationUsers.Add(user);
+                if(user.Travels == null)
+                {
+                    user.Travels = new List<Travel>();
+                }
+                user.Travels.Add(trav);
             }
 
             db.SaveChanges();
 
-            return Ok(trav);
+            TravelDTO dto = new TravelDTO(trav);
+
+            return Ok(dto);
         }
 
         // DELETE: api/Share/5
-        [ResponseType(typeof(Travel))]
+        [ResponseType(typeof(TravelDTO))]
         public IHttpActionResult DeleteShare(ShareDTO infos)
         {
             string username = infos.username;
@@ -115,12 +135,21 @@ namespace AirBermudesAPI.Controllers
 
             if (trav.ApplicationUsers.Contains(user))
             {
-                trav.ApplicationUsers.Remove(user);
+                if (user.Travels == null)
+                {
+                    user.Travels = new List<Travel>();
+                }
+                else
+                {
+                    user.Travels.Remove(trav);
+                }
             }
 
             db.SaveChanges();
 
-            return Ok(trav);
+            TravelDTO dto = new TravelDTO(trav);
+
+            return Ok(dto);
         }
 
         protected override void Dispose(bool disposing)
