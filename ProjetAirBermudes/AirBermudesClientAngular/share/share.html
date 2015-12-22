@@ -1,0 +1,32 @@
+﻿<div class="container theme-showcase" role="main">
+    <div class="row">
+        <div ng-show="showAlertSucess" class="alert alert-success" role="alert"><p>{{flashMessage}}</p></div>
+        <div ng-show="showAlertError" class="alert alert-danger" role="alert"><p>{{flashErrors}}</p></div>
+
+        <div class="col-md-12">
+            <!-- Table -->
+            <h3 class="text-center">Users that share your travel</h3>
+            <input type="text" name="userToAdd" ng-model="userToAdd" placeholder="Name of user to share travel with..." />
+            <button class="btn btn-default" ng-click="onAddUser()">
+                Share with another user
+            </button>
+            <!--{{userList}}-->
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in users">
+                        <th>{{user.Username}}</th>
+                        <td>
+                            | <a href="javascript:void(0)" ng-click="onDeleteUser(user)">Remove from sharing</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

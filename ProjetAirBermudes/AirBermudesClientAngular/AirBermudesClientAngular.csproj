@@ -85,6 +85,8 @@
     <Content Include="mapService\testMaps.html" />
     <Content Include="mapService\mapService.js" />
     <Content Include="Scripts\jquery.datetimepicker.js" />
+    <Content Include="share\share.html" />
+    <Content Include="share\share.js" />
     <Content Include="travels\createTravel.html" />
     <Content Include="travelsOld\edit.html" />
     <Content Include="travelsOld\edit.js" />

@@ -11,7 +11,8 @@ angular.module('AppAirBermudes', [
     'AppAirBermudes.travels',
     'AppAirBermudes.days',
     'AppAirBermudes.destinations',
-    'AppAirBermudes.RouteAutorization'
+    'AppAirBermudes.RouteAutorization',
+    'AppAirBermudes.share'
 
 
     //'AppAirBermudes.AuthentificationService',
@@ -136,6 +137,14 @@ angular.module('AppAirBermudes', [
     $routeProvider.when('/travelsOldEdit', {
         templateUrl: '/travelsOld/edit.html',
         controller: 'TravelsOldEditController',
+        access: {
+            requireAuthentication: true
+        }
+    });
+
+    $routeProvider.when('/share', {
+        templateUrl: '/share/share.html',
+        controller: 'ShareController',
         access: {
             requireAuthentication: true
         }
@@ -333,5 +342,29 @@ function DataService(IdentityService) {
     function setCurrentDay(data) {
         this.currentDay.Id = data.Id;
         this.currentDay.Date = new Date(data.Date);
+    }
+
+    // Users
+    this.users = [];
+    
+    function setUsers(data) {
+        this.users = data;
+    }
+
+    function pushUser(user) {
+        this.users.push(user);
+    }
+
+    function removeUser(user)
+    {
+        for(u in this.users)
+        {
+            var us = this.users[u];
+
+            if(us.username === user.username)
+            {
+                this.users.splice(u, 1);
+            }
+        }
     }
 };

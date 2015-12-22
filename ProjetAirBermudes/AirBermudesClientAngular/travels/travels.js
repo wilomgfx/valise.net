@@ -96,6 +96,12 @@ function TravelMinDetailsDirective($timeout, $location, MapService, DataService)
                 DataService.currentTravel = travel;
                 $location.path('/days');
             }
+
+            $scope.onClickShare = function (travel)
+            {
+                DataService.currentTravel = travel;
+                $location.path('/share');
+            }
         },
         link: function ($scope) {
 
@@ -145,6 +151,11 @@ function TravelMinDetailsDirective($timeout, $location, MapService, DataService)
             $scope.onCourses = function (travelId) {
                 console.log("onCourses");
                 $location.path("/courses/forTravel/" + travelId)
+            };
+
+            $scope.onClickShare = function (travel) {
+                DataService.currentTravel = travel;
+                $location.path('/share');
             };
 
         }
